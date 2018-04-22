@@ -18,10 +18,13 @@ class homeController extends Controller {
             'menu' => array(
                 BASE_URL.'home/add' => 'Adicionar Produto',
                 BASE_URL.'relatorio' => 'Relatório',
+                BASE_URL.'home/fornecedores' => 'Fornecedores',
+                BASE_URL.'home/addUsuario' => 'Cadastrar Usuários',
                 BASE_URL.'login/sair' => 'Sair'
             )
         );
         $p = new Products();
+
 
         $s = '';
         
@@ -96,10 +99,116 @@ class homeController extends Controller {
     }
 
 
+      public function fornecedores() {
+        $data = array(
+            'menu' => array(
+                BASE_URL => 'Voltar',
+                BASE_URL.'home/rlfornecedores' => 'Lista'
+            )
+        );
+        $f = new Fornecedores();
+        //$filters = new FiltersHelper();
+
+        if(!empty($_POST['nome'])) {
+            $nome = addslashes($_POST['nome']);
+            $endereco = addslashes($_POST['endereco']);
+            $fone = addslashes($_POST['fone']);
+            $cnpj = addslashes($_POST['cnpj']);
+
+            if($nome && $endereco && $fone && $cnpj) {
+                $f->addFornecedores($nome, $endereco, $fone, $cnpj);
+
+                header("Location: ".BASE_URL);
+                exit;
+            } else {
+                $data['warning'] = 'Digite os campos corretamente.';
+            }
+        }
+
+
+        $this->loadTemplate('fornecedores', $data);
+    }
+
+    public function editarFornecedor($id) {
+        $data = array(
+            'menu' => array(
+                BASE_URL => 'Voltar'
+            )
+        );
+        $f = new Fornecedores();
+        //$filters = new FiltersHelper();
+
+        if(!empty($_POST['nome'])) {
+            $nome = addslashes($_POST['nome']);
+            $endereco = addslashes($_POST['endereco']);
+            $fone = addslashes($_POST['fone']);
+            $cnpj = addslashes($_POST['cnpj']);
+
+            if($nome && $endereco && $fone && $cnpj) {
+                $f->editarFornecedor($nome, $endereco, $fone, $cnpj, $id);
+
+                header("Location: ".BASE_URL);
+                exit;
+            } else {
+                $data['warning'] = 'Digite os campos corretamente.';
+            }
+        }
+
+        $data['info'] = $f->getFornecedor($id);
+
+        $this->loadTemplate('editarFornecedor', $data);
+    }
+
+    public function rlfornecedores() {
+         $data = array(
+            'menu' => array(
+                BASE_URL => 'Voltar'
+            )
+        );
+        $f = new Fornecedores();
+
+
+        $s = '';
+        
+        if(!empty($_GET['busca'])) {
+            $s = $_GET['busca'];
+        }
+
+        $data['list'] = $f->getFornecedores($s);
+
+        $this->loadTemplate('rlfornecedores', $data);
+    }
+
+    public function addUsuario() {
+        $data = array(
+            'menu' => array(
+                BASE_URL => 'Voltar'
+            )
+        );
+        $f = new Users();
+        //$filters = new FiltersHelper();
+
+        if(!empty($_POST['user_number'])) {
+            $user_number = addslashes($_POST['user_number']);
+            $user_pass = addslashes($_POST['user_pass']);
+
+            if($user_number && $user_pass) {
+                $f->addUsuario($user_number, $user_pass);
+
+                header("Location: addUsuario");
+                exit;
+            } else {
+                $data['warning'] = 'Digite os campos corretamente.';
+            }
+        }
+
+
+        $this->loadTemplate('addUsuario', $data);
+    }
+
 
 
 }
-
 
 
 

@@ -1,3 +1,6 @@
+*{
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 body {
 	background-color:#DDDDDD;
 }
@@ -20,4 +23,13 @@ input[type=submit] {
 	border-radius:10px;
 	font-size:15px;
 	font-weight: bold;
+}
+.loginarea a{
+	text-decoration: none;
+	color: blue;
+}
+.loginarea a:hover{
+	text-decoration: none;
+	color: blue;
+	text-decoration: underline;
 }
