@@ -23,9 +23,16 @@ class Products extends Model {
 	}
 
 	private function verifyProduct($cod) {
-		// ....
+		$sql = "SELECT * FROM products WHERE cod = :cod";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":cod", $cod);
+		$sql->execute();
 
-		return true;
+		if($sql->rowCount() > 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public function addProduct($cod, $name, $price, $quantity, $min_quantity) {
@@ -48,7 +55,7 @@ class Products extends Model {
 
 	public function editProduct($cod, $name, $price, $quantity, $min_quantity, $id) {
 
-		if($this->verifyProduct($cod)) {
+		if($this->verifyProduct($name)) {
 
 			$sql = "UPDATE products SET cod = :cod, name = :name, price = :price, quantity = :quantity, min_quantity = :min_quantity WHERE id = :id";
 			$sql = $this->db->prepare($sql);
@@ -95,6 +102,23 @@ class Products extends Model {
 
 		return $array;
 	}
+
+	private function getProductAdd($id, $nome) {
+		if($this->verifyProduct($name)) {
+		$sql = "SELECT * FROM fornecedores";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->bindValue(":nome", $nome);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+		}
+		return $array;
+	} 
+}
+
+
 
 }
 

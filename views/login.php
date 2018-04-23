@@ -6,11 +6,11 @@
 <body>
 	<div class="loginarea">
 		<form method="POST">
-			Seu número:<br/>
-			<input type="text" name="number" /><br/><br/>
+			Usuário:<br/>
+			<input type="text" name="number" required /><br/><br/>
 
-			Sua senha:<br/>
-			<input type="password" name="password" /><br/><br/>
+			Senha:<br/>
+			<input type="password" name="password" required /><br/><br/>
 
 			<input type="submit" value="Entrar" />
 		</form>

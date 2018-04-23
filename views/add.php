@@ -16,10 +16,15 @@
 	<input type="text" class="dinheiro" name="price" required /><br/><br/>
 
 	Quantidade:<br/>
-	<input type="text" class="dinheiro" name="quantity" required /><br/><br/>
+	<input type="text" class="" name="quantity" required /><br/><br/>
 
 	Qtd. Minima:<br/>
-	<input type="text" class="dinheiro" name="min_quantity" required /><br/><br/>
+	<input type="text" class="" name="min_quantity" required /><br/><br/>
+
+	Fornecedor:
+	<select name="id" onchange="this.form.submit()">
+		<option value="<?php echo $array; ?>"></option>
+	</select><br/><br/>
 
 	<input type="submit" value="Adicionar Produto" />
 

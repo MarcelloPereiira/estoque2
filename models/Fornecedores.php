@@ -22,15 +22,22 @@ class Fornecedores extends Model {
 		return $array;
 	}
 
-	private function verifyFornecedores($nome) {
-		// ....
+	private function verifyFornecedores($cnpj) {
+		$sql = "SELECT * FROM fornecedores WHERE cnpj = :cnpj";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":cnpj", $cnpj);
+		$sql->execute();
 
-		return true;
+		if($sql->rowCount() > 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 
 	public function addFornecedores($nome, $endereco, $fone, $cnpj) {
 
-		if($this->verifyFornecedores($nome)) {
+		if($this->verifyFornecedores($cnpj)) {
 
 			$sql = "INSERT INTO fornecedores (nome, endereco, fone, cnpj) VALUES (:nome, :endereco, :fone, :cnpj)";
 			$sql = $this->db->prepare($sql);

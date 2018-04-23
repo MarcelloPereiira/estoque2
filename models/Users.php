@@ -50,6 +50,8 @@ class Users extends Model {
 		return false;
 	}
 
+
+
 	public function verifyUsuario($user_number) {
 
 		$sql = "SELECT * FROM users WHERE user_number = :user_number";
@@ -65,7 +67,6 @@ class Users extends Model {
 	}
 
 	public function addUsuario($user_number, $user_pass) {
-		echo "Entrou";
 		if($this->verifyUsuario($user_number)) {
 
 			$sql = "INSERT INTO users (user_number, user_pass) VALUES (:user_number, :user_pass)";
@@ -75,6 +76,7 @@ class Users extends Model {
 			$sql->execute();
 
 		} else {
+
 			return false;
 		}
 	}

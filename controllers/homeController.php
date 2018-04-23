@@ -103,7 +103,7 @@ class homeController extends Controller {
         $data = array(
             'menu' => array(
                 BASE_URL => 'Voltar',
-                BASE_URL.'home/rlfornecedores' => 'Lista'
+                BASE_URL.'home/listafornecedores' => 'Lista'
             )
         );
         $f = new Fornecedores();
@@ -159,7 +159,7 @@ class homeController extends Controller {
         $this->loadTemplate('editarFornecedor', $data);
     }
 
-    public function rlfornecedores() {
+    public function listafornecedores() {
          $data = array(
             'menu' => array(
                 BASE_URL => 'Voltar'
@@ -176,7 +176,7 @@ class homeController extends Controller {
 
         $data['list'] = $f->getFornecedores($s);
 
-        $this->loadTemplate('rlfornecedores', $data);
+        $this->loadTemplate('listafornecedores', $data);
     }
 
     public function addUsuario() {
@@ -188,22 +188,43 @@ class homeController extends Controller {
         $f = new Users();
         //$filters = new FiltersHelper();
 
-        if(!empty($_POST['user_number'])) {
+        if(!empty($_POST['user_number']) || !empty($_POST['user_pass'])) {
             $user_number = addslashes($_POST['user_number']);
-            $user_pass = addslashes($_POST['user_pass']);
+            $user_pass = md5(addslashes($_POST['user_pass']));
 
             if($user_number && $user_pass) {
                 $f->addUsuario($user_number, $user_pass);
 
-                header("Location: addUsuario");
+                header("Location: ".BASE_URL);
                 exit;
             } else {
-                $data['warning'] = 'Digite os campos corretamente.';
+                $data['msg'] = 'Digite os campos corretamente.';
             }
         }
 
 
         $this->loadTemplate('addUsuario', $data);
+    }
+
+     public function getProductAdd($id) {
+        
+        $p = new Products();
+
+        if(!empty($_POST['id'])) {
+            $id = addslashes($_POST['id']);
+            $nome = addslashes($_POST['nome']);
+
+            if($id && $nome) {
+                $p->getProductAdd($id, $nome);
+
+                header("Location: ".BASE_URL);
+                exit;
+            }
+        }
+
+        $data['info'] = $p->getProductAdd($nome);
+
+        $this->loadTemplate('add', $data);
     }
 
 
