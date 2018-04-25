@@ -22,10 +22,25 @@
 	<input type="text" class="" name="min_quantity" required /><br/><br/>
 
 	Fornecedor:
-	<select name="id" onchange="this.form.submit()">
-		<option value="<?php echo $array; ?>"></option>
-	</select><br/><br/>
+	<select name="name_fornecedor">
+		<option></option>
+		<?php foreach($list as $item): ?>
+		<option value="<?php echo $item['id']; ?>">
+			NOME:
+			<?php echo $item['nome']; ?>
+			&nbsp;&nbsp; ENDEREÇO:
+			<?php echo $item['endereco']; ?>
+			&nbsp;&nbsp; TELEFONE:
+			<?php echo $item['fone']; ?>
+			&nbsp;&nbsp; CNPJ:
+			<?php echo $item['cnpj']; ?>
+		</option>
+		<?php endforeach; ?>	
+	</select><br/><br/>	
 
 	<input type="submit" value="Adicionar Produto" />
 
 </form>
+
+
+

@@ -11,7 +11,7 @@ class Fornecedores extends Model {
 			$sql->bindValue(":cnpj", '%'.$s.'%');
 			$sql->execute();
 		} else {
-			$sql = "SELECT * FROM fornecedores";
+			$sql = "SELECT * FROM fornecedores ORDER BY nome";
 			$sql = $this->db->query($sql);
 		}
 

@@ -46,15 +46,19 @@ class homeController extends Controller {
     	$p = new Products();
         $filters = new FiltersHelper();
 
+        $f = new Fornecedores();
+        $data['list'] = $f->getFornecedores();
+
     	if(!empty($_POST['cod'])) {
             $cod = filter_input(INPUT_POST, 'cod', FILTER_VALIDATE_INT);
             $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
             $price = $filters->filter_post_money('price');
             $quantity = $filters->filter_post_money('quantity');
             $min_quantity = $filters->filter_post_money('min_quantity');
+            $name_fornecedor = filter_input(INPUT_POST, 'name_fornecedor', FILTER_VALIDATE_INT);
 
-            if($cod && $name && $price && $quantity && $min_quantity) {
-        		$p->addProduct($cod, $name, $price, $quantity, $min_quantity);
+            if($cod && $name && $price && $quantity && $min_quantity && $name_fornecedor) {
+        		$p->addProduct($cod, $name, $price, $quantity, $min_quantity, $name_fornecedor);
 
         		header("Location: ".BASE_URL);
         		exit;
@@ -62,7 +66,6 @@ class homeController extends Controller {
                 $data['warning'] = 'Digite os campos corretamente.';
             }
     	}
-
 
     	$this->loadTemplate('add', $data);
     }
@@ -76,15 +79,19 @@ class homeController extends Controller {
     	$p = new Products();
         $filters = new FiltersHelper();
 
+        $f = new Fornecedores();
+        $data['list'] = $f->getFornecedores();
+
     	if(!empty($_POST['cod'])) {
             $cod = filter_input(INPUT_POST, 'cod', FILTER_VALIDATE_INT);
     		$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
             $price = $filters->filter_post_money('price');
             $quantity = $filters->filter_post_money('quantity');
             $min_quantity = $filters->filter_post_money('min_quantity');
+            $name_fornecedor = filter_input(INPUT_POST, 'name_fornecedor', FILTER_VALIDATE_INT);
 
-            if($cod && $name && $price && $quantity && $min_quantity) {
-        		$p->editProduct($cod, $name, $price, $quantity, $min_quantity, $id);
+            if($cod && $name && $price && $quantity && $min_quantity && $name_fornecedor) {
+        		$p->editProduct($cod, $name, $price, $quantity, $min_quantity, $id, $name_fornecedor);
 
         		header("Location: ".BASE_URL);
         		exit;
@@ -205,27 +212,7 @@ class homeController extends Controller {
 
         $this->loadTemplate('addUsuario', $data);
     }
-
-     public function getProductAdd($id) {
-        
-        $p = new Products();
-
-        if(!empty($_POST['id'])) {
-            $id = addslashes($_POST['id']);
-            $nome = addslashes($_POST['nome']);
-
-            if($id && $nome) {
-                $p->getProductAdd($id, $nome);
-
-                header("Location: ".BASE_URL);
-                exit;
-            }
-        }
-
-        $data['info'] = $p->getProductAdd($nome);
-
-        $this->loadTemplate('add', $data);
-    }
+  
 
 
 
