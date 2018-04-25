@@ -19,6 +19,7 @@ class homeController extends Controller {
                 BASE_URL.'home/add' => 'Adicionar Produto',
                 BASE_URL.'relatorio' => 'Relatório',
                 BASE_URL.'home/fornecedores' => 'Fornecedores',
+                BASE_URL.'inventario' => 'Inventário',
                 BASE_URL.'home/addUsuario' => 'Cadastrar Usuários',
                 BASE_URL.'login/sair' => 'Sair'
             )
@@ -212,6 +213,8 @@ class homeController extends Controller {
 
         $this->loadTemplate('addUsuario', $data);
     }
+
+    
   
 
 
