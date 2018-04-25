@@ -16,10 +16,10 @@
 	<input type="text" class="dinheiro" name="price" required /><br/><br/>
 
 	Quantidade:<br/>
-	<input type="text" class="" name="quantity" required /><br/><br/>
+	<input type="text" class="inteiro" name="quantity" required /><br/><br/>
 
 	Qtd. Minima:<br/>
-	<input type="text" class="" name="min_quantity" required /><br/><br/>
+	<input type="text" class="inteiro" name="min_quantity" required /><br/><br/>
 
 	Fornecedor:
 	<select name="name_fornecedor">

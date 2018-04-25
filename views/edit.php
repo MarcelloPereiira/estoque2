@@ -13,13 +13,13 @@
 	<input type="text" name="name" value="<?php echo $info['name']; ?>" required /><br/><br/>
 
 	Preço do Produto:<br/>
-	<input type="text" class="dinheiro" name="price" value="<?php echo number_format($info['price'], 2, ',', '.'); ?>" required /><br/><br/>
+	<input type="text" class="dinheiro" name="price" value="<?php echo $info['price']; ?>" required /><br/><br/>
 
 	Quantidade:<br/>
-	<input type="text" class="" name="quantity" value="<?php echo $info['quantity']; ?>" required /><br/><br/>
+	<input type="text" class="inteiro" name="quantity" value="<?php echo $info['quantity']; ?>" required /><br/><br/>
 
 	Qtd. Minima:<br/>
-	<input type="text" class="" name="min_quantity" value="<?php echo $info['min_quantity']; ?>" required /><br/><br/>
+	<input type="text" class="inteiro" name="min_quantity" value="<?php echo $info['min_quantity']; ?>" required /><br/><br/>
 
 	Fornecedor:
 	<select name="name_fornecedor">

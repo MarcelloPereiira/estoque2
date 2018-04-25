@@ -10,14 +10,13 @@
 	<?php foreach($list as $item): ?>
 		<tr>
 			<td><?php echo $item['name']; ?></td>
-			<td><?php echo $item['quantity']; ?></td>
-			<td><?php echo $item['min_quantity']; ?></td>
-			<td><?php echo (floatval($item['min_quantity']) - floatval($item['quantity'])); ?></td>
+			<td><?php echo number_format($item['quantity'], 0, '', '.'); ?></td>
+			<td><?php echo number_format($item['min_quantity'], 0, '', '.'); ?></td>
+			<td><?php echo number_format(floatval($item['min_quantity']) - floatval($item['quantity']), 0, '', '.'); ?></td>
 		</tr>
 	<?php endforeach; ?>
-</table>
-<a href="<?php echo BASE_URL; ?>"><input type="submit" value="Voltar" style="border: 0; margin-top: 20px;
- padding: 5px 10px;  border-radius: 5px; background-color: #CBCBCB; box-shadow: 2px 2px 0px #888;" /></a>
+</table><br/><br/>
+<a href="<?php echo BASE_URL; ?>"><input type="submit" value="Voltar" class="btn_relatorio" /></a>
 <script type="text/javascript">
 window.print();
 </script>

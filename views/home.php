@@ -18,7 +18,7 @@
 			<td><?php echo $item['cod']; ?></td>
 			<td><?php echo $item['name']; ?></td>
 			<td>R$ <?php echo number_format($item['price'], 2, ',', '.'); ?></td>
-			<td><?php echo $item['quantity']; ?></td>
+			<td><?php echo number_format($item['quantity'], 0, '', '.'); ?></td>
 			<td>
 				<a href="<?php echo BASE_URL; ?>home/edit/<?php echo $item['id']; ?>">Editar</a>
 			</td>

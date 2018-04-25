@@ -74,7 +74,8 @@ table a:hover {
 	border:2px solid #DDD;
 	outline:0;
 }
-.form input[type=submit] {
+.form input[type=submit],
+.btn_relatorio {
 	background-color:#CCCCCC;
 	padding:5px 10px;
 	border-radius:3px;
