@@ -14,7 +14,11 @@ class homeController extends Controller {
 	}
 
     public function index() {
-        $data = array(
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+
+        if ($users->hasPermission("ADM")) {
+            $data = array(
             'menu' => array(
                 BASE_URL.'home/add' => 'Adicionar Produto',
                 BASE_URL.'relatorio' => 'Relatório',
@@ -24,9 +28,33 @@ class homeController extends Controller {
                 BASE_URL.'login/sair' => 'Sair'
             )
         );
+
+        }
+        else if ($users->hasPermission("OP")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL.'home/add' => 'Adicionar Produto',
+                BASE_URL.'relatorio' => 'Relatório',
+                BASE_URL.'home/fornecedores' => 'Fornecedores',
+                BASE_URL.'inventario' => 'Inventário',
+                BASE_URL.'login/sair' => 'Sair'
+            )
+        );
+
+        }
+
+        else if ($users->hasPermission("CX")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL.'login/sair' => 'Sair'
+            )
+        );
+
+        }
+
+        
         $p = new Products();
-
-
+        
         $s = '';
         
         if(!empty($_GET['busca'])) {

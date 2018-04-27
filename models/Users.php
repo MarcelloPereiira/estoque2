@@ -2,6 +2,9 @@
 class Users extends Model {
 
 	private $info;
+	private $token;
+	private $nivel;
+
 
 	public function verifyUser($number, $pass) {
 
@@ -27,6 +30,7 @@ class Users extends Model {
 		$sql->bindValue(":token", $token);
 		$sql->bindValue(":unumber", $unumber);
 		$sql->execute();
+
 
 		return $token;
 	}
@@ -72,7 +76,7 @@ class Users extends Model {
 			$sql = "INSERT INTO users (user_number, user_pass) VALUES (:user_number, :user_pass)";
 			$sql = $this->db->prepare($sql);
 			$sql->bindValue(":user_number", $user_number);
-			$sql->bindValue(":user_pass", md5($user_pass));
+			$sql->bindValue(":user_pass", $user_pass);
 			$sql->execute();
 
 		} else {
@@ -80,6 +84,36 @@ class Users extends Model {
 			return false;
 		}
 	}
+
+	public function setUsuario($token){
+		$this->token = $token;
+
+		$sql = "SELECT * FROM users WHERE user_token = :token";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":token", $token);
+		$sql->execute();
+
+		if ($sql->rowCount() > 0) {
+			$sql = $sql->fetch();
+
+			$this->nivel = explode(',', $sql['nivel']);
+		}
+
+	}
+
+	public function getNivel() {
+		return $this->nivel;
+	}
+
+	public function hasPermission($p){
+		if (in_array($p, $this->nivel)) {
+			return true;
+		} else{
+			return false;
+		}
+	}
+
+
 
 }
 

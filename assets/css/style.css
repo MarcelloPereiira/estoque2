@@ -97,7 +97,11 @@ table a:hover {
 	color:#000;
 	margin-bottom:10px;
 }
-
+.status{
+	font-size: 12px;
+	color: #6bb4cf;
+	margin-left: 5px;
+}
 
 
 

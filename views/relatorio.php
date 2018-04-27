@@ -1,3 +1,14 @@
+<?php 
+$users = new Users();
+$users->setUsuario($_SESSION['token']);
+?>
+<?php
+if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == false) {
+	header("Location: index.php");
+	exit;
+} 
+?>
+
 <h1>Relatório</h1>
 
 <table border="1" width="500">
