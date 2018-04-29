@@ -22,7 +22,7 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 		<th>Endereço</th>
 		<th>Telefone</th>
 		<th>CNPJ</th>
-		<?php if ($users->hasPermission('EDIT')): ?>
+		<?php if ($users->hasPermission('ADM') || $users->hasPermission('OP')): ?>
 			<th>Ações</th>
 		<?php endif; ?>
 	</tr>
@@ -33,7 +33,7 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 			<td><?php echo $item['endereco']; ?></td>
 			<td><?php echo $item['fone']; ?></td>
 			<td><?php echo $item['cnpj']; ?></td>
-			<?php if ($users->hasPermission('EDIT')): ?>
+			<?php if ($users->hasPermission('ADM') || $users->hasPermission('OP')): ?>
 				<td>
 					<a href="<?php echo BASE_URL; ?>home/editarFornecedor/<?php echo $item['id']; ?>">Editar</a>
 				</td>

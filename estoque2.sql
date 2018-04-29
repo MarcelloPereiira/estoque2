@@ -63,21 +63,16 @@ CREATE TABLE `products` (
   `price` float NOT NULL,
   `quantity` float NOT NULL,
   `min_quantity` float NOT NULL,
-  `id_fornecedor` int(10) UNSIGNED NOT NULL,
-   PRIMARY KEY (`id`),
-   INDEX indice_fornecedor(`id_fornecedor`),
-   CONSTRAINT `fk_id_fornecedor` 
-   FOREIGN KEY (`id_fornecedor`) 
-   REFERENCES `fornecedores` (`id`)
+   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Fazendo dump de dados para tabela `products`
 --
 
-INSERT INTO `products` (`id`, `cod`, `name`, `price`, `quantity`, `min_quantity`, `id_fornecedor`) VALUES
-(1, 56464646, 'Produto de Teste', 15, 10, 12, 2),
-(2, 123456, 'Produto legal', 100, 7, 2, 1);
+INSERT INTO `products` (`id`, `cod`, `name`, `price`, `quantity`, `min_quantity`) VALUES
+(1, 56464646, 'Produto de Teste', 15, 10, 12),
+(2, 123456, 'Produto legal', 100, 7, 2);
 
 -- --------------------------------------------------------
 
@@ -90,6 +85,8 @@ CREATE TABLE `users` (
   `user_number` int(10) NOT NULL,
   `user_pass` varchar(32) NOT NULL DEFAULT '',
   `user_token` varchar(32) DEFAULT NULL,
+   nivel VARCHAR(50) NOT NULL,
+   nome VARCHAR(70) NOT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -97,11 +94,24 @@ CREATE TABLE `users` (
 -- Fazendo dump de dados para tabela `users`
 --
 
-INSERT INTO `users` (`id`, `user_number`, `user_pass`, `user_token`) VALUES
-(1, 123, '202cb962ac59075b964b07152d234b70', '752c1d8eada1593d04abe075b4e8d47a'),
-(2, 321, 'caf1a3dfb505ffed0d024130f58c5cfa', '4fb650f7ea5f3f8ec43d4aedbba112b5');
+INSERT INTO `users` (`id`, `user_number`, `user_pass`, `user_token`, `nivel`, `nome`) VALUES
+(1, 123, '202cb962ac59075b964b07152d234b70', '752c1d8eada1593d04abe075b4e8d47a', 'ADM', 'MARCELO PEREIRA'),
+(2, 321, 'caf1a3dfb505ffed0d024130f58c5cfa', '4fb650f7ea5f3f8ec43d4aedbba112b5', 'OP', 'HANNA PIMENTA');
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+CREATE TABLE `lote` (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    data_lote DATE,
+    PRIMARY KEY(id),
+    id_products INT UNSIGNED NOT NULL,
+    INDEX indice_id_produto (id_products),
+    CONSTRAINT fk_id_products
+    FOREIGN KEY (id_products)
+    REFERENCES products(id)
+);
+

@@ -35,30 +35,31 @@ class Products extends Model {
 		}
 	}
 
-	public function addProduct($cod, $name, $price, $quantity, $min_quantity, $name_fornecedor) {
+	public function addProduct($cod, $name, $price, $quantity, $min_quantity) {
 
 		if($this->verifyProduct($cod)) {
 
-			$sql = "INSERT INTO products (cod, name, price, quantity, min_quantity, id_fornecedor) VALUES (:cod, :name, :price, :quantity, :min_quantity, :name_fornecedor)";
+			$sql = "INSERT INTO products (cod, name, price, quantity, min_quantity) VALUES (:cod, :name, :price, :quantity, :min_quantity)";
 			$sql = $this->db->prepare($sql);
 			$sql->bindValue(":cod", $cod);
 			$sql->bindValue(":name", $name);
 			$sql->bindValue(":price", $price);
 			$sql->bindValue(":quantity", $quantity);
 			$sql->bindValue(":min_quantity", $min_quantity);
-			$sql->bindValue(":name_fornecedor", $name_fornecedor);
 			$sql->execute();
+
+			return true;
 
 		} else {
 			return false;
 		}
 	}
 
-	public function editProduct($cod, $name, $price, $quantity, $min_quantity, $id, $name_fornecedor) {
+	public function editProduct($cod, $name, $price, $quantity, $min_quantity, $id) {
 
 		if($this->verifyProduct($name)) {
 
-			$sql = "UPDATE products SET cod = :cod, name = :name, price = :price, quantity = :quantity, min_quantity = :min_quantity, id_fornecedor = :name_fornecedor WHERE id = :id";
+			$sql = "UPDATE products SET cod = :cod, name = :name, price = :price, quantity = :quantity, min_quantity = :min_quantity WHERE id = :id";
 			$sql = $this->db->prepare($sql);
 			$sql->bindValue(":cod", $cod);
 			$sql->bindValue(":name", $name);
@@ -66,8 +67,8 @@ class Products extends Model {
 			$sql->bindValue(":quantity", $quantity);
 			$sql->bindValue(":min_quantity", $min_quantity);
 			$sql->bindValue(":id", $id);
-			$sql->bindValue(":name_fornecedor", $name_fornecedor);
 			$sql->execute();
+			return true;
 
 		} else {
 			return false;
@@ -117,6 +118,18 @@ class Products extends Model {
 		}
 
 		return $array;
+	}
+
+	public function entradaProduto($quantity, $id) {
+
+			$sql = "UPDATE products SET quantity = quantity + :quantity WHERE id = :id";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":quantity", $quantity);
+			$sql->bindValue(":id", $id);
+			$sql->execute();
+
+			return true;
+
 	}
 
 }

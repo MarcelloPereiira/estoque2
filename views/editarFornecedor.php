@@ -11,6 +11,10 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 
 <h1>Editar Fornecedor</h1>
 
+<?php if(!empty($sucess)): ?>
+<div class="sucess"><?php echo $sucess; ?></div>
+<?php endif; ?>
+
 <?php if(!empty($warning)): ?>
 <div class="warning"><?php echo $warning; ?></div>
 <?php endif; ?>

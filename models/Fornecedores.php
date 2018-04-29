@@ -46,6 +46,7 @@ class Fornecedores extends Model {
 			$sql->bindValue(":fone", $fone);
 			$sql->bindValue(":cnpj", $cnpj);
 			$sql->execute();
+			return true;
 
 		} else {
 			return false;

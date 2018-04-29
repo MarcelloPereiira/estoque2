@@ -11,6 +11,10 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 
 <h1>Editar Produto</h1>
 
+<?php if(!empty($sucess)): ?>
+<div class="sucess"><?php echo $sucess; ?></div>
+<?php endif; ?>
+
 <?php if(!empty($warning)): ?>
 <div class="warning"><?php echo $warning; ?></div>
 <?php endif; ?>
@@ -31,23 +35,6 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 
 	Qtd. Minima:<br/>
 	<input type="text" class="inteiro" name="min_quantity" value="<?php echo $info['min_quantity']; ?>" required /><br/><br/>
-
-	Fornecedor:
-	<select name="name_fornecedor">
-		<option></option>
-		<?php foreach($list as $item): ?>
-		<option value="<?php echo $item['id']; ?>">
-			NOME:
-			<?php echo $item['nome']; ?>
-			&nbsp;&nbsp; ENDEREÇO:
-			<?php echo $item['endereco']; ?>
-			&nbsp;&nbsp; TELEFONE:
-			<?php echo $item['fone']; ?>
-			&nbsp;&nbsp; CNPJ:
-			<?php echo $item['cnpj']; ?>
-		</option>
-		<?php endforeach; ?>	
-	</select><br/><br/>
 
 	<input type="submit" value="Salvar" />
 

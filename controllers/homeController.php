@@ -24,6 +24,7 @@ class homeController extends Controller {
                 BASE_URL.'relatorio' => 'Relatório',
                 BASE_URL.'home/fornecedores' => 'Fornecedores',
                 BASE_URL.'inventario' => 'Inventário',
+                BASE_URL.'home/entrada' => 'Entrada',
                 BASE_URL.'home/addUsuario' => 'Cadastrar Usuários',
                 BASE_URL.'login/sair' => 'Sair'
             )
@@ -37,6 +38,7 @@ class homeController extends Controller {
                 BASE_URL.'relatorio' => 'Relatório',
                 BASE_URL.'home/fornecedores' => 'Fornecedores',
                 BASE_URL.'inventario' => 'Inventário',
+                BASE_URL.'home/entrada' => 'Entrada',
                 BASE_URL.'login/sair' => 'Sair'
             )
         );
@@ -54,6 +56,7 @@ class homeController extends Controller {
 
         
         $p = new Products();
+        $u = new Users();
         
         $s = '';
         
@@ -62,6 +65,7 @@ class homeController extends Controller {
         }
 
         $data['list'] = $p->getProducts($s);
+        $data['nome'] = $u->getNome();
 
         $this->loadTemplate('home', $data);
     }
@@ -75,22 +79,26 @@ class homeController extends Controller {
     	$p = new Products();
         $filters = new FiltersHelper();
 
-        $f = new Fornecedores();
-        $data['list'] = $f->getFornecedores();
+        //$f = new Fornecedores();
+        //$data['list'] = $f->getFornecedores();
 
     	if(!empty($_POST['cod'])) {
             $cod = filter_input(INPUT_POST, 'cod', FILTER_VALIDATE_INT);
-            $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+            $name = mb_strtoupper(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING));
             $price = $filters->filter_post_money('price');
             $quantity = $filters->filter_post_money('quantity');
             $min_quantity = $filters->filter_post_money('min_quantity');
-            $name_fornecedor = filter_input(INPUT_POST, 'name_fornecedor', FILTER_VALIDATE_INT);
+            //$name_fornecedor = filter_input(INPUT_POST, 'name_fornecedor', FILTER_VALIDATE_INT);
 
-            if($cod && $name && $price && $quantity && $min_quantity && $name_fornecedor) {
-        		$p->addProduct($cod, $name, $price, $quantity, $min_quantity, $name_fornecedor);
+            if($cod && $name && $price && $quantity && $min_quantity) {
+        		if($p->addProduct($cod, $name, $price, $quantity, $min_quantity)){
+                    $data['sucess'] = 'Cadastrado com sucesso.';
+                } else{
+                    $data['warning'] = 'O produto já existe.';
+                }
 
-        		header("Location: ".BASE_URL);
-        		exit;
+        		//header("Location: ".BASE_URL);
+        		//exit;
             } else {
                 $data['warning'] = 'Digite os campos corretamente.';
             }
@@ -108,22 +116,20 @@ class homeController extends Controller {
     	$p = new Products();
         $filters = new FiltersHelper();
 
-        $f = new Fornecedores();
-        $data['list'] = $f->getFornecedores();
 
     	if(!empty($_POST['cod'])) {
             $cod = filter_input(INPUT_POST, 'cod', FILTER_VALIDATE_INT);
-    		$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+    		$name = mb_strtoupper(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING));
             $price = $filters->filter_post_money('price');
             $quantity = $filters->filter_post_money('quantity');
             $min_quantity = $filters->filter_post_money('min_quantity');
-            $name_fornecedor = filter_input(INPUT_POST, 'name_fornecedor', FILTER_VALIDATE_INT);
 
-            if($cod && $name && $price && $quantity && $min_quantity && $name_fornecedor) {
-        		$p->editProduct($cod, $name, $price, $quantity, $min_quantity, $id, $name_fornecedor);
+            if($cod && $name && $price && $quantity && $min_quantity) {
+        		$p->editProduct($cod, $name, $price, $quantity, $min_quantity, $id);
 
-        		header("Location: ".BASE_URL);
-        		exit;
+                $data['sucess'] = 'Editado com sucesso.';
+        		//header("Location: ".BASE_URL);
+        		//exit;
             } else {
                 $data['warning'] = 'Digite os campos corretamente.';
             }
@@ -146,16 +152,20 @@ class homeController extends Controller {
         //$filters = new FiltersHelper();
 
         if(!empty($_POST['nome'])) {
-            $nome = addslashes($_POST['nome']);
-            $endereco = addslashes($_POST['endereco']);
+            $nome = mb_strtoupper(addslashes($_POST['nome']));
+            $endereco = mb_strtoupper(addslashes($_POST['endereco']));
             $fone = addslashes($_POST['fone']);
             $cnpj = addslashes($_POST['cnpj']);
 
             if($nome && $endereco && $fone && $cnpj) {
-                $f->addFornecedores($nome, $endereco, $fone, $cnpj);
+                if($f->addFornecedores($nome, $endereco, $fone, $cnpj)){
+                    $data['sucess'] = 'Cadastrado com sucesso.';
+                }   else{
+                    $data['warning'] = 'O fornecedor já existe.';
+                }
 
-                header("Location: ".BASE_URL);
-                exit;
+                //header("Location: ".BASE_URL);
+                //exit;
             } else {
                 $data['warning'] = 'Digite os campos corretamente.';
             }
@@ -175,16 +185,17 @@ class homeController extends Controller {
         //$filters = new FiltersHelper();
 
         if(!empty($_POST['nome'])) {
-            $nome = addslashes($_POST['nome']);
-            $endereco = addslashes($_POST['endereco']);
+            $nome = mb_strtoupper(addslashes($_POST['nome']));
+            $endereco = mb_strtoupper(addslashes($_POST['endereco']));
             $fone = addslashes($_POST['fone']);
             $cnpj = addslashes($_POST['cnpj']);
 
             if($nome && $endereco && $fone && $cnpj) {
                 $f->editarFornecedor($nome, $endereco, $fone, $cnpj, $id);
 
-                header("Location: ".BASE_URL);
-                exit;
+                $data['sucess'] = 'Editado com sucesso.';
+                //header("Location: ".BASE_URL);
+                //exit;
             } else {
                 $data['warning'] = 'Digite os campos corretamente.';
             }
@@ -224,15 +235,22 @@ class homeController extends Controller {
         $f = new Users();
         //$filters = new FiltersHelper();
 
-        if(!empty($_POST['user_number']) || !empty($_POST['user_pass'])) {
+        if((!empty($_POST['user_number']) && !empty($_POST['user_pass'])) && isset($_POST['enviarNivel']) && !empty($_POST['nome'])) {
             $user_number = addslashes($_POST['user_number']);
             $user_pass = md5(addslashes($_POST['user_pass']));
+            $nivel = addslashes($_POST['enviarNivel']);
+            $nome = mb_strtoupper(addslashes($_POST['nome']));
 
-            if($user_number && $user_pass) {
-                $f->addUsuario($user_number, $user_pass);
+            if($user_number && $user_pass && $nivel && $nome) {
+                
+                if ($f->addUsuario($user_number, $user_pass, $nivel, $nome)) {
+                    $data['msg'] = 'Cadastrado com sucesso.';   
+                } else{
+                    $data['msg'] = 'O usuário já existe.';
+                }
 
-                header("Location: ".BASE_URL);
-                exit;
+                //header("Location: ".BASE_URL);
+                //exit;
             } else {
                 $data['msg'] = 'Digite os campos corretamente.';
             }
@@ -242,10 +260,34 @@ class homeController extends Controller {
         $this->loadTemplate('addUsuario', $data);
     }
 
+
+    public function entrada() {
+         $data = array(
+            'menu' => array(
+                BASE_URL => 'Voltar'
+            )
+        );
+
+         $p = new Products();
+        
+
+        if(!empty($_POST['quantity'])){
+            $quantity = addslashes($_POST['quantity']);
+            $id = addslashes($_POST['id']);
+
+            if($quantity && $id) {
+                $p->entradaProduto($quantity, $id);
+                $data['sucess'] = 'Entrada de Produto com sucesso.';
+                    
+            } else{
+                   $data['warning'] = 'Não foi possível dar entrada.';
+              }
+        }
+
+        $data['list'] = $p->getProducts();
+        $this->loadTemplate('entrada', $data);
+    }
     
-  
-
-
 
 }
 

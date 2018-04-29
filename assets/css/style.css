@@ -46,6 +46,7 @@ table th {
 table td {
 	border:1px solid #DDDDDD;
 	padding:5px;
+	text-align: center;
 }
 table tr:hover td {
 	background-color:#EEE;
@@ -54,9 +55,13 @@ table tr:hover td {
 table a {
 	color:#0000FF;
 	text-decoration: none;
+	transition: 0.1s all;
 }
 table a:hover {
 	text-decoration:underline;
+	color: red;
+	font-size: 13px;
+	font-weight: bold;
 }
 
 #busca {
@@ -97,12 +102,48 @@ table a:hover {
 	color:#000;
 	margin-bottom:10px;
 }
-.status{
-	font-size: 12px;
-	color: #6bb4cf;
-	margin-left: 5px;
+.sucess {
+	border:1px solid green;
+	background-color: green;
+	padding:10px;
+	font-size:14px;
+	color:#000;
+	margin-bottom:10px;
 }
 
+.flex{
+	display: flex;
+	justify-content: space-between;
+}
+.status{
+	font-size: 12px;
+	color: #03b0be;
+}
+
+.formLogin input[type=text],
+.formLogin input[type=password]{
+	max-width: 700px;
+	width:100%;
+	height:35px;
+	font-size:13px;
+	padding-left:10px;
+	border:2px solid #DDD;
+	outline:0;
+}
+
+.formLogin input[type=submit] {
+	background-color:#CCCCCC;
+	padding:5px 10px;
+	border-radius:3px;
+	font-size:15px;
+	font-weight: bold;
+	transition: all;
+	transition-duration: 1s;
+}
+.formLogin input[type=submit]:hover{
+	box-shadow: 0px 0px 5px #000000;
+	background-color:#EEEEEE;
+}
 
 
 

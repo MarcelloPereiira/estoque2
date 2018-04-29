@@ -70,14 +70,18 @@ class Users extends Model {
 		}
 	}
 
-	public function addUsuario($user_number, $user_pass) {
+	public function addUsuario($user_number, $user_pass, $nivel, $nome) {
 		if($this->verifyUsuario($user_number)) {
 
-			$sql = "INSERT INTO users (user_number, user_pass) VALUES (:user_number, :user_pass)";
+			$sql = "INSERT INTO users (user_number, user_pass, nivel, nome) VALUES (:user_number, :user_pass, :nivel, :nome)";
 			$sql = $this->db->prepare($sql);
 			$sql->bindValue(":user_number", $user_number);
 			$sql->bindValue(":user_pass", $user_pass);
+			$sql->bindValue(":nivel", $nivel);
+			$sql->bindValue(":nome", $nome);
 			$sql->execute();
+
+			return true;
 
 		} else {
 
@@ -111,6 +115,21 @@ class Users extends Model {
 		} else{
 			return false;
 		}
+	}
+
+	public function getNome(){
+		$array = array();
+		$token = $_SESSION['token'];
+
+		$sql = "SELECT * FROM users WHERE user_token = :token";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":token", $token);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetch();
+		}
+		return $array;
 	}
 
 

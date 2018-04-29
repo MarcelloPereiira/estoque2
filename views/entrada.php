@@ -9,7 +9,7 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 } 
 ?>
 
-<h1>Adicionar Produto</h1>
+<h1>Entrada de Produtos</h1>
 
 <?php if(!empty($warning)): ?>
 <div class="warning"><?php echo $warning; ?></div>
@@ -20,24 +20,24 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 
 <form method="POST" class="form">
 
-	Código de Barras:<br/>
-	<input type="text" name="cod" required /><br/><br/>
-
-	Nome do Produto:<br/>
-	<input type="text" name="name" required /><br/><br/>
-
-	Preço do Produto:<br/>
-	<input type="text" class="dinheiro" name="price" required /><br/><br/>
+	Produto:
+	<select name="id">
+		<option></option>
+		<?php foreach($list as $item): ?>
+		<option value="<?php echo $item['id']; ?>">
+			<?php echo $item['name']; ?>
+			&nbsp;&nbsp;
+			CÓD.:
+			<?php echo $item['cod']; ?>
+			&nbsp;&nbsp;
+		</option>
+		<?php endforeach; ?>	
+	</select><br/><br/>	
 
 	Quantidade:<br/>
 	<input type="text" class="inteiro" name="quantity" required /><br/><br/>
 
-	Qtd. Minima:<br/>
-	<input type="text" class="inteiro" name="min_quantity" required /><br/><br/>
-
-	<input type="submit" value="Adicionar Produto" />
+	<input type="submit" value="Salvar" />
 
 </form>
-
-
 

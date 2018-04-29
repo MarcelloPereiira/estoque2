@@ -2,15 +2,19 @@
 $users = new Users();
 $users->setUsuario($_SESSION['token']);
 ?>
-<?php if ($users->hasPermission('ADM')): ?>
-	<p class="status">ADMINISTRADOR</p>
-<?php endif; ?>
-<?php if ($users->hasPermission('OP')): ?>
-	<p class="status">OPERACIONAL</p>
-<?php endif; ?>
-<?php if ($users->hasPermission('CX')): ?>
-	<p class="status">CAIXA</p>
-<?php endif; ?>
+<div class="flex">
+	<p class="status"> BEM-VINDO, <?php echo $nome['nome']; ?></p>
+
+	<?php if ($users->hasPermission('ADM')): ?>
+		<p class="status">ADMINISTRADOR</p>
+	<?php endif; ?>
+	<?php if ($users->hasPermission('OP')): ?>
+		<p class="status">OPERACIONAL</p>
+	<?php endif; ?>
+	<?php if ($users->hasPermission('CX')): ?>
+		<p class="status">CAIXA</p>
+	<?php endif; ?>
+</div>
 
 <fieldset>
 	<form method="GET">
@@ -25,7 +29,7 @@ $users->setUsuario($_SESSION['token']);
 		<th>Nome</th>
 		<th>Preço Unit.</th>
 		<th>Qtd.</th>
-		<?php if ($users->hasPermission('EDIT')): ?>
+		<?php if ($users->hasPermission('ADM')): ?>
 			<th>Ações</th>
 		<?php endif; ?>
 	</tr>
@@ -35,10 +39,9 @@ $users->setUsuario($_SESSION['token']);
 			<td><?php echo $item['name']; ?></td>
 			<td>R$ <?php echo number_format($item['price'], 2, ',', '.'); ?></td>
 			<td><?php echo number_format($item['quantity'], 0, '', '.'); ?></td>
-			<?php if ($users->hasPermission('EDIT')): ?>
+			<?php if ($users->hasPermission('ADM')): ?>
 				<td>
 					<a href="<?php echo BASE_URL; ?>home/edit/<?php echo $item['id']; ?>">Editar</a>
-					
 				</td>
 			<?php endif; ?>
 		</tr>
@@ -48,6 +51,3 @@ $users->setUsuario($_SESSION['token']);
 <script type="text/javascript">
 document.getElementById("busca").focus();
 </script>
-
-	
-
