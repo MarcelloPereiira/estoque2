@@ -25,12 +25,12 @@ $users->setUsuario($_SESSION['token']);
 
 <table border="0" width="100%">
 	<tr>
-		<th>Cód.</th>
-		<th>Nome</th>
-		<th>Preço Unit.</th>
-		<th>Qtd.</th>
+		<th>CÓDIGO</th>
+		<th>NOME</th>
+		<th>PREÇO UN.</th>
+		<th>QTD.</th>
 		<?php if ($users->hasPermission('ADM')): ?>
-			<th>Ações</th>
+			<th>AÇÕES</th>
 		<?php endif; ?>
 	</tr>
 	<?php foreach($list as $item): ?>

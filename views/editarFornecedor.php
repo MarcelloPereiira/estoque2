@@ -28,10 +28,10 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 	<input type="text" class="endereco" name="endereco" value="<?php echo $info['endereco']; ?>" required /><br/><br/>
 
 	Telefone:<br/>
-	<input type="text" class="fone" name="fone" value="<?php echo $info['fone']; ?>" required /><br/><br/>
+	<input type="text" class="" name="fone" value="<?php echo $info['fone']; ?>" placeholder="00000-0000" required /><br/><br/>
 
 	CNPJ:<br/>
-	<input type="text" class="cnpj" name="cnpj" value="<?php echo $info['cnpj']; ?>" required /><br/><br/>
+	<input type="text" class="" name="cnpj" value="<?php echo $info['cnpj']; ?>" required /><br/><br/>
 
 	<input type="submit" value="Salvar" />
 

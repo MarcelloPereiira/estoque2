@@ -31,10 +31,10 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 	<input type="text" class="dinheiro" name="price" value="<?php echo $info['price']; ?>" required /><br/><br/>
 
 	Quantidade:<br/>
-	<input type="text" class="inteiro" name="quantity" value="<?php echo $info['quantity']; ?>" required /><br/><br/>
+	<input type="text" name="quantity" value="<?php echo $info['quantity']; ?>" required /><br/><br/>
 
 	Qtd. Minima:<br/>
-	<input type="text" class="inteiro" name="min_quantity" value="<?php echo $info['min_quantity']; ?>" required /><br/><br/>
+	<input type="text" name="min_quantity" value="<?php echo $info['min_quantity']; ?>" required /><br/><br/>
 
 	<input type="submit" value="Salvar" />
 

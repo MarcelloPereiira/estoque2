@@ -11,19 +11,16 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 
 <?php 
 date_default_timezone_set('America/Sao_Paulo');
-$date = date('d-m-Y');
-$horas = date('H\h:i\m\i\n');
+$date = date('d/m/Y \- \H\o\r\a\: H\h:i\m\i\n');
+//$horas = date('H\h:i\m\i\n');
  ?>
 <?php $total = 0;?>
 <h1>Inventário</h1>
 
 <table border="1" width="100%">
 	<tr>
-		<th colspan="2" style="background-color: #BBB; ">
+		<th colspan="4" style="background-color: #BBB; ">
 		<?php echo "Data: ".$date; ?>
-		</th>
-		<th colspan="2" style="background-color: #BBB; ">
-		<?php echo "Hora: ".$horas; ?>
 		</th>
 	</tr>
 	<tr>

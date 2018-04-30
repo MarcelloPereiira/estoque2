@@ -20,13 +20,13 @@ class homeController extends Controller {
         if ($users->hasPermission("ADM")) {
             $data = array(
             'menu' => array(
-                BASE_URL.'home/add' => 'Adicionar Produto',
-                BASE_URL.'relatorio' => 'Relatório',
-                BASE_URL.'home/fornecedores' => 'Fornecedores',
-                BASE_URL.'inventario' => 'Inventário',
-                BASE_URL.'home/entrada' => 'Entrada',
-                BASE_URL.'home/addUsuario' => 'Cadastrar Usuários',
-                BASE_URL.'login/sair' => 'Sair'
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'relatorio' => 'RELATÓRIO',
+                BASE_URL.'home/fornecedores' => 'FORNECEDOR',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
             )
         );
 
@@ -34,12 +34,12 @@ class homeController extends Controller {
         else if ($users->hasPermission("OP")) {
             $data = array(
             'menu' => array(
-                BASE_URL.'home/add' => 'Adicionar Produto',
-                BASE_URL.'relatorio' => 'Relatório',
-                BASE_URL.'home/fornecedores' => 'Fornecedores',
-                BASE_URL.'inventario' => 'Inventário',
-                BASE_URL.'home/entrada' => 'Entrada',
-                BASE_URL.'login/sair' => 'Sair'
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'relatorio' => 'RELATÓRIO',
+                BASE_URL.'home/fornecedores' => 'FORNECEDOR',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'login/sair' => 'SAIR'
             )
         );
 
@@ -48,7 +48,7 @@ class homeController extends Controller {
         else if ($users->hasPermission("CX")) {
             $data = array(
             'menu' => array(
-                BASE_URL.'login/sair' => 'Sair'
+                BASE_URL.'login/sair' => 'SAIR'
             )
         );
 
@@ -56,7 +56,6 @@ class homeController extends Controller {
 
         
         $p = new Products();
-        $u = new Users();
         
         $s = '';
         
@@ -65,7 +64,7 @@ class homeController extends Controller {
         }
 
         $data['list'] = $p->getProducts($s);
-        $data['nome'] = $u->getNome();
+        $data['nome'] = $users->getNome();
 
         $this->loadTemplate('home', $data);
     }
@@ -73,7 +72,7 @@ class homeController extends Controller {
     public function add() {
     	$data = array(
             'menu' => array(
-                BASE_URL => 'Voltar'
+                BASE_URL => 'VOLTAR'
             )
         );
     	$p = new Products();
@@ -84,7 +83,7 @@ class homeController extends Controller {
 
     	if(!empty($_POST['cod'])) {
             $cod = filter_input(INPUT_POST, 'cod', FILTER_VALIDATE_INT);
-            $name = mb_strtoupper(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING));
+            $name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
             $price = $filters->filter_post_money('price');
             $quantity = $filters->filter_post_money('quantity');
             $min_quantity = $filters->filter_post_money('min_quantity');
@@ -110,7 +109,7 @@ class homeController extends Controller {
     public function edit($id) {
     	$data = array(
             'menu' => array(
-                BASE_URL => 'Voltar'
+                BASE_URL => 'VOLTAR'
             )
         );
     	$p = new Products();
@@ -119,7 +118,7 @@ class homeController extends Controller {
 
     	if(!empty($_POST['cod'])) {
             $cod = filter_input(INPUT_POST, 'cod', FILTER_VALIDATE_INT);
-    		$name = mb_strtoupper(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING));
+    		$name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
             $price = $filters->filter_post_money('price');
             $quantity = $filters->filter_post_money('quantity');
             $min_quantity = $filters->filter_post_money('min_quantity');
@@ -144,16 +143,16 @@ class homeController extends Controller {
       public function fornecedores() {
         $data = array(
             'menu' => array(
-                BASE_URL => 'Voltar',
-                BASE_URL.'home/listafornecedores' => 'Lista'
+                BASE_URL => 'VOLTAR',
+                BASE_URL.'home/listafornecedores' => 'LISTA'
             )
         );
         $f = new Fornecedores();
         //$filters = new FiltersHelper();
 
         if(!empty($_POST['nome'])) {
-            $nome = mb_strtoupper(addslashes($_POST['nome']));
-            $endereco = mb_strtoupper(addslashes($_POST['endereco']));
+            $nome = ucwords(mb_strtolower(addslashes($_POST['nome'])));
+            $endereco = ucwords(mb_strtolower(addslashes($_POST['endereco'])));
             $fone = addslashes($_POST['fone']);
             $cnpj = addslashes($_POST['cnpj']);
 
@@ -178,15 +177,15 @@ class homeController extends Controller {
     public function editarFornecedor($id) {
         $data = array(
             'menu' => array(
-                BASE_URL => 'Voltar'
+                BASE_URL => 'VOLTAR'
             )
         );
         $f = new Fornecedores();
         //$filters = new FiltersHelper();
 
         if(!empty($_POST['nome'])) {
-            $nome = mb_strtoupper(addslashes($_POST['nome']));
-            $endereco = mb_strtoupper(addslashes($_POST['endereco']));
+            $nome = ucwords(mb_strtolower(addslashes($_POST['nome'])));
+            $endereco = ucwords(mb_strtolower(addslashes($_POST['endereco'])));
             $fone = addslashes($_POST['fone']);
             $cnpj = addslashes($_POST['cnpj']);
 
@@ -209,7 +208,7 @@ class homeController extends Controller {
     public function listafornecedores() {
          $data = array(
             'menu' => array(
-                BASE_URL => 'Voltar'
+                BASE_URL => 'VOLTAR'
             )
         );
         $f = new Fornecedores();
@@ -229,7 +228,7 @@ class homeController extends Controller {
     public function addUsuario() {
         $data = array(
             'menu' => array(
-                BASE_URL => 'Voltar'
+                BASE_URL => 'VOLTAR'
             )
         );
         $f = new Users();
@@ -264,7 +263,7 @@ class homeController extends Controller {
     public function entrada() {
          $data = array(
             'menu' => array(
-                BASE_URL => 'Voltar'
+                BASE_URL => 'VOLTAR'
             )
         );
 
