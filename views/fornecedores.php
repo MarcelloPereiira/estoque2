@@ -28,10 +28,10 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 	<input type="text" name="endereco" required /><br/><br/>
 
 	Telefone:<br/>
-	<input type="text" class="" name="fone" placeholder="00000-0000" required /><br/><br/>
+	<input type="text" class="inteiro" name="fone" required /><br/><br/>
 
 	CNPJ:<br/>
-	<input type="text" class="" name="cnpj" required /><br/><br/>
+	<input type="text" class="inteiro" name="cnpj" required /><br/><br/>
 
 	<input type="submit" value="Cadastrar" /><br/><br/>
 </form>

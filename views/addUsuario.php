@@ -13,11 +13,11 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 	Nome:<br/>
 	<input type="text" name="nome" required /><br/><br/>
 
-	Usuário:<br/>
-	<input type="text" name="user_number" required /><br/><br/>
+	Número do Usuário:<br/>
+	<input type="text" class="inteiro" name="user_number" required /><br/><br/>
 
 	Senha:<br/>
-	<input type="password" name="user_pass" required /><br/><br/>
+	<input type="password" class="inteiro" name="user_pass" required /><br/><br/>
 
 	<input type="radio" name="enviarNivel" value="ADM" id="adm" required />
 	<label for="adm">ADMINISTRADOR</label>

@@ -32,7 +32,7 @@ CREATE TABLE `fornecedores` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `endereco` varchar(255) NOT NULL,
-  `fone` int(10) UNSIGNED NOT NULL,
+  `fone` int(25) UNSIGNED NOT NULL,
   `cnpj` varchar(100) NOT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -82,7 +82,7 @@ INSERT INTO `products` (`id`, `cod`, `name`, `price`, `quantity`, `min_quantity`
 
 CREATE TABLE `users` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_number` int(10) NOT NULL,
+  `user_number` int(11) UNSIGNED NOT NULL,
   `user_pass` varchar(32) NOT NULL DEFAULT '',
   `user_token` varchar(32) DEFAULT NULL,
    nivel VARCHAR(50) NOT NULL,

@@ -30,10 +30,10 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 	<input type="text" class="dinheiro" name="price" required /><br/><br/>
 
 	Quantidade:<br/>
-	<input type="text" class="inteiro" name="quantity" required /><br/><br/>
+	<input type="text" class="dinheiro" name="quantity" required /><br/><br/>
 
 	Qtd. Minima:<br/>
-	<input type="text" class="inteiro" name="min_quantity" required /><br/><br/>
+	<input type="text" class="dinheiro" name="min_quantity" required /><br/><br/>
 
 	<input type="submit" value="Adicionar Produto" />
 
