@@ -35,7 +35,17 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 	Qtd. Minima:<br/>
 	<input type="text" class="dinheiro" name="min_quantity" required /><br/><br/>
 
-	<input type="submit" value="Adicionar Produto" />
+	Categoria:
+	<select name="id">
+		<option></option>
+		<?php foreach($list as $item): ?>
+		<option value="<?php echo $item['id_categories']; ?>">
+			<?php echo $item['name_categories']; ?>
+		</option>
+		<?php endforeach; ?>	
+	</select><br/><br/>	
+
+	<input type="submit" value="Adicionar Produto" />	
 
 </form>
 

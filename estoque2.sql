@@ -42,7 +42,7 @@ CREATE TABLE `fornecedores` (
 --
 
 INSERT INTO `fornecedores` (`id`, `nome`, `endereco`, `fone`, `cnpj`) VALUES
-(1, 'FarmÃ¡cia', '517', 3459, '0001'),
+(1, 'Farmácia', '517', 3459, '0001'),
 (2, 'Mercado', '123', 123, '123'),
 (3, 'Loja', '654', 654, '654'),
 (4, 'Distribuidora', '513 cj 15', 88888, '00222'),
@@ -51,6 +51,16 @@ INSERT INTO `fornecedores` (`id`, `nome`, `endereco`, `fone`, `cnpj`) VALUES
 (7, 'Americanas', 'qr 100', 989898, '011151510000');
 
 -- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `categories`
+--
+
+CREATE TABLE `categories`(
+  id_categories INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  name_categories VARCHAR(100) NOT NULL,
+  PRIMARY KEY(id_categories)
+);
 
 --
 -- Estrutura para tabela `products`
@@ -63,7 +73,12 @@ CREATE TABLE `products` (
   `price` float NOT NULL,
   `quantity` float NOT NULL,
   `min_quantity` float NOT NULL,
-   PRIMARY KEY (`id`)
+  `id_categories` int(11) UNSIGNED DEFAULT NULL,
+   PRIMARY KEY (`id`),
+   INDEX indice_categories(id_categories),
+   CONSTRAINT fk_categories_products
+   FOREIGN KEY(id_categories)
+   REFERENCES categories(id_categories)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -104,7 +119,7 @@ INSERT INTO `users` (`id`, `user_number`, `user_pass`, `user_token`, `nivel`, `n
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 
-CREATE TABLE `lote` (
+/*CREATE TABLE `lote` (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     data_lote DATE,
     PRIMARY KEY(id),
@@ -113,5 +128,8 @@ CREATE TABLE `lote` (
     CONSTRAINT fk_id_products
     FOREIGN KEY (id_products)
     REFERENCES products(id)
-);
+);*/
+
+
+
 

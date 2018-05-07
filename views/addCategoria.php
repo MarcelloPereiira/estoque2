@@ -9,8 +9,6 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 } 
 ?>
 
-<h1>Entrada de Produtos</h1>
-
 <?php if(!empty($warning)): ?>
 <div class="warning"><?php echo $warning; ?></div>
 <?php endif; ?>
@@ -18,26 +16,13 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 <div class="sucess"><?php echo $sucess; ?></div>
 <?php endif; ?>
 
+<h1>Cadastro de Categoria</h1>
 <form method="POST" class="form">
-
-	Produto:
-	<select name="id">
-		<option></option>
-		<?php foreach($list as $item): ?>
-		<option value="<?php echo $item['id']; ?>">
-			<?php echo $item['name']; ?>
-			&nbsp;&nbsp;
-			CÓD.:
-			<?php echo $item['cod']; ?>
-			&nbsp;&nbsp;
-		</option>
-		<?php endforeach; ?>	
-	</select><br/><br/>	
-
-	Quantidade:<br/>
-	<input type="text" class="dinheiro" name="quantity"  required /><br/><br/>
+	Nome:<br/>
+	<input type="text" name="nome" required /><br/><br/>
 
 	<input type="submit" value="Salvar" />
 
 </form>
+
 

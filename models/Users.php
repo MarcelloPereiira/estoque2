@@ -100,7 +100,8 @@ class Users extends Model {
 		if ($sql->rowCount() > 0) {
 			$sql = $sql->fetch();
 
-			$this->nivel = explode(',', $sql['nivel']);
+			$this->nivel = array($sql['nivel']);
+			//$this->nivel = explode(',', $sql['nivel']);
 		}
 
 	}

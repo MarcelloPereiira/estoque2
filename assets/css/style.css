@@ -58,6 +58,19 @@ table a {
 	text-decoration: none;
 	transition: 0.1s all;
 }
+.monitorar {
+	margin-left: 2px;
+	color:#CCC;
+	text-decoration: none;
+	border: 1px solid #CCC;
+	padding: 5px;
+	border-radius: 3px;
+	transition: 1s all;
+}
+.monitorar:hover {
+	color: green;
+	border: 1px solid green;
+}
 table a:hover {
 	text-decoration:underline;
 	color: red;

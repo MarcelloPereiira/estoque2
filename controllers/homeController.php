@@ -21,12 +21,13 @@ class homeController extends Controller {
             $data = array(
             'menu' => array(
                 BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
-                BASE_URL.'relatorio' => 'RELATÓRIO',
                 BASE_URL.'home/fornecedores' => 'FORNECEDOR',
                 BASE_URL.'inventario' => 'INVENTÁRIO',
                 BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
                 BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
                 BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
 
@@ -35,10 +36,10 @@ class homeController extends Controller {
             $data = array(
             'menu' => array(
                 BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
-                BASE_URL.'relatorio' => 'RELATÓRIO',
                 BASE_URL.'home/fornecedores' => 'FORNECEDOR',
                 BASE_URL.'inventario' => 'INVENTÁRIO',
                 BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
                 BASE_URL.'login/sair' => 'SAIR'
             )
         );
@@ -87,10 +88,15 @@ class homeController extends Controller {
             $price = $filters->filter_post_money('price');
             $quantity = $filters->filter_post_money('quantity');
             $min_quantity = $filters->filter_post_money('min_quantity');
+            if (!empty($_POST['id'])) {
+                $id_categories = addslashes($_POST['id']);
+            }   else{
+                    $id_categories = null;
+                }  
             //$name_fornecedor = filter_input(INPUT_POST, 'name_fornecedor', FILTER_VALIDATE_INT);
 
             if($cod && $name && $price && $quantity && $min_quantity) {
-        		if($p->addProduct($cod, $name, $price, $quantity, $min_quantity)){
+        		if($p->addProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories)){
                     $data['sucess'] = 'Cadastrado com sucesso.';
                 } else{
                     $data['warning'] = 'O produto já existe.';
@@ -102,7 +108,7 @@ class homeController extends Controller {
                 $data['warning'] = 'Digite os campos corretamente.';
             }
     	}
-
+        $data['list'] = $p->getCategories();
     	$this->loadTemplate('add', $data);
     }
 
@@ -122,9 +128,14 @@ class homeController extends Controller {
             $price = $filters->filter_post_money('price');
             $quantity = $filters->filter_post_money('quantity');
             $min_quantity = $filters->filter_post_money('min_quantity');
+            if (!empty($_POST['id'])) {
+                $id_categories = addslashes($_POST['id']);
+            }   else{
+                    $id_categories = null;
+                }  
 
             if($cod && $name && $price && $quantity && $min_quantity) {
-        		$p->editProduct($cod, $name, $price, $quantity, $min_quantity, $id);
+        		$p->editProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories, $id);
 
                 $data['sucess'] = 'Editado com sucesso.';
         		//header("Location: ".BASE_URL);
@@ -135,6 +146,7 @@ class homeController extends Controller {
     	}
 
     	$data['info'] = $p->getProduct($id);
+        $data['list'] = $p->getCategories();
 
     	$this->loadTemplate('edit', $data);
     }
@@ -285,6 +297,36 @@ class homeController extends Controller {
 
         $data['list'] = $p->getProducts();
         $this->loadTemplate('entrada', $data);
+    }
+
+
+    public function addCategoria() {
+        $data = array(
+            'menu' => array(
+                BASE_URL => 'VOLTAR'
+            )
+        );
+        $p = new Products();
+        //$filters = new FiltersHelper();
+
+        if(!empty($_POST['nome'])) {
+            $nome = ucwords(mb_strtolower(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING)));
+
+            if($nome){
+                if ($p->addCategoryProduct($nome)) {
+                    $data['sucess'] = 'Cadastrado com sucesso.';   
+                } else{
+                    $data['warning'] = 'O usuário já existe.';
+                }
+
+                //header("Location: ".BASE_URL);
+                //exit;
+            } else {
+                $data['msg'] = 'Digite os campos corretamente.';
+            }
+        }
+
+        $this->loadTemplate('addCategoria', $data);
     }
     
 
