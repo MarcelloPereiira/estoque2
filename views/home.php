@@ -31,7 +31,7 @@ $users->setUsuario($_SESSION['token']);
 		<?php endforeach; ?>	
 	</select>
 
-	<input type="submit" value="Buscar" class="botao">
+	<input type="image" src="assets/images/seach.png" class="botao">
 </form>
 
 <br/>

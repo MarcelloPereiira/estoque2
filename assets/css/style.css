@@ -89,12 +89,19 @@ table a:hover {
 	width: 100%;
 }
 .flexbuscador .botao{
-	background-color: #CCC;
 	margin-left: 2px;
+	border: 2px solid #EEE;
+	width: 50px;
+	height: 50px;
+	padding: 5.5px;
+	transition: 1s all;
+}
+.flexbuscador .botao:hover{
+	border: 2px solid blue;
 }
 
 .homeselect{
-	height: 60px;
+	height: 65px;
 	width: 200px;
 	background-color: #FFF;
 	border: 2px solid blue;
