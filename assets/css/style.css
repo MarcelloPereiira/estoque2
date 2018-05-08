@@ -77,10 +77,27 @@ table a:hover {
 	font-size: 13px;
 	font-weight: bold;
 }
-
+.flexbuscador{
+	display: flex;
+	justify-content: space-between;
+}
 #busca {
 	outline:0;
 	border:0;
+}
+.flexbuscador fieldset{
+	width: 100%;
+}
+.flexbuscador .botao{
+	background-color: #CCC;
+	margin-left: 2px;
+}
+
+.homeselect{
+	height: 60px;
+	width: 200px;
+	background-color: #FFF;
+	border: 2px solid blue;
 }
 
 .form input[type=text],

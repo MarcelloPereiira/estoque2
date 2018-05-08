@@ -1,19 +1,35 @@
 <?php
 class Products extends Model {
 
-	public function getProducts($s='') {
+	public function getProducts($s='', $c='') {
 		$array = array();
 
-		if(!empty($s)) {
+		if(!empty($s) && empty($c)) {
 			$sql = "SELECT * FROM products WHERE cod = :cod OR name LIKE :name";
 			$sql = $this->db->prepare($sql);
 			$sql->bindValue(":cod", $s);
 			$sql->bindValue(":name", '%'.$s.'%');
 			$sql->execute();
-		} else {
-			$sql = "SELECT * FROM products";
-			$sql = $this->db->query($sql);
-		}
+		} 
+			else if(empty($s) && !empty($c)) {
+				$sql = "SELECT * FROM products WHERE id_categories = :id_categories";
+				$sql = $this->db->prepare($sql);
+				$sql->bindValue(":id_categories", $c);
+				$sql->execute();
+			}
+				else if(!empty($s) && !empty($c)) {
+					$sql = "SELECT * FROM products WHERE cod = :cod OR name LIKE :name AND id_categories = :id_categories";
+					$sql = $this->db->prepare($sql);
+					$sql->bindValue(":cod", $s);
+					$sql->bindValue(":name", '%'.$s.'%');
+					$sql->bindValue(":id_categories", $c);
+					$sql->execute();
+				}
+
+					else {
+						$sql = "SELECT * FROM products";
+						$sql = $this->db->query($sql);
+					}
 
 		if($sql->rowCount() > 0) {
 			$array = $sql->fetchAll();

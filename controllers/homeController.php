@@ -58,15 +58,23 @@ class homeController extends Controller {
         
         $p = new Products();
         
+
         $s = '';
+        $c = '';
         
-        if(!empty($_GET['busca'])) {
+        if(!empty($_GET['busca']) || !empty($_GET['category'])) {
         	$s = $_GET['busca'];
+            $c = $_GET['category'];
+        }else if (empty($_GET['category'])) {
+            $_GET['category'] = '';
         }
 
-        $data['list'] = $p->getProducts($s);
+        $data['list'] = $p->getProducts($s, $c);
         $data['nome'] = $users->getNome();
 
+        //$data['list'] = $p->getCategory($c);
+
+        $data['listcategory'] = $p->getCategories();
         $this->loadTemplate('home', $data);
     }
 

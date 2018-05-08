@@ -16,11 +16,24 @@ $users->setUsuario($_SESSION['token']);
 	<?php endif; ?>
 </div>
 
-<fieldset>
-	<form method="GET">
-		<input type="text" id="busca" name="busca" value="<?php echo (!empty($_GET['busca']))?$_GET['busca']:''; ?>" placeholder="Digite o código de barras ou o nome do produto" style="width:100%;height:40px;font-size:18px;" />
-	</form>
-</fieldset>
+
+<form method="GET" class="flexbuscador">
+	<fieldset>
+			<input type="text" id="busca" name="busca" value="<?php echo (!empty($_GET['busca']))?$_GET['busca']:''; ?>" placeholder="Digite o código de barras ou o nome do produto" style="width:100%;height:40px;font-size:18px;" />
+	</fieldset>
+
+	<select name="category" class="homeselect">
+		<option value="">Todas as Categorias</option>
+		<?php foreach($listcategory as $item): ?>
+		<option value="<?php echo $item['id_categories']; ?>" <?php echo (($_GET['category']) == $item['id_categories'])?'selected="select"':''; ?>> 
+			<?php echo $item['name_categories']; ?>					
+		</option>
+		<?php endforeach; ?>	
+	</select>
+
+	<input type="submit" value="Buscar" class="botao">
+</form>
+
 <br/>
 
 <a href="<?php echo BASE_URL.'relatorio' ?>" class="monitorar">MONITORAR</a><br/><br/>
