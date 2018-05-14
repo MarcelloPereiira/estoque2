@@ -73,7 +73,7 @@ CREATE TABLE `products` (
   `price` float NOT NULL,
   `quantity` float NOT NULL,
   `min_quantity` float NOT NULL,
-  `id_categories` int(11) UNSIGNED DEFAULT NULL,
+  `id_categories` int(11) UNSIGNED NOT NULL,
    PRIMARY KEY (`id`),
    INDEX indice_categories(id_categories),
    CONSTRAINT fk_categories_products
@@ -122,25 +122,25 @@ INSERT INTO `users` (`id`, `user_number`, `user_pass`, `user_token`, `nivel`, `n
 
 
 CREATE TABLE `estoque2`.`conjunct` (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    data_conjunct DATETIME NOT NULL,
-    total_conjunct INT NOT NULL,
+    `id` INT(30) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `data_conjunct` DATETIME NOT NULL,
+    `total_conjunct` INT NOT NULL,
     PRIMARY KEY(id)    
 );
 
 CREATE TABLE `estoque2`.`inventario`(
-   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+   `id` INT(30) UNSIGNED NOT NULL AUTO_INCREMENT,
    `cod` INT(30) NOT NULL,
-    `name` VARCHAR(50) NOT NULL,
+    `name_products` VARCHAR(50) NOT NULL,
     `quantity` FLOAT NOT NULL,
     `min_quantity` FLOAT NOT NULL,
     `difference` FLOAT NOT NULL,
     PRIMARY KEY(id),
-    id_conjunct INT UNSIGNED NOT NULL,
+    `id_conjunct` INT(30) UNSIGNED NOT NULL,
     INDEX indice_id_produto (id_conjunct),
     CONSTRAINT fk_id_conjunct
     FOREIGN KEY (id_conjunct)
-    REFERENCES estoque2.conjunct(id)
+    REFERENCES `estoque2`.`conjunct`(id)
 );
 
 
