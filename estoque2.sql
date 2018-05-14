@@ -85,9 +85,6 @@ CREATE TABLE `products` (
 -- Fazendo dump de dados para tabela `products`
 --
 
-INSERT INTO `products` (`id`, `cod`, `name`, `price`, `quantity`, `min_quantity`) VALUES
-(1, 56464646, 'Produto de Teste', 15, 10, 12),
-(2, 123456, 'Produto legal', 100, 7, 2);
 
 -- --------------------------------------------------------
 

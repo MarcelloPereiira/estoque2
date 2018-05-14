@@ -103,7 +103,7 @@ class homeController extends Controller {
                 }  
             //$name_fornecedor = filter_input(INPUT_POST, 'name_fornecedor', FILTER_VALIDATE_INT);
 
-            if($cod && $name && $price && $quantity && $min_quantity) {
+            if($cod && $name && $price && $quantity && $min_quantity && $id_categories) {
         		if($p->addProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories)){
                     $data['sucess'] = 'Cadastrado com sucesso.';
                 } else{
