@@ -81,6 +81,7 @@ table a:hover {
 	display: flex;
 	justify-content: space-between;
 }
+
 #busca {
 	outline:0;
 	border:0;
@@ -107,6 +108,7 @@ table a:hover {
 	border: 2px solid blue;
 }
 
+
 .form input[type=text],
 .form select,
 .form textarea {
@@ -118,7 +120,8 @@ table a:hover {
 	outline:0;
 }
 .form input[type=submit],
-.btn_relatorio {
+.btn_relatorio,
+a input {
 	background-color:#CCCCCC;
 	padding:5px 10px;
 	border-radius:3px;
@@ -127,7 +130,9 @@ table a:hover {
 	transition: all;
 	transition-duration: 1s;
 }
-.form input[type=submit]:hover{
+.form input[type=submit]:hover,
+.btn_relatorio:hover,
+a input:hover{
 	box-shadow: 0px 0px 5px #000000;
 	background-color:#EEEEEE;
 }
@@ -183,11 +188,15 @@ table a:hover {
 	background-color:#EEEEEE;
 }
 
-
-
-
-
-
+.avisoinv{
+	border: 1px solid #CCC;
+	text-align: center;
+	margin-top: 2px;
+	height: 150px;
+	line-height: 150px;
+	color: #BBB;
+	padding-bottom: 25px;
+}
 
 
 

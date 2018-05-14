@@ -3,6 +3,7 @@ $users = new Users();
 $users->setUsuario($_SESSION['token']);
 ?>
 <?php
+//Usuários com permição para acessar essa página
 if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == false) {
 	header("Location: index.php");
 	exit;
@@ -11,10 +12,12 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 
 <h1>Editar Produto</h1>
 
+<!-- Mensagem de sucesso -->
 <?php if(!empty($sucess)): ?>
 <div class="sucess"><?php echo $sucess; ?></div>
 <?php endif; ?>
 
+<!-- Mensagem de atenção -->
 <?php if(!empty($warning)): ?>
 <div class="warning"><?php echo $warning; ?></div>
 <?php endif; ?>

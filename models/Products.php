@@ -125,18 +125,7 @@ class Products extends Model {
 		return $array;
 	}
 
-	public function getLowQuantityProductsRelario() {
-		$array = array();
-
-		$sql = "SELECT * FROM products";
-		$sql = $this->db->query($sql);
-
-		if($sql->rowCount() > 0) {
-			$array = $sql->fetchAll();
-		}
-
-		return $array;
-	}
+	
 
 	public function entradaProduto($quantity, $id) {
 
