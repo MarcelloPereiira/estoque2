@@ -1,7 +1,7 @@
 <?php
 class Inventario extends Model {
 
-	private function verifyInventario($cod) {
+	/*private function verifyInventario($cod) {
 		$sql = "SELECT * FROM products WHERE cod = :cod";
 		$sql = $this->db->prepare($sql);
 		$sql->bindValue(":cod", $cod);
@@ -12,7 +12,7 @@ class Inventario extends Model {
 		} else {
 			return true;
 		}
-	}
+	}*/
 
 	public function editInventario($array) {
 
@@ -62,7 +62,7 @@ class Inventario extends Model {
 	}
 
 	public function addInventario($array, $id_conjunct) {
-		
+		$id_conjunct = $id_conjunct[0];
 		if(!empty($array)) {
 			for ($i=0; $i < count($array['name']); $i++) {
 
@@ -71,7 +71,8 @@ class Inventario extends Model {
 				 $quantity = $array['quantity'][$i];
 				 $min_quantity = $array['min_quantity'][$i];
 				 $difference = $array['min_quantity'][$i] - $array['quantity'][$i];
-				 $id_conjunct = $id_conjunct[0];
+				 
+				 
 				 
 
 					$sql = "INSERT INTO inventario (cod, name_products, quantity, min_quantity, difference, id_conjunct) VALUES (:cod, :name, :quantity, :min_quantity, :difference, :id_conjunct)";
@@ -100,7 +101,7 @@ class Inventario extends Model {
 public function getConjunct() {
 		$array = array();
 
-		$sql = "SELECT id FROM conjunct ORDER BY data_conjunct DESC LIMIT 1";
+		$sql = "SELECT id FROM conjunct ORDER BY id DESC LIMIT 1";
 		$sql = $this->db->prepare($sql);
 		$sql->execute();
 
