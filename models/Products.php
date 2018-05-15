@@ -170,6 +170,61 @@ class Products extends Model {
 		return $array;
 	}
 
+	public function getCategory($s='') {
+		$array = array();
+
+		if(!empty($s)) {
+			$sql = "SELECT * FROM categories WHERE name_categories LIKE :name_categories";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":name_categories", '%'.$s.'%');
+			$sql->execute();
+		} else {
+			$sql = "SELECT * FROM categories ORDER BY name_categories";
+			$sql = $this->db->query($sql);
+		}
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+		}
+
+		return $array;
+	}
+
+	public function editarCategoria($nome, $id) {
+
+		if(!empty($nome)) {
+
+			$sql = "UPDATE categories SET name_categories = :name_categories WHERE id_categories = :id_categories";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":name_categories", $nome);
+			$sql->bindValue(":id_categories", $id);
+			$sql->execute();
+
+			return true;
+
+		} else {
+			return false;
+		}
+
+	}
+
+	public function getCategoryEdit($id) {
+		$array = array();
+
+		$sql = "SELECT * FROM categories WHERE id_categories = :id_categories";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":id_categories", $id);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+
+			$array = $sql->fetch();
+
+		}
+
+		return $array;
+	}
+
 }
 
 

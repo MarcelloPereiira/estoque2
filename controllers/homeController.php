@@ -246,12 +246,24 @@ class homeController extends Controller {
     }
 
     public function addUsuario() {
-        $data = array(
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+        if ($users->hasPermission("ADM")) {
+            $data = array(
             'menu' => array(
                 BASE_URL => 'VOLTAR',
                 BASE_URL.'home/listausuarios' => 'LISTA'
             )
         );
+
+        } else{
+            $data = array(
+                'menu' => array(
+                    BASE_URL => 'VOLTAR'
+                )
+            );
+         }
+
         $f = new Users();
         //$filters = new FiltersHelper();
 
@@ -289,7 +301,6 @@ class homeController extends Controller {
             )
         );
         $u = new Users();
-
 
         $s = '';
         
@@ -341,9 +352,6 @@ class homeController extends Controller {
 
     
 
-
-
-
     public function entrada() {
          $data = array(
             'menu' => array(
@@ -375,7 +383,8 @@ class homeController extends Controller {
     public function addCategoria() {
         $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'VOLTAR',
+                BASE_URL."home/listacategorias" => "LISTA"
             )
         );
         $p = new Products();
@@ -400,6 +409,56 @@ class homeController extends Controller {
 
         $this->loadTemplate('addCategoria', $data);
     }
+
+    public function listacategorias() {
+         $data = array(
+            'menu' => array(
+                BASE_URL => 'VOLTAR'
+            )
+        );
+        $p = new Products();
+
+
+        $s = '';
+        
+        if(!empty($_GET['busca'])) {
+            $s = $_GET['busca'];
+        }
+
+        $data['list'] = $p->getCategory($s);
+
+        $this->loadTemplate('listacategorias', $data);
+    }
+
+    public function editarCategory($id) {
+        $data = array(
+            'menu' => array(
+                BASE_URL => 'VOLTAR'
+            )
+        );
+        $p = new Products();
+        //$filters = new FiltersHelper();
+
+        if(!empty($_POST['name_categories'])) {
+            $name_categories = ucwords(mb_strtolower(addslashes($_POST['name_categories'])));
+
+            if($name_categories) {
+                $p->editarCategoria($name_categories, $id);
+
+                $data['sucess'] = 'Editado com sucesso.';
+                //header("Location: ".BASE_URL);
+                //exit;
+            } else {
+                $data['warning'] = 'Digite os campos corretamente.';
+            }
+        }
+
+        $data['info'] = $p->getCategoryEdit($id);
+
+        $this->loadTemplate('editcategory', $data);
+    }
+
+    
     
 
 }

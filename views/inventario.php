@@ -87,8 +87,6 @@ function confirmar(){
 </script>
 <br><br><br><br>
 
-
-<br><br>
  <?php
 
 

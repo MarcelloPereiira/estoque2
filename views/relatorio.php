@@ -11,7 +11,7 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 
 <h1>Relatório</h1>
 
-<table border="1" width="500">
+<table border="1" width="100%">
 	<tr>
 		<th>Nome do Produto</th>
 		<th>Qtd.</th>
@@ -27,7 +27,14 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 		</tr>
 	<?php endforeach; ?>
 </table><br/><br/>
-<a href="<?php echo BASE_URL; ?>"><input type="submit" value="Voltar" class="btn_relatorio" /></a>
+<a href="<?php echo BASE_URL; ?>"><input type="submit" value="Voltar" class="btn_relatorio noprint" /></a>
+<input type="submit" value="Imprimir" onclick="window.print()" class="btn_relatorio noprint" />
 <script type="text/javascript">
 window.print();
 </script>
+
+<style type="text/css">
+    @media print {
+      .noprint { display: none; }
+    }
+</style>

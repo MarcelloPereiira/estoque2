@@ -3,7 +3,7 @@ $users = new Users();
 $users->setUsuario($_SESSION['token']);
 ?>
 <?php
-if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == false) {
+if ($users->hasPermission("ADM") == false) {
 	header("Location: index.php");
 	exit;
 } 
@@ -19,14 +19,20 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 	Senha:<br/>
 	<input type="password" class="inteiro" name="user_pass" required /><br/><br/>
 
-	<input type="radio" name="enviarNivel" value="ADM" id="adm" required />
-	<label for="adm">ADMINISTRADOR</label>
-
-	<input type="radio" name="enviarNivel" value="OP" id="op" required />
-	<label for="op">OPERACIONAL</label>
-
-	<input type="radio" name="enviarNivel" value="CX" id="cx" required />
-	<label for="cx">CAIXA</label><br/><br/>
+	<div class="flexlogin">
+		<div>
+			<input type="radio" name="enviarNivel" value="ADM" id="adm" required />
+			<label for="adm">ADMINISTRADOR</label>
+		</div>
+		<div>
+			<input type="radio" name="enviarNivel" value="OP" id="op" required />
+			<label for="op">OPERACIONAL</label>
+		</div>
+		<div>
+			<input type="radio" name="enviarNivel" value="CX" id="cx" required />
+			<label for="cx">CAIXA</label><br/><br/>
+		</div>
+	</div>
 
 	<input type="submit" value="Salvar" />
 

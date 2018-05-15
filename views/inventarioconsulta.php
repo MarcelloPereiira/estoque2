@@ -17,7 +17,7 @@ $date = date('d/m/Y \- \H\o\r\a\: H\h:i\m\i\n');
 <?php $total = 0;?>
 <h1>Consulta de Inventário</h1>
 
-<form method="GET" class="flexbuscador inv">
+<form method="GET" class="flexbuscador noprint">
 	<select name="data_conj" class="homeselect">
 		<option value="">SELECIONE UMA DATA</option>
 		<?php foreach($listdate as $item): ?>
@@ -70,12 +70,12 @@ $date = date('d/m/Y \- \H\o\r\a\: H\h:i\m\i\n');
 	
 </form>
 <?php if (!empty($list)): ?>
-	<a href="" target="_blank" ><input type="submit" value="NOVA ABA"></a>
+	<a href="" target="_blank" id="i" class="noprint"><input type="submit" value="NOVA ABA"></a>
+	<a href="" onclick="window.print()" class="noprint"><input type="submit" value="IMPRIMIR"></a>
 <?php endif; ?>
-<script type="text/javascript">
 
-</script>
-<br><br><br><br>
-
-
-<br><br>
+<style type="text/css">
+    @media print {
+      .noprint { display: none; }
+    }
+</style>
