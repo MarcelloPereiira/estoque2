@@ -6,6 +6,28 @@ class Users extends Model {
 	private $nivel;
 
 
+	public function getUsers($s='') {
+		$array = array();
+
+		if(!empty($s)) {
+			$sql = "SELECT * FROM users WHERE nome LIKE :nome OR user_number LIKE :user_number";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":nome", '%'.$s.'%');
+			$sql->bindValue(":user_number", '%'.$s.'%');
+			$sql->execute();
+		} else {
+			$sql = "SELECT * FROM users ORDER BY nome";
+			$sql = $this->db->query($sql);
+		}
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+		}
+
+		return $array;
+	}
+
+
 	public function verifyUser($number, $pass) {
 
 		$sql = "SELECT * FROM users WHERE user_number = :unumber AND user_pass = :upass";
@@ -18,6 +40,27 @@ class Users extends Model {
 			return true;
 		} else {
 			return false;
+		}
+
+	}
+
+	public function verifyUserEdit($user_number, $id) {
+
+		$sql = "SELECT * FROM users WHERE user_number = :user_number";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":user_number", $user_number);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetch();
+			if ($id == $array['id']) {
+				return true;
+			} else{
+				return false;
+			} 
+
+		} else {
+			return true;
 		}
 
 	}
@@ -131,6 +174,44 @@ class Users extends Model {
 			$array = $sql->fetch();
 		}
 		return $array;
+	}
+
+	public function getUser($id) {
+		$array = array();
+
+		$sql = "SELECT * FROM users WHERE id = :id";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+
+			$array = $sql->fetch();
+
+		}
+
+		return $array;
+	}
+
+	public function editUser($user_number, $user_pass, $nivel, $nome, $id) {
+
+		if($this->verifyUserEdit($user_number, $id)) {
+
+			$sql = "UPDATE users SET user_number = :user_number, user_pass = :user_pass, nivel = :nivel, nome = :nome WHERE id = :id";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":user_number", $user_number);
+			$sql->bindValue(":user_pass", $user_pass);
+			$sql->bindValue(":nivel", $nivel);
+			$sql->bindValue(":nome", $nome);
+			$sql->bindValue(":id", $id);
+			$sql->execute();
+
+			return true;
+
+		} else {
+			return false;
+		}
+
 	}
 
 

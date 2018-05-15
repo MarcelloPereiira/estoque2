@@ -248,7 +248,8 @@ class homeController extends Controller {
     public function addUsuario() {
         $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'VOLTAR',
+                BASE_URL.'home/listausuarios' => 'LISTA'
             )
         );
         $f = new Users();
@@ -278,6 +279,69 @@ class homeController extends Controller {
 
         $this->loadTemplate('addUsuario', $data);
     }
+
+
+
+    public function listausuarios() {
+         $data = array(
+            'menu' => array(
+                BASE_URL => 'VOLTAR'
+            )
+        );
+        $u = new Users();
+
+
+        $s = '';
+        
+        if(!empty($_GET['busca'])) {
+            $s = $_GET['busca'];
+        }
+
+        $data['list'] = $u->getUsers($s);
+
+        $this->loadTemplate('listausuarios', $data);
+    }
+
+
+
+     public function editarUsuario($id) {
+        $data = array(
+            'menu' => array(
+                BASE_URL => 'VOLTAR'
+            )
+        );
+        $f = new Users();
+        //$filters = new FiltersHelper();
+
+        if(!empty($_POST['nome'])) {
+            $user_number = addslashes($_POST['user_number']);
+            $user_pass = md5(addslashes($_POST['user_pass']));
+            $nivel = addslashes($_POST['enviarNivel']);
+            $nome = mb_strtoupper(addslashes($_POST['nome']));
+
+             if($user_number && $user_pass && $nivel && $nome) {
+                
+                if ($f->editUser($user_number, $user_pass, $nivel, $nome, $id)) {
+                    $data['msg'] = 'Editado com sucesso.';   
+                } else{
+                    $data['msg'] = 'O usuário já existe.';
+                }
+
+                //header("Location: ".BASE_URL);
+                //exit;
+            } else {
+                $data['warning'] = 'Digite os campos corretamente.';
+            }
+        }
+
+        $data['info'] = $f->getUser($id);
+
+        $this->loadTemplate('editarusuario', $data);
+    }
+
+    
+
+
 
 
     public function entrada() {

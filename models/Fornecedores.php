@@ -66,6 +66,8 @@ class Fornecedores extends Model {
 			$sql->bindValue(":id", $id);
 			$sql->execute();
 
+			return true;
+
 		} else {
 			return false;
 		}

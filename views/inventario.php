@@ -40,7 +40,7 @@ $date = date('d/m/Y \- H:i:s');
 
 	<input type="image" src="assets/images/seach.png" class="botao">
 </form>
-<form method="POST">
+<form method="POST" id="forminv">
 	<table border="1" width="100%">
 		<tr>
 			<th colspan="5" style="background-color: #BBB; ">
@@ -71,16 +71,19 @@ $date = date('d/m/Y \- H:i:s');
 			<tr>
 				<td colspan="5"><input type="text" name="totalProducts" value="<?php echo count($list); ?>"></td>
 			<tr>
-	</table><br/><br/>
-	<input type="submit" value="Salvar" class="btn_relatorio" >
-	
+	</table><br/><br/>	
 </form>
+<input type="submit" value="Salvar" class="btn_relatorio" onclick="confirmar();" >
 
 
 
 <!-- <input class="btn_relatorio" type="submit" value="Imprimir" onclick="window.print()" />-->
 <script type="text/javascript">
-
+function confirmar(){ 
+	if(confirm("Tem certeza que deseja salvar o Inventário?")){ 
+		document.getElementById('forminv').submit(); 
+	} 
+}
 </script>
 <br><br><br><br>
 
