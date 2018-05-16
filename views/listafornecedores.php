@@ -18,12 +18,12 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 
 <table border="0" width="100%">
 	<tr>
-		<th>Nome</th>
-		<th>Endereço</th>
-		<th>Telefone</th>
+		<th>NOME</th>
+		<th>ENDEREÇO</th>
+		<th>TELEFONE</th>
 		<th>CNPJ</th>
 		<?php if ($users->hasPermission('ADM') || $users->hasPermission('OP')): ?>
-			<th>Ações</th>
+			<th>AÇÕES</th>
 		<?php endif; ?>
 	</tr>
 	<?php foreach($list as $item): ?>

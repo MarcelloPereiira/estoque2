@@ -40,11 +40,11 @@ $date = date('d/m/Y \- \H\o\r\a\: H\h:i\m\i\n');
 				</th>
 			</tr>
 			<tr>
-				<th>Código</th>
-				<th>Nome do Produto</th>
-				<th>Qtd.</th>
-				<th>Qtd. Min.</th>
-				<th>Diferença</th>
+				<th>CÓDIGO</th>
+				<th>NOME DO PRODUTO</th>
+				<th>QTD.</th>
+				<th>QTD. MIN.</th>
+				<th>DIFERENÇA</th>
 			</tr>
 			<?php foreach($list as $item): ?>
 				<tr>
@@ -57,7 +57,7 @@ $date = date('d/m/Y \- \H\o\r\a\: H\h:i\m\i\n');
 				<?php $total += $item['quantity']; ?>
 			<?php endforeach; ?>
 				<tr>
-					<th colspan="5">Total de Produtos</th>
+					<th colspan="5">TOTAL DE PRODUTOS</th>
 				</tr>
 				<tr>
 					<td colspan="5"><?php echo count($list); ?></td>

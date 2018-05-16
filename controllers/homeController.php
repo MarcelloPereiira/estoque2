@@ -161,6 +161,50 @@ class homeController extends Controller {
     }
 
 
+     public function editarStatusProducts($id) {
+        
+        $p = new Products();
+
+        $id_status = $p->getProduct($id);
+        $data['info'] = $p->upStatus($id_status, $id);
+
+        header("Location: ../../home");
+    }
+
+    public function inativoproducts() {
+         $data = array(
+            'menu' => array(
+                BASE_URL => 'VOLTAR'
+            )
+        );
+        $p = new Products();
+        
+        
+
+        $s = '';
+        $c = '';
+        
+        if(!empty($_GET['busca']) || !empty($_GET['category'])) {
+            $s = $_GET['busca'];
+            $c = $_GET['category'];
+        }else if (empty($_GET['category'])) {
+            $_GET['category'] = '';
+        }
+
+        $data['list'] = $p->getProducts($s, $c);
+
+
+        $data['list'] = $p->getProductsInativos($s, $c);
+
+        //$data['list'] = $p->getCategory($c);
+
+        $data['listcategory'] = $p->getCategoriesInativos();
+
+
+        $this->loadTemplate('inativoproducts', $data);
+    }
+
+
       public function fornecedores() {
         $data = array(
             'menu' => array(
@@ -351,7 +395,7 @@ class homeController extends Controller {
         $this->loadTemplate('editarusuario', $data);
     }
 
-     public function editarStatus($id) {
+     public function editarStatusUser($id) {
         
         $u = new Users();
 
@@ -485,6 +529,38 @@ class homeController extends Controller {
         $data['info'] = $p->getCategoryEdit($id);
 
         $this->loadTemplate('editcategory', $data);
+    }
+
+     public function editarStatusCategory($id) {
+        
+        $p = new Products();
+
+        $id_status = $p->getCategoryEdit($id);
+        $data['info'] = $p->upStatusCategory($id_status, $id);
+
+        header("Location: ../listacategorias");
+    }
+
+    public function inativocategories() {
+         $data = array(
+            'menu' => array(
+                BASE_URL => 'VOLTAR'
+            )
+        );
+        $p = new Products();
+        
+        
+
+        $s = '';
+        
+        if(!empty($_GET['busca']) || !empty($_GET['category'])) {
+            $s = $_GET['busca'];
+        }
+
+        $data['list'] = $p->getCategoryInativos($s);
+
+
+        $this->loadTemplate('inativocategories', $data);
     }
 
     

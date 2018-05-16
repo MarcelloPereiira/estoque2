@@ -16,11 +16,14 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 </fieldset>
 <br/><br/>
 
+<a href="<?php echo BASE_URL.'home/inativocategories' ?>" class="btninativos">INATIVOS</a><br/><br/>
+
 <table border="0" width="100%">
 	<tr>
-		<th>Nome</th>
+		<th>NOME</th>
 		<?php if ($users->hasPermission('ADM') || $users->hasPermission('OP')): ?>
-			<th>Ações</th>
+			<th>AÇÕES</th>
+			<th>STATUS</th>
 		<?php endif; ?>
 	</tr>
 	<?php foreach($list as $item): ?>
@@ -30,6 +33,18 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 			<?php if ($users->hasPermission('ADM') || $users->hasPermission('OP')): ?>
 				<td>
 					<a href="<?php echo BASE_URL; ?>home/editarCategory/<?php echo $item['id_categories']; ?>">Editar</a>
+				</td>
+				<td>
+					<a href="<?php echo BASE_URL; ?>home/editarStatusCategory/<?php echo $item['id_categories']; ?>">
+						<?php
+						if ($item['id_status'] == 1) {
+						 	echo "<div class='ativo'>Ativo</div>";
+						 } else{
+						 	echo "<div class='inativo'>Inativo</div>";
+						 }
+							
+						 ?>	
+					</a>
 				</td>
 			<?php endif; ?>
 		</tr>

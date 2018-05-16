@@ -54,12 +54,12 @@ $date = date('d/m/Y \- H:i:s');
 			</th>
 		</tr>
 		<tr>
-			<th>Op</th>
-			<th>Código</th>
-			<th>Nome do Produto</th>
-			<th>Qtd.</th>
-			<th>Qtd. Min.</th>
-			<th>Diferença</th>
+			<th>OP</th>
+			<th>CÓDIGO</th>
+			<th>NOME DO PRODUTO</th>
+			<th>QTD.</th>
+			<th>QTD. MIN.</th>
+			<th>DIFERENÇA</th>
 		</tr>
 		<?php foreach($list as $item): ?>
 			<tr>
@@ -74,7 +74,7 @@ $date = date('d/m/Y \- H:i:s');
 			<?php $total += $item['quantity']; ?>
 		<?php endforeach; ?>
 			<tr>
-				<th colspan="6">Total de Produtos</th>
+				<th colspan="6">TOTAL DE PRODUTOS</th>
 			</tr>
 			<tr>
 				<td colspan="6"><input type="text" name="totalProducts" value="<?php echo count($list); ?>"></td>

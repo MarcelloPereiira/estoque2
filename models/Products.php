@@ -5,20 +5,20 @@ class Products extends Model {
 		$array = array();
 
 		if(!empty($s) && empty($c)) {
-			$sql = "SELECT * FROM products WHERE cod = :cod OR name LIKE :name";
+			$sql = "SELECT * FROM products WHERE (cod = :cod OR name LIKE :name) AND id_status = 1";
 			$sql = $this->db->prepare($sql);
 			$sql->bindValue(":cod", $s);
 			$sql->bindValue(":name", '%'.$s.'%');
 			$sql->execute();
 		} 
 			else if(empty($s) && !empty($c)) {
-				$sql = "SELECT * FROM products WHERE id_categories = :id_categories";
+				$sql = "SELECT * FROM products WHERE id_categories = :id_categories AND id_status = 1";
 				$sql = $this->db->prepare($sql);
 				$sql->bindValue(":id_categories", $c);
 				$sql->execute();
 			}
 				else if(!empty($s) && !empty($c)) {
-					$sql = "SELECT * FROM products WHERE cod = :cod OR name LIKE :name AND id_categories = :id_categories";
+					$sql = "SELECT * FROM products WHERE (cod = :cod OR name LIKE :name) AND id_categories = :id_categories AND id_status = 1 ";
 					$sql = $this->db->prepare($sql);
 					$sql->bindValue(":cod", $s);
 					$sql->bindValue(":name", '%'.$s.'%');
@@ -27,7 +27,44 @@ class Products extends Model {
 				}
 
 					else {
-						$sql = "SELECT * FROM products";
+						$sql = "SELECT * FROM products WHERE id_status = 1";
+						$sql = $this->db->query($sql);
+					}
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+		}
+
+		return $array;
+	}
+
+	public function getProductsInativos($s='', $c='') {
+		$array = array();
+
+		if(!empty($s) && empty($c)) {
+			$sql = "SELECT * FROM products WHERE (cod = :cod OR name LIKE :name) AND id_status = 2";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":cod", $s);
+			$sql->bindValue(":name", '%'.$s.'%');
+			$sql->execute();
+		} 
+			else if(empty($s) && !empty($c)) {
+				$sql = "SELECT * FROM products WHERE id_categories = :id_categories AND id_status = 2";
+				$sql = $this->db->prepare($sql);
+				$sql->bindValue(":id_categories", $c);
+				$sql->execute();
+			}
+				else if(!empty($s) && !empty($c)) {
+					$sql = "SELECT * FROM products WHERE (cod = :cod OR name LIKE :name) AND id_categories = :id_categories AND id_status = 2 ";
+					$sql = $this->db->prepare($sql);
+					$sql->bindValue(":cod", $s);
+					$sql->bindValue(":name", '%'.$s.'%');
+					$sql->bindValue(":id_categories", $c);
+					$sql->execute();
+				}
+
+					else {
+						$sql = "SELECT * FROM products WHERE id_status = 2";
 						$sql = $this->db->query($sql);
 					}
 
@@ -158,7 +195,22 @@ class Products extends Model {
 	public function getCategories() {
 		$array = array();
 
-		$sql = "SELECT * FROM categories";
+		$sql = "SELECT * FROM categories WHERE id_status = 1";
+		$sql = $this->db->query($sql);
+
+		if($sql->rowCount() > 0) {
+
+			$array = $sql->fetchAll();
+
+		}
+
+		return $array;
+	}
+
+	public function getCategoriesInativos() {
+		$array = array();
+
+		$sql = "SELECT * FROM categories WHERE id_status = 2";
 		$sql = $this->db->query($sql);
 
 		if($sql->rowCount() > 0) {
@@ -174,12 +226,32 @@ class Products extends Model {
 		$array = array();
 
 		if(!empty($s)) {
-			$sql = "SELECT * FROM categories WHERE name_categories LIKE :name_categories";
+			$sql = "SELECT * FROM categories WHERE name_categories LIKE :name_categories AND id_status = 1";
 			$sql = $this->db->prepare($sql);
 			$sql->bindValue(":name_categories", '%'.$s.'%');
 			$sql->execute();
 		} else {
-			$sql = "SELECT * FROM categories ORDER BY name_categories";
+			$sql = "SELECT * FROM categories WHERE id_status = 1 ORDER BY name_categories";
+			$sql = $this->db->query($sql);
+		}
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+		}
+
+		return $array;
+	}
+
+	public function getCategoryInativos($s='') {
+		$array = array();
+
+		if(!empty($s)) {
+			$sql = "SELECT * FROM categories WHERE name_categories LIKE :name_categories AND id_status = 2";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":name_categories", '%'.$s.'%');
+			$sql->execute();
+		} else {
+			$sql = "SELECT * FROM categories WHERE id_status = 2 ORDER BY name_categories";
 			$sql = $this->db->query($sql);
 		}
 
@@ -223,6 +295,64 @@ class Products extends Model {
 		}
 
 		return $array;
+	}
+
+	public function upStatus($id_status, $id) {
+		$id_status = $id_status['id_status'];
+		if($id_status == 1) {
+			$id_status = 2;
+
+			$sql = "UPDATE products SET id_status = :id_status WHERE id = :id";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":id_status", $id_status);
+			$sql->bindValue(":id", $id);
+			$sql->execute();
+
+			return true;
+		} else if($id_status == 2){
+			$id_status = 1;
+			
+			$sql = "UPDATE products SET id_status = :id_status WHERE id = :id";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":id_status", $id_status);
+			$sql->bindValue(":id", $id);
+			$sql->execute();
+
+			return true;
+
+		} else{
+			return false;
+		}
+
+	}
+
+	public function upStatusCategory($id_status, $id) {
+		$id_status = $id_status['id_status'];
+		if($id_status == 1) {
+			$id_status = 2;
+
+			$sql = "UPDATE categories SET id_status = :id_status WHERE id_categories = :id";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":id_status", $id_status);
+			$sql->bindValue(":id", $id);
+			$sql->execute();
+
+			return true;
+		} else if($id_status == 2){
+			$id_status = 1;
+			
+			$sql = "UPDATE categories SET id_status = :id_status WHERE id_categories = :id";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":id_status", $id_status);
+			$sql->bindValue(":id", $id);
+			$sql->execute();
+
+			return true;
+
+		} else{
+			return false;
+		}
+
 	}
 
 }

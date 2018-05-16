@@ -71,6 +71,26 @@ table a {
 	color: green;
 	border: 1px solid green;
 }
+
+.btninativos {
+	margin-left: 2px;
+	color:#CCC;
+	text-decoration: none;
+	border: 1px solid #CCC;
+	padding: 5px;
+	border-radius: 3px;
+	transition: 1s all;
+}
+.btninativos:hover {
+	color: red;
+	border: 1px solid red;
+}
+
+.flexlinkhome{
+	display: flex;
+	margin-bottom: 10px;
+}
+
 table a:hover {
 	text-decoration:underline;
 	color: red;
@@ -91,7 +111,6 @@ table a:hover {
 .flexbuscador{
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 3px;
 }
 
 #busca {
@@ -120,6 +139,7 @@ table a:hover {
 	background-color: #FFF;
 	border: 2px solid blue;
 }
+
 
 
 .form input[type=text],

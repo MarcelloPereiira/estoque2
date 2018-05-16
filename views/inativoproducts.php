@@ -2,20 +2,6 @@
 $users = new Users();
 $users->setUsuario($_SESSION['token']);
 ?>
-<div class="flex">
-	<p class="status"> BEM-VINDO, <?php echo $nome['nome']; ?></p>
-
-	<?php if ($users->hasPermission('ADM')): ?>
-		<p class="status">ADMINISTRADOR</p>
-	<?php endif; ?>
-	<?php if ($users->hasPermission('OP')): ?>
-		<p class="status">OPERACIONAL</p>
-	<?php endif; ?>
-	<?php if ($users->hasPermission('CX')): ?>
-		<p class="status">CAIXA</p>
-	<?php endif; ?>
-</div>
-
 
 <form method="GET" class="flexbuscador">
 	<fieldset>
@@ -31,14 +17,11 @@ $users->setUsuario($_SESSION['token']);
 		<?php endforeach; ?>	
 	</select>
 
-	<input type="image" src="assets/images/seach.png" class="botao">
+	<input type="image" src="../assets/images/seach.png" class="botao">
 </form>
 
 <br/>
-<div class="flexlinkhome">
-	<a href="<?php echo BASE_URL.'home/inativoproducts' ?>" class="btninativos">INATIVOS</a><br/><br/>
-	<a href="<?php echo BASE_URL.'relatorio' ?>" class="monitorar">MONITORAR</a><br/><br/>
-</div>
+
 
 <table border="0" width="100%">
 	<tr>

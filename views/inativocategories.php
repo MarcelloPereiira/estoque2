@@ -3,7 +3,7 @@ $users = new Users();
 $users->setUsuario($_SESSION['token']);
 ?>
 <?php
-if ($users->hasPermission("ADM") == false) {
+if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == false) {
 	header("Location: index.php");
 	exit;
 }
@@ -11,16 +11,15 @@ if ($users->hasPermission("ADM") == false) {
 
 <fieldset>
 	<form method="GET">
-		<input type="text" id="busca" name="busca" value="<?php echo (!empty($_GET['busca']))?$_GET['busca']:''; ?>" placeholder="Digite o nome ou o número do usuário" style="width:100%;height:40px;font-size:18px;" />
+		<input type="text" id="busca" name="busca" value="<?php echo (!empty($_GET['busca']))?$_GET['busca']:''; ?>" placeholder="Digite o nome do fornecedor ou o CNPJ" style="width:100%;height:40px;font-size:18px;" />
 	</form>
 </fieldset>
 <br/><br/>
 
+
 <table border="0" width="100%">
 	<tr>
 		<th>NOME</th>
-		<th>NIVEL</th>
-		<th>NÚMERO</th>
 		<?php if ($users->hasPermission('ADM') || $users->hasPermission('OP')): ?>
 			<th>AÇÕES</th>
 			<th>STATUS</th>
@@ -29,15 +28,13 @@ if ($users->hasPermission("ADM") == false) {
 	<?php foreach($list as $item): ?>
 		<tr>
 
-			<td><?php echo $item['nome']; ?></td>
-			<td><?php echo $item['nivel']; ?></td>
-			<td><?php echo $item['user_number']; ?></td>
+			<td><?php echo $item['name_categories']; ?></td>
 			<?php if ($users->hasPermission('ADM') || $users->hasPermission('OP')): ?>
 				<td>
-					<a href="<?php echo BASE_URL; ?>home/editarusuario/<?php echo $item['id']; ?>">Editar</a>
+					<a href="<?php echo BASE_URL; ?>home/editarCategory/<?php echo $item['id_categories']; ?>">Editar</a>
 				</td>
 				<td>
-					<a href="<?php echo BASE_URL; ?>home/editarStatusUser/<?php echo $item['id']; ?>">
+					<a href="<?php echo BASE_URL; ?>home/editarStatusCategory/<?php echo $item['id_categories']; ?>">
 						<?php
 						if ($item['id_status'] == 1) {
 						 	echo "<div class='ativo'>Ativo</div>";
