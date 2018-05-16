@@ -3,3 +3,5 @@ $(function(){
 	$('.inteiro').mask("#0", {reverse: true});
 	$('input[name=cod]').mask('#');
 });
+
+

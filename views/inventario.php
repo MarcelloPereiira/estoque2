@@ -26,7 +26,7 @@ $date = date('d/m/Y \- H:i:s');
 
 <form method="GET" class="flexbuscador">
 	<fieldset>
-			<input type="text" id="busca" name="busca" value="<?php echo (!empty($_GET['busca']))?$_GET['busca']:''; ?>" placeholder="Digite o código de barras ou o nome do produto" style="width:100%;height:40px;font-size:18px;" />
+			<input type="text" id="busca" name="busca" id="check" value="<?php echo (!empty($_GET['busca']))?$_GET['busca']:''; ?>" placeholder="Digite o código de barras ou o nome do produto" style="width:100%;height:40px;font-size:18px;" />
 	</fieldset>
 
 	<select name="category" class="homeselect">
@@ -40,14 +40,21 @@ $date = date('d/m/Y \- H:i:s');
 
 	<input type="image" src="assets/images/seach.png" class="botao">
 </form>
+
+<div class="checkall">
+	<label for="selectAll" id="checar">Marcados</label>
+	<input type="checkbox" name="MarcaTodos" id="selectAll" checked>
+</div>
+
 <form method="POST" id="forminv">
 	<table border="1" width="100%">
 		<tr>
-			<th colspan="5" style="background-color: #BBB; ">
+			<th colspan="6" style="background-color: #BBB; ">
 			<?php echo $date; ?>
 			</th>
 		</tr>
 		<tr>
+			<th>Op</th>
 			<th>Código</th>
 			<th>Nome do Produto</th>
 			<th>Qtd.</th>
@@ -57,6 +64,7 @@ $date = date('d/m/Y \- H:i:s');
 		<?php foreach($list as $item): ?>
 			<tr>
 				<td style="display: none"><input type="text" name="id[]" value="<?php echo $item['id']; ?>"></td>
+				<td><input type="checkbox" name="check[]" class="marcar" value="<?php echo $item['id']; ?>"  checked></td>
 				<td><input type="text" name="cod[]" value="<?php echo $item['cod']; ?>"></td>
 				<td><input type="text" name="name[]" value="<?php echo $item['name']; ?>"></td>
 				<td><input type="text" name="quantity[]" value="<?php echo number_format($item['quantity'], 0, '', '.'); ?>"></td>
@@ -66,10 +74,10 @@ $date = date('d/m/Y \- H:i:s');
 			<?php $total += $item['quantity']; ?>
 		<?php endforeach; ?>
 			<tr>
-				<th colspan="5">Total de Produtos</th>
+				<th colspan="6">Total de Produtos</th>
 			</tr>
 			<tr>
-				<td colspan="5"><input type="text" name="totalProducts" value="<?php echo count($list); ?>"></td>
+				<td colspan="6"><input type="text" name="totalProducts" value="<?php echo count($list); ?>"></td>
 			<tr>
 	</table><br/><br/>	
 </form>
@@ -77,14 +85,39 @@ $date = date('d/m/Y \- H:i:s');
 
 
 
-<!-- <input class="btn_relatorio" type="submit" value="Imprimir" onclick="window.print()" />-->
+
 <script type="text/javascript">
+//Confirmação para salvar o inventário
 function confirmar(){ 
 	if(confirm("Tem certeza que deseja salvar o Inventário?")){ 
 		document.getElementById('forminv').submit(); 
 	} 
 }
+
+//Função para marcar e desmarcar todos os checkbox do inventário
+$('#selectAll').click(function(){
+	if ($(this).prop("checked")) {
+		$('#checar').text('Marcados');
+		$('.marcar').prop("checked", true); 
+	}
+	else{
+		$('#checar').text('Desmarcados');
+		$('.marcar').prop("checked", false);
+	}
+});
+
 </script>
+
+
+
+
+
+
+
+
+
+
+
 <br><br><br><br>
 
  <?php
@@ -110,3 +143,5 @@ if ($dias < 31) {
 	echo "<br>Faltam ".$dias." dia(s) para o vencimento deste produto!";// aqui o resultando que dia que vai acaba
 }
 ?>
+
+

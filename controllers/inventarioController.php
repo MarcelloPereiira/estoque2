@@ -26,29 +26,35 @@ class inventarioController extends Controller {
 		if(!empty($_POST['name'])) {
             //$cod = filter_input(INPUT_POST, 'cod', FILTER_VALIDATE_INT);
     		//$name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
-    		$array['id'] = $_POST['id'];
-    		$array['cod'] = $_POST['cod'];
-    		$array['name'] = $_POST['name'];
-            $array['quantity'] = $_POST['quantity'];
-            $array['min_quantity'] = $_POST['min_quantity'];
-            $array['difference'] = $_POST['difference'];
-            $total = $_POST['totalProducts'];
-            //$totalUni = $filters->filter_post_money('totalUni');
-            
+            if (!empty($_POST['check'])) {
 
-            if($array) {
-            	$i->addConjunct($total);
-            	$id_conjunct = $i->getConjunct();
-            	$i->editInventario($array);
-        		$i->addInventario($array, $id_conjunct);
-        		
+                $array['check'] = $_POST['check'];
+        		$array['id'] = $_POST['id'];
+        		$array['cod'] = $_POST['cod'];
+        		$array['name'] = $_POST['name'];
+                $array['quantity'] = $_POST['quantity'];
+                $array['min_quantity'] = $_POST['min_quantity'];
+                $array['difference'] = $_POST['difference'];
+                $total = $_POST['totalProducts'];
+                //$totalUni = $filters->filter_post_money('totalUni');
+                
+                if($array && $total) {
+                	$i->addConjunct($total);
+                	$id_conjunct = $i->getConjunct();
+                	$i->editInventario($array);
+            		$i->addInventario($array, $id_conjunct);
+            		
 
-                $data['sucess'] = 'Inventário salvo com sucesso.';
-        		//header("Location: ".BASE_URL);
-        		//exit;
-            } else {
-                $data['warning'] = 'Não foi possível salvar.';
-            }
+                    $data['sucess'] = 'Inventário salvo com sucesso.';
+            		//header("Location: ".BASE_URL);
+            		//exit;
+                } else {
+                    $data['warning'] = 'Não foi possível salvar.';
+                    }
+            }   
+                else {
+                    $data['warning'] = 'Escolha algum produto. Não foi possível salvar.';
+                    }
     	}
 
 

@@ -78,6 +78,7 @@ class homeController extends Controller {
         $this->loadTemplate('home', $data);
     }
 
+
     public function add() {
     	$data = array(
             'menu' => array(
@@ -350,6 +351,34 @@ class homeController extends Controller {
         $this->loadTemplate('editarusuario', $data);
     }
 
+     public function editarStatus($id) {
+        
+        $u = new Users();
+
+        $id_status = $u->getUser($id);
+        $data['info'] = $u->upStatus($id_status, $id);
+
+        header("Location: ../listausuarios");
+    }
+
+    public function inativousers() {
+         $data = array(
+            'menu' => array(
+                BASE_URL => 'VOLTAR'
+            )
+        );
+        $u = new Users();
+
+        $s = '';
+        
+        if(!empty($_GET['busca'])) {
+            $s = $_GET['busca'];
+        }
+
+        $data['list'] = $u->getUsersInativos($s);
+
+        $this->loadTemplate('inativousers', $data);
+    }
     
 
     public function entrada() {

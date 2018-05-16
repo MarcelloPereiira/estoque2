@@ -77,6 +77,17 @@ table a:hover {
 	font-size: 13px;
 	font-weight: bold;
 }
+.ativo{
+	color: green;
+} 
+.ativo:hover{
+	color: green;
+	text-decoration:underline;
+} 
+.inativo{
+	color: red;
+}
+
 .flexbuscador{
 	display: flex;
 	justify-content: space-between;
@@ -206,9 +217,9 @@ a input:hover{
 	padding-bottom: 25px;
 }
 
-
-
-
+.checkall{
+	margin-bottom: 2px; 
+}
 
 
 

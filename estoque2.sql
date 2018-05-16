@@ -25,6 +25,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `status`
+--
+
+CREATE TABLE status(
+  id_status INT UNSIGNED NOT NULL,
+  name_status VARCHAR(50) NOT NULL,
+  PRIMARY KEY(id_status)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Fazendo dump de dados para tabela `status`
+--
+
+INSERT INTO `status` (`id_status`, `name_status`) VALUES
+(1, "Ativo"),
+(2, "Inativo");
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `fornecedores`
 --
 
@@ -59,8 +79,13 @@ INSERT INTO `fornecedores` (`id`, `nome`, `endereco`, `fone`, `cnpj`) VALUES
 CREATE TABLE `categories`(
   id_categories INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   name_categories VARCHAR(100) NOT NULL,
-  PRIMARY KEY(id_categories)
-);
+  PRIMARY KEY(id_categories),
+  `id_status` INT UNSIGNED NOT NULL DEFAULT 1,
+    INDEX indice_status(id_status),
+    CONSTRAINT fk_status_categories
+    FOREIGN KEY(id_status)
+    REFERENCES `estoque2`.`status`(id_status)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Estrutura para tabela `products`
@@ -78,7 +103,12 @@ CREATE TABLE `products` (
    INDEX indice_categories(id_categories),
    CONSTRAINT fk_categories_products
    FOREIGN KEY(id_categories)
-   REFERENCES categories(id_categories)
+   REFERENCES categories(id_categories),
+   `id_status` INT UNSIGNED NOT NULL DEFAULT 1,
+    INDEX indice_status(id_status),
+    CONSTRAINT fk_status_products
+    FOREIGN KEY(id_status)
+    REFERENCES status(id_status)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -99,7 +129,12 @@ CREATE TABLE `users` (
   `user_token` varchar(32) DEFAULT NULL,
    nivel VARCHAR(50) NOT NULL,
    nome VARCHAR(70) NOT NULL,
-   PRIMARY KEY (`id`)
+   PRIMARY KEY (`id`),
+   `id_status` INT UNSIGNED NOT NULL DEFAULT 1,
+    INDEX indice_status(id_status),
+    CONSTRAINT fk_status_users
+    FOREIGN KEY(id_status)
+    REFERENCES status(id_status)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -123,7 +158,7 @@ CREATE TABLE `estoque2`.`conjunct` (
     `data_conjunct` DATETIME NOT NULL,
     `total_conjunct` INT NOT NULL,
     PRIMARY KEY(id)    
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `estoque2`.`inventario`(
    `id` INT(30) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -138,8 +173,7 @@ CREATE TABLE `estoque2`.`inventario`(
     CONSTRAINT fk_id_conjunct
     FOREIGN KEY (id_conjunct)
     REFERENCES `estoque2`.`conjunct`(id)
-);
-
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 

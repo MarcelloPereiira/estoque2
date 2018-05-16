@@ -63,18 +63,16 @@ class Inventario extends Model {
 
 	public function addInventario($array, $id_conjunct) {
 		$id_conjunct = $id_conjunct[0];
-		if(!empty($array)) {
+		if($array && $id_conjunct) {
 			for ($i=0; $i < count($array['name']); $i++) {
-
-				 $cod = $array['cod'][$i];
-				 $name = $array['name'][$i];
-				 $quantity = $array['quantity'][$i];
-				 $min_quantity = $array['min_quantity'][$i];
-				 $difference = $array['min_quantity'][$i] - $array['quantity'][$i];
+				$id = $array['id'][$i];
+				if (in_array($id, $array['check'])) {
+					 $cod = $array['cod'][$i];
+					 $name = $array['name'][$i];
+					 $quantity = $array['quantity'][$i];
+					 $min_quantity = $array['min_quantity'][$i];
+					 $difference = $array['min_quantity'][$i] - $array['quantity'][$i];
 				 
-				 
-				 
-
 					$sql = "INSERT INTO inventario (cod, name_products, quantity, min_quantity, difference, id_conjunct) VALUES (:cod, :name, :quantity, :min_quantity, :difference, :id_conjunct)";
 					$sql = $this->db->prepare($sql);
 					$sql->bindValue(":cod", $cod);
@@ -84,6 +82,7 @@ class Inventario extends Model {
 					$sql->bindValue(":difference", $difference);
 					$sql->bindValue(":id_conjunct", $id_conjunct);
 					$sql->execute();
+				} 
 
 			}
 

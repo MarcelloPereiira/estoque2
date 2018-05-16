@@ -10,13 +10,34 @@ class Users extends Model {
 		$array = array();
 
 		if(!empty($s)) {
-			$sql = "SELECT * FROM users WHERE nome LIKE :nome OR user_number LIKE :user_number";
+			$sql = "SELECT * FROM users WHERE id_status = 1 AND nome LIKE :nome OR user_number LIKE :user_number";
 			$sql = $this->db->prepare($sql);
 			$sql->bindValue(":nome", '%'.$s.'%');
 			$sql->bindValue(":user_number", '%'.$s.'%');
 			$sql->execute();
 		} else {
-			$sql = "SELECT * FROM users ORDER BY nome";
+			$sql = "SELECT * FROM users WHERE id_status = 1 ORDER BY nome";
+			$sql = $this->db->query($sql);
+		}
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+		}
+
+		return $array;
+	}
+
+	public function getUsersInativos($s='') {
+		$array = array();
+
+		if(!empty($s)) {
+			$sql = "SELECT * FROM users WHERE id_status = 2 AND nome LIKE :nome OR user_number LIKE :user_number";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":nome", '%'.$s.'%');
+			$sql->bindValue(":user_number", '%'.$s.'%');
+			$sql->execute();
+		} else {
+			$sql = "SELECT * FROM users WHERE id_status = 2 ORDER BY nome";
 			$sql = $this->db->query($sql);
 		}
 
@@ -37,9 +58,17 @@ class Users extends Model {
 		$sql->execute();
 
 		if($sql->rowCount() > 0) {
-			return true;
-		} else {
-			return false;
+			$status = $sql->fetch();
+
+			if ($status['id_status'] == 1) {
+				return true;	
+			} 
+				else {
+					return false;
+			}
+		} 
+			else {
+				return false;
 		}
 
 	}
@@ -209,6 +238,38 @@ class Users extends Model {
 			return true;
 
 		} else {
+			return false;
+		}
+
+	}
+
+
+
+
+	public function upStatus($id_status, $id) {
+		$id_status = $id_status['id_status'];
+		if($id_status == 1) {
+			$id_status = 2;
+
+			$sql = "UPDATE users SET id_status = :id_status WHERE id = :id";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":id_status", $id_status);
+			$sql->bindValue(":id", $id);
+			$sql->execute();
+
+			return true;
+		} else if($id_status == 2){
+			$id_status = 1;
+			
+			$sql = "UPDATE users SET id_status = :id_status WHERE id = :id";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":id_status", $id_status);
+			$sql->bindValue(":id", $id);
+			$sql->execute();
+
+			return true;
+
+		} else{
 			return false;
 		}
 

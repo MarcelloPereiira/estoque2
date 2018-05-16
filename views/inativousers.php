@@ -16,8 +16,6 @@ if ($users->hasPermission("ADM") == false) {
 </fieldset>
 <br/><br/>
 
-<a href="<?php echo BASE_URL.'home/inativousers' ?>" class="monitorar">INATIVOS</a><br/><br/>
-
 <table border="0" width="100%">
 	<tr>
 		<th>Nome</th>
