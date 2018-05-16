@@ -44,6 +44,7 @@ $users->setUsuario($_SESSION['token']);
 	<tr>
 		<th>CÓDIGO</th>
 		<th>NOME</th>
+		<th>CATEGORIA</th>
 		<th>PREÇO UN.</th>
 		<th>QTD.</th>
 		<?php if ($users->hasPermission('ADM')): ?>
@@ -55,6 +56,7 @@ $users->setUsuario($_SESSION['token']);
 		<tr>
 			<td><?php echo $item['cod']; ?></td>
 			<td><?php echo $item['name']; ?></td>
+			<td><?php echo $item['name_categories']; ?></td>
 			<td>R$ <?php echo number_format($item['price'], 2, ',', '.'); ?></td>
 			<td><?php echo number_format($item['quantity'], 2, ',', '.'); ?></td>
 			<?php if ($users->hasPermission('ADM')): ?>

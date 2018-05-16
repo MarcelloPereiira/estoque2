@@ -98,25 +98,28 @@ class homeController extends Controller {
             $quantity = $filters->filter_post_money('quantity');
             $min_quantity = $filters->filter_post_money('min_quantity');
             if (!empty($_POST['id'])) {
-                $id_categories = addslashes($_POST['id']);
-            }   else{
-                    $id_categories = null;
-                }  
+                $id_categories = addslashes($_POST['id']);    
+                        
             //$name_fornecedor = filter_input(INPUT_POST, 'name_fornecedor', FILTER_VALIDATE_INT);
 
-            if($cod && $name && $price && $quantity && $min_quantity && $id_categories) {
-        		if($p->addProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories)){
-                    $data['sucess'] = 'Cadastrado com sucesso.';
-                } else{
-                    $data['warning'] = 'O produto já existe.';
+                if($cod && $name && $price && $quantity && $min_quantity && $id_categories) {
+            		if($p->addProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories)){
+                        $data['sucess'] = 'Cadastrado com sucesso.';
+                    } else{
+                        $data['warning'] = 'O produto já existe.';
+                    }
+
+            		//header("Location: ".BASE_URL);
+            		//exit;
+                } else {
+                    $data['warning'] = 'Digite os campos corretamente.';
                 }
 
-        		//header("Location: ".BASE_URL);
-        		//exit;
-            } else {
-                $data['warning'] = 'Digite os campos corretamente.';
-            }
-    	}
+            }   else {
+                    $data['warning'] = 'Digite os campos corretamente.';
+                }
+
+    	} 
         $data['list'] = $p->getCategories();
     	$this->loadTemplate('add', $data);
     }
@@ -139,19 +142,21 @@ class homeController extends Controller {
             $min_quantity = $filters->filter_post_money('min_quantity');
             if (!empty($_POST['id'])) {
                 $id_categories = addslashes($_POST['id']);
-            }   else{
-                    $id_categories = null;
-                }  
+             
 
-            if($cod && $name && $price && $quantity && $min_quantity) {
-        		$p->editProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories, $id);
+                if($cod && $name && $price && $quantity && $min_quantity) {
+            		$p->editProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories, $id);
 
-                $data['sucess'] = 'Editado com sucesso.';
-        		//header("Location: ".BASE_URL);
-        		//exit;
-            } else {
-                $data['warning'] = 'Digite os campos corretamente.';
-            }
+                    $data['sucess'] = 'Editado com sucesso.';
+            		//header("Location: ".BASE_URL);
+            		//exit;
+                } else {
+                    $data['warning'] = 'Digite os campos corretamente.';
+                }
+
+            }  else {
+                    $data['warning'] = 'Digite os campos corretamente.';
+                }
     	}
 
     	$data['info'] = $p->getProduct($id);
@@ -165,10 +170,19 @@ class homeController extends Controller {
         
         $p = new Products();
 
-        $id_status = $p->getProduct($id);
-        $data['info'] = $p->upStatus($id_status, $id);
+        $id_produto = $p->getProduct($id);
+        $categoria = $p->getCategoryStatus($id_produto['id_categories']);
+        if (empty($categoria)) {
+            echo "<script>alert('A categoria deste produto está desativada.');</script>";
+            echo "<script>location.href='../../home';</script>";
+            exit;
+        } else{
+            $data['info'] = $p->upStatus($id_produto, $id, $categoria);
 
-        header("Location: ../../home");
+            header("Location: ../../home");   
+            exit;
+        }
+        
     }
 
     public function inativoproducts() {
@@ -532,13 +546,26 @@ class homeController extends Controller {
     }
 
      public function editarStatusCategory($id) {
+        $data = array(
+            'menu' => array(
+                BASE_URL => 'VOLTAR'
+            )
+        );
         
         $p = new Products();
 
         $id_status = $p->getCategoryEdit($id);
-        $data['info'] = $p->upStatusCategory($id_status, $id);
-
-        header("Location: ../listacategorias");
+        $produto = $p->getProductCat($id);
+        if (!empty($produto)) {
+             echo "<script>alert('Existem produtos ativos relacionados a esta categoria. Não foi possível Inativar.');</script>";
+             echo "<script>location.href='listacategorias';</script>";
+             exit;
+        } else{
+            $data['info'] = $p->upStatusCategory($id_status, $id, $produto);
+            header("Location: ../listacategorias");
+            exit;
+        }
+        
     }
 
     public function inativocategories() {

@@ -18,6 +18,10 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 
 <a href="<?php echo BASE_URL.'home/inativocategories' ?>" class="btninativos">INATIVOS</a><br/><br/>
 
+<?php if(!empty($warning)): ?>
+<div class="warning"><?php echo $warning; ?></div>
+<?php endif; ?>
+
 <table border="0" width="100%">
 	<tr>
 		<th>NOME</th>

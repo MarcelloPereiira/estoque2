@@ -5,20 +5,32 @@ class Products extends Model {
 		$array = array();
 
 		if(!empty($s) && empty($c)) {
-			$sql = "SELECT * FROM products WHERE (cod = :cod OR name LIKE :name) AND id_status = 1";
+			$sql = "SELECT products.id, products.cod, products.name, products.price, products.quantity, products.min_quantity,
+					categories.name_categories, products.id_status FROM products
+					INNER JOIN categories
+					on categories.id_categories = products.id_categories WHERE (products.cod = :cod OR products.name LIKE :name) 
+					AND products.id_status = 1";
 			$sql = $this->db->prepare($sql);
 			$sql->bindValue(":cod", $s);
 			$sql->bindValue(":name", '%'.$s.'%');
 			$sql->execute();
 		} 
 			else if(empty($s) && !empty($c)) {
-				$sql = "SELECT * FROM products WHERE id_categories = :id_categories AND id_status = 1";
+				$sql = "SELECT products.id, products.cod, products.name, products.price, products.quantity, products.min_quantity,
+						categories.name_categories, products.id_status FROM products
+						INNER JOIN categories
+						on categories.id_categories = products.id_categories WHERE products.id_categories = :id_categories 
+						AND products.id_status = 1";
 				$sql = $this->db->prepare($sql);
 				$sql->bindValue(":id_categories", $c);
 				$sql->execute();
 			}
 				else if(!empty($s) && !empty($c)) {
-					$sql = "SELECT * FROM products WHERE (cod = :cod OR name LIKE :name) AND id_categories = :id_categories AND id_status = 1 ";
+					$sql = "SELECT products.id, products.cod, products.name, products.price, products.quantity, products.min_quantity,
+							categories.name_categories, products.id_status FROM products
+							INNER JOIN categories
+							on categories.id_categories = products.id_categories WHERE (products.cod = :cod OR products.name LIKE :name) 
+							AND products.id_categories = :id_categories AND products.id_status = 1";
 					$sql = $this->db->prepare($sql);
 					$sql->bindValue(":cod", $s);
 					$sql->bindValue(":name", '%'.$s.'%');
@@ -27,7 +39,10 @@ class Products extends Model {
 				}
 
 					else {
-						$sql = "SELECT * FROM products WHERE id_status = 1";
+						$sql = "SELECT products.id, products.cod, products.name, products.price, products.quantity, products.min_quantity, categories.name_categories, products.id_status FROM products
+								INNER JOIN categories
+								on categories.id_categories = products.id_categories
+						 		WHERE products.id_status = 1";
 						$sql = $this->db->query($sql);
 					}
 
@@ -42,20 +57,29 @@ class Products extends Model {
 		$array = array();
 
 		if(!empty($s) && empty($c)) {
-			$sql = "SELECT * FROM products WHERE (cod = :cod OR name LIKE :name) AND id_status = 2";
+			$sql = "SELECT products.id, products.cod, products.name, products.price, products.quantity, products.min_quantity, categories.name_categories, products.id_status FROM products
+					INNER JOIN categories
+					on categories.id_categories = products.id_categories WHERE (products.cod = :cod OR products.name LIKE :name) 
+					AND products.id_status = 2";
 			$sql = $this->db->prepare($sql);
 			$sql->bindValue(":cod", $s);
 			$sql->bindValue(":name", '%'.$s.'%');
 			$sql->execute();
 		} 
 			else if(empty($s) && !empty($c)) {
-				$sql = "SELECT * FROM products WHERE id_categories = :id_categories AND id_status = 2";
+				$sql = "SELECT products.id, products.cod, products.name, products.price, products.quantity, products.min_quantity, categories.name_categories, products.id_status FROM products
+						INNER JOIN categories
+						on categories.id_categories = products.id_categories WHERE products.id_categories = :id_categories 
+						AND products.id_status = 2";
 				$sql = $this->db->prepare($sql);
 				$sql->bindValue(":id_categories", $c);
 				$sql->execute();
 			}
 				else if(!empty($s) && !empty($c)) {
-					$sql = "SELECT * FROM products WHERE (cod = :cod OR name LIKE :name) AND id_categories = :id_categories AND id_status = 2 ";
+					$sql = "SELECT products.id, products.cod, products.name, products.price, products.quantity, products.min_quantity, categories.name_categories, products.id_status FROM products
+						INNER JOIN categories
+						on categories.id_categories = products.id_categories WHERE (products.cod = :cod OR products.name LIKE :name) 
+						AND products.id_categories = :id_categories AND products.id_status = 2";
 					$sql = $this->db->prepare($sql);
 					$sql->bindValue(":cod", $s);
 					$sql->bindValue(":name", '%'.$s.'%');
@@ -64,7 +88,10 @@ class Products extends Model {
 				}
 
 					else {
-						$sql = "SELECT * FROM products WHERE id_status = 2";
+						$sql = "SELECT products.id, products.cod, products.name, products.price, products.quantity, products.min_quantity, categories.name_categories, products.id_status FROM products
+								INNER JOIN categories
+								on categories.id_categories = products.id_categories
+						 		WHERE products.id_status = 2";
 						$sql = $this->db->query($sql);
 					}
 
@@ -149,10 +176,28 @@ class Products extends Model {
 	}
 
 
+
+	public function getProductCat($id) {
+		$array = array();
+
+		$sql = "SELECT * FROM products WHERE id_categories = :id AND id_status = 1";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetch();
+
+		}
+
+		return $array;
+	}
+
+
 	public function getLowQuantityProducts() {
 		$array = array();
 
-		$sql = "SELECT * FROM products WHERE quantity < min_quantity";
+		$sql = "SELECT * FROM products WHERE quantity < min_quantity AND id_status = 1";
 		$sql = $this->db->query($sql);
 
 		if($sql->rowCount() > 0) {
@@ -297,60 +342,83 @@ class Products extends Model {
 		return $array;
 	}
 
-	public function upStatus($id_status, $id) {
-		$id_status = $id_status['id_status'];
-		if($id_status == 1) {
-			$id_status = 2;
+	public function getCategoryStatus($id) {
+		$array = array();
 
-			$sql = "UPDATE products SET id_status = :id_status WHERE id = :id";
-			$sql = $this->db->prepare($sql);
-			$sql->bindValue(":id_status", $id_status);
-			$sql->bindValue(":id", $id);
-			$sql->execute();
+		$sql = "SELECT * FROM categories WHERE id_categories = :id_categories_products AND id_status = 1";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":id_categories_products", $id);
+		$sql->execute();
 
-			return true;
-		} else if($id_status == 2){
-			$id_status = 1;
-			
-			$sql = "UPDATE products SET id_status = :id_status WHERE id = :id";
-			$sql = $this->db->prepare($sql);
-			$sql->bindValue(":id_status", $id_status);
-			$sql->bindValue(":id", $id);
-			$sql->execute();
+		if($sql->rowCount() > 0) {
 
-			return true;
+			$array = $sql->fetch();
 
-		} else{
-			return false;
 		}
+
+		return $array;
+	}
+
+	public function upStatus($id_status, $id, $categoria) {
+		$id_status = $id_status['id_status'];
+			if($id_status == 1) {
+				$id_status = 2;
+
+				$sql = "UPDATE products SET id_status = :id_status WHERE id = :id";
+				$sql = $this->db->prepare($sql);
+				$sql->bindValue(":id_status", $id_status);
+				$sql->bindValue(":id", $id);
+				$sql->execute();
+
+				return true;
+			} else if($id_status == 2){
+				if (!empty($categoria)) {
+					$id_status = 1;
+					
+					$sql = "UPDATE products SET id_status = :id_status WHERE id = :id";
+					$sql = $this->db->prepare($sql);
+					$sql->bindValue(":id_status", $id_status);
+					$sql->bindValue(":id", $id);
+					$sql->execute();
+
+					return true;
+				} else {
+					return false;
+				}
+
+			} else{
+				return false;
+			}
 
 	}
 
-	public function upStatusCategory($id_status, $id) {
+	public function upStatusCategory($id_status, $id, $produto) {
 		$id_status = $id_status['id_status'];
-		if($id_status == 1) {
-			$id_status = 2;
+		if (empty($produto)) {
+			if($id_status == 1) {
+				$id_status = 2;
 
-			$sql = "UPDATE categories SET id_status = :id_status WHERE id_categories = :id";
-			$sql = $this->db->prepare($sql);
-			$sql->bindValue(":id_status", $id_status);
-			$sql->bindValue(":id", $id);
-			$sql->execute();
+				$sql = "UPDATE categories SET id_status = :id_status WHERE id_categories = :id";
+				$sql = $this->db->prepare($sql);
+				$sql->bindValue(":id_status", $id_status);
+				$sql->bindValue(":id", $id);
+				$sql->execute();
 
-			return true;
-		} else if($id_status == 2){
-			$id_status = 1;
-			
-			$sql = "UPDATE categories SET id_status = :id_status WHERE id_categories = :id";
-			$sql = $this->db->prepare($sql);
-			$sql->bindValue(":id_status", $id_status);
-			$sql->bindValue(":id", $id);
-			$sql->execute();
+				return true;
+			} else if($id_status == 2){
+				$id_status = 1;
+				
+				$sql = "UPDATE categories SET id_status = :id_status WHERE id_categories = :id";
+				$sql = $this->db->prepare($sql);
+				$sql->bindValue(":id_status", $id_status);
+				$sql->bindValue(":id", $id);
+				$sql->execute();
 
-			return true;
+				return true;
 
-		} else{
-			return false;
+			} else{
+				return false;
+			}
 		}
 
 	}
