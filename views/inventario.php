@@ -111,37 +111,3 @@ $('#selectAll').click(function(){
 
 
 
-
-
-
-
-
-
-
-<br><br><br><br>
-
- <?php
-
-
-$dia_hora_atual = strtotime(date("Y-m-d H:i:s")); //aqui o dia atual
-$dia_hora_evento = strtotime(date("2018-05-12 08:00:00")); // aqui o dia que o vip vai acaba
-
-#Achamos a diferença entre as datas...
-$diferenca = $dia_hora_evento - $dia_hora_atual;
-
-#Fazemos a contagem...
-$dias = intval($diferenca / 86400);
-$marcador = $diferenca % 86400;
-$hora = intval($marcador / 3600);
-$marcador = $marcador % 3600;
-$minuto = intval($marcador / 60);
-$segundos = $marcador % 60;
-
-#Exibimos o resultado
-echo $dias." dia(s) ".$hora." hora(s) ".$minuto." minuto(s)";// aqui o resultando que dia que vai acaba
-if ($dias < 31) {
-	echo "<br>Faltam ".$dias." dia(s) para o vencimento deste produto!";// aqui o resultando que dia que vai acaba
-}
-?>
-
-
