@@ -35,6 +35,7 @@ class homeController extends Controller {
         else if ($users->hasPermission("OP")) {
             $data = array(
             'menu' => array(
+                BASE_URL => 'HOME',
                 BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
                 BASE_URL.'inventario' => 'INVENTÁRIO',
                 BASE_URL.'home/entrada' => 'ENTRADA',
@@ -48,6 +49,7 @@ class homeController extends Controller {
         else if ($users->hasPermission("CX")) {
             $data = array(
             'menu' => array(
+                BASE_URL => 'HOME',
                 BASE_URL.'login/sair' => 'SAIR'
             )
         );
@@ -79,7 +81,11 @@ class homeController extends Controller {
 
 
     public function add() {
-    	$data = array(
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+    	
+        if ($users->hasPermission("ADM")) {
+            $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
                 BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
@@ -91,6 +97,22 @@ class homeController extends Controller {
                 
             )
         );
+
+        }
+        else if ($users->hasPermission("OP")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'login/sair' => 'SAIR'
+            )
+        );
+
+        }
+
     	$p = new Products();
         $filters = new FiltersHelper();
 
@@ -128,7 +150,11 @@ class homeController extends Controller {
     }
 
     public function edit($id) {
-        $data = array(
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+        
+        if ($users->hasPermission("ADM")) {
+            $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
                 BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
@@ -140,6 +166,23 @@ class homeController extends Controller {
                 
             )
         );
+
+        }
+        else if ($users->hasPermission("OP")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'login/sair' => 'SAIR'
+            )
+        );
+
+        }
+
+
     	$p = new Products();
         $filters = new FiltersHelper();
 
@@ -196,13 +239,41 @@ class homeController extends Controller {
     }
 
     public function inativoproducts() {
-         $data = array(
+        
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+
+        if ($users->hasPermission("ADM")) {
+            $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
+
+        }
+        else if ($users->hasPermission("OP")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'login/sair' => 'SAIR'
+            )
+        );
+
+        }
+
+
         $p = new Products();
-        
         
 
         $s = '';
@@ -232,7 +303,6 @@ class homeController extends Controller {
     public function addUsuario() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
-        if ($users->hasPermission("ADM")) {
         $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
@@ -247,13 +317,7 @@ class homeController extends Controller {
             )
         );
 
-        } else{
-            $data = array(
-                'menu' => array(
-                    BASE_URL => 'VOLTAR'
-                )
-            );
-         }
+        
 
         $f = new Users();
         //$filters = new FiltersHelper();
@@ -395,7 +459,11 @@ class homeController extends Controller {
     
 
     public function entrada() {
-         $data = array(
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+        
+         if ($users->hasPermission("ADM")) {
+            $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
                 BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
@@ -407,6 +475,21 @@ class homeController extends Controller {
                 
             )
         );
+
+        }
+        else if ($users->hasPermission("OP")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'login/sair' => 'SAIR'
+            )
+        );
+
+        }
 
          $p = new Products();
         
@@ -430,7 +513,11 @@ class homeController extends Controller {
 
 
     public function addCategoria() {
-         $data = array(
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+        
+         if ($users->hasPermission("ADM")) {
+            $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
                 BASE_URL."home/listacategorias" => "LISTA",
@@ -443,6 +530,22 @@ class homeController extends Controller {
                 
             )
         );
+
+        }
+        else if ($users->hasPermission("OP")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL."home/listacategorias" => "LISTA",
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'login/sair' => 'SAIR'
+            )
+        );
+
+        }
 
 
         $p = new Products();
@@ -469,7 +572,11 @@ class homeController extends Controller {
     }
 
     public function listacategorias() {
-         $data = array(
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+        
+          if ($users->hasPermission("ADM")) {
+            $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
                 BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
@@ -481,6 +588,24 @@ class homeController extends Controller {
                 
             )
         );
+
+        }
+        else if ($users->hasPermission("OP")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'login/sair' => 'SAIR'
+            )
+        );
+
+        }
+
+
+
         $p = new Products();
 
 
@@ -496,7 +621,11 @@ class homeController extends Controller {
     }
 
     public function editarCategory($id) {
-         $data = array(
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+        
+          if ($users->hasPermission("ADM")) {
+            $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
                 BASE_URL."home/listacategorias" => "LISTA",
@@ -509,6 +638,23 @@ class homeController extends Controller {
                 
             )
         );
+
+        }
+        else if ($users->hasPermission("OP")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL."home/listacategorias" => "LISTA",
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'login/sair' => 'SAIR'
+            )
+        );
+
+        }
+
         $p = new Products();
         //$filters = new FiltersHelper();
 
@@ -532,19 +678,7 @@ class homeController extends Controller {
     }
 
      public function editarStatusCategory($id) {
-         $data = array(
-            'menu' => array(
-                BASE_URL => 'HOME',
-                BASE_URL."home/listacategorias" => "LISTA",
-                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
-                BASE_URL.'inventario' => 'INVENTÁRIO',
-                BASE_URL.'home/entrada' => 'ENTRADA',
-                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
-                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
-                BASE_URL.'login/sair' => 'SAIR'
-                
-            )
-        );
+        
         
         $p = new Products();
 
@@ -563,7 +697,12 @@ class homeController extends Controller {
     }
 
     public function inativocategories() {
-         $data = array(
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+    
+
+          if ($users->hasPermission("ADM")) {
+            $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
                 BASE_URL."home/listacategorias" => "LISTA",
@@ -576,6 +715,23 @@ class homeController extends Controller {
                 
             )
         );
+
+        }
+        else if ($users->hasPermission("OP")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL."home/listacategorias" => "LISTA",
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'login/sair' => 'SAIR'
+            )
+        );
+
+        }
+
         $p = new Products();
         
         

@@ -12,7 +12,11 @@ class inventarioController extends Controller {
 	}
 
 	public function index() {
-        $data = array(
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+
+        if ($users->hasPermission("ADM")) {
+            $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
                 BASE_URL.'inventario/inventarioconsulta' => 'CONSULTA',
@@ -25,6 +29,23 @@ class inventarioController extends Controller {
                 
             )
         );
+
+        }
+        else if ($users->hasPermission("OP")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL.'inventario/inventarioconsulta' => 'CONSULTA',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'login/sair' => 'SAIR'
+            )
+        );
+
+        }
+
 
 		$i = new Inventario();
 		$p = new Products();

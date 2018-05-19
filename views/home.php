@@ -36,8 +36,12 @@ $users->setUsuario($_SESSION['token']);
 
 <br/>
 <div class="flexlinkhome">
-	<a href="<?php echo BASE_URL.'home/inativoproducts' ?>" class="btninativos">INATIVOS</a><br/><br/>
-	<a href="<?php echo BASE_URL.'relatorio' ?>" class="monitorar">MONITORAR</a><br/><br/>
+	<?php if ($users->hasPermission('ADM')): ?>
+		<a href="<?php echo BASE_URL.'home/inativoproducts' ?>" class="btninativos">INATIVOS</a><br/><br/>
+	<?php endif; ?>
+	<?php if ($users->hasPermission('ADM') || $users->hasPermission('OP')): ?>
+		<a href="<?php echo BASE_URL.'relatorio' ?>" class="monitorar">MONITORAR</a><br/><br/>
+	<?php endif; ?>
 </div>
 
 <table border="0" width="100%">
