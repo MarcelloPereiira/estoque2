@@ -1,19 +1,6 @@
 <?php
 class Inventario extends Model {
 
-	/*private function verifyInventario($cod) {
-		$sql = "SELECT * FROM products WHERE cod = :cod";
-		$sql = $this->db->prepare($sql);
-		$sql->bindValue(":cod", $cod);
-		$sql->execute();
-
-		if($sql->rowCount() > 0) {
-			return false;
-		} else {
-			return true;
-		}
-	}*/
-
 	public function editProductsByInventario($array) {
 
 		if(!empty($array)) {

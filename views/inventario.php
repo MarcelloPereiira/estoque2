@@ -69,19 +69,18 @@ $date = date('d/m/Y \- H:i:s');
 			<tr>
 				<td style="display: none"><input type="text" name="id[]" value="<?php echo $item['id']; ?>"></td>
 				<td><input type="checkbox" name="check[]" class="marcar" value="<?php echo $item['id']; ?>"  checked></td>
-				<td><input type="text" name="cod[]" readonly="true" value="<?php echo $item['cod']; ?>"></td>
-				<td><input type="text" name="name[]" readonly="true" value="<?php echo $item['name']; ?>"></td>
-				<td><input type="text" name="quantity[]" readonly="true" value="<?php echo number_format($item['quantity'], 0, '', '.'); ?>"></td>
-				<td><input type="text" name="min_quantity[]" readonly="true" value="<?php echo number_format($item['min_quantity'], 0, '', '.'); ?>"></td>
-				<td><input type="text" name="difference[]" readonly="true" value="<?php echo floatval($item['quantity']) - number_format(floatval($item['min_quantity']), 0, '', '.'); ?>"></td>
+				<td><input class="borderinput" type="text" name="cod[]" readonly="true" value="<?php echo $item['cod']; ?>"></td>
+				<td><input class="borderinput" type="text" name="name[]" readonly="true" value="<?php echo $item['name']; ?>"></td>
+				<td><input class="borderinput" type="text" name="quantity[]" readonly="true" value="<?php echo number_format($item['quantity'], 0, '', '.'); ?>"></td>
+				<td><input class="borderinput" type="text" name="min_quantity[]" readonly="true" value="<?php echo number_format($item['min_quantity'], 0, '', '.'); ?>"></td>
+				<td><input class="borderinput" type="text" name="difference[]" readonly="true" value="<?php echo floatval($item['quantity']) - number_format(floatval($item['min_quantity']), 0, '', '.'); ?>"></td>
 			</tr>
-			<?php $total += $item['quantity']; ?>
 		<?php endforeach; ?>
 			<tr>
 				<th colspan="6">TOTAL DE PRODUTOS</th>
 			</tr>
 			<tr>
-				<td colspan="6"><input type="text" name="totalProducts" readonly="true" value="<?php echo count($list); ?>"></td>
+				<td colspan="6"><input class="borderinput" type="text" name="totalProducts" readonly="true" value="<?php echo count($list); ?>"></td>
 			<tr>
 	</table><br/><br/>	
 </form>

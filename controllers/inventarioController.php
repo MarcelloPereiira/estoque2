@@ -132,18 +132,7 @@ class inventarioController extends Controller {
 
 
 	public function inventarioconsulta() {
-		$data = array(
-            'menu' => array(
-                BASE_URL => 'HOME',
-                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
-                BASE_URL.'inventario' => 'INVENTÁRIO',
-                BASE_URL.'home/entrada' => 'ENTRADA',
-                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
-                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
-                BASE_URL.'login/sair' => 'SAIR'
-                
-            )
-        );
+		$data = array();
 		$i = new Inventario();
 
 		$c = '';

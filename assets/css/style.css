@@ -244,6 +244,14 @@ a input:hover{
 	margin-bottom: 2px; 
 }
 
+.borderinput{
+	text-align: center;
+	border: 0;
+}
+.borderinput2{
+	text-align: center;
+	border: 1px solid #DDD;
+}
 
 
 

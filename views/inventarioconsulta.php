@@ -18,7 +18,7 @@ $date = date('d/m/Y \- \H\o\r\a\: H\h:i\m\i\n');
 <h1>Consulta de Inventário</h1>
 
 <form method="GET" class="flexbuscador noprint">
-	<select name="data_conj" class="homeselect">
+	<select style="padding-left: 50px; " name="data_conj" class="homeselect">
 		<option value="">SELECIONE UMA DATA</option>
 		<?php foreach($listdate as $item): ?>
 		<option value="<?php echo $item['id']; ?>" <?php echo (($_GET['data_conj']) == $item['id'])?'selected="select"':''; ?>> 
@@ -54,7 +54,6 @@ $date = date('d/m/Y \- \H\o\r\a\: H\h:i\m\i\n');
 					<td><?php echo number_format($item['min_quantity'], 0, '', '.'); ?></td>
 					<td><?php echo number_format(floatval($item['min_quantity']) - floatval($item['quantity']), 0, '', '.'); ?></td>
 				</tr>
-				<?php $total += $item['quantity']; ?>
 			<?php endforeach; ?>
 				<tr>
 					<th colspan="5">TOTAL DE PRODUTOS</th>
@@ -69,9 +68,10 @@ $date = date('d/m/Y \- \H\o\r\a\: H\h:i\m\i\n');
 	<br/><br/>
 	
 </form>
+<a href="../inventario" class="noprint"><input type="submit" value="Voltar"></a>
 <?php if (!empty($list)): ?>
-	<a href="" target="_blank" id="i" class="noprint"><input type="submit" value="NOVA ABA"></a>
-	<a href="" onclick="window.print()" class="noprint"><input type="submit" value="IMPRIMIR"></a>
+	<a href="" target="_blank" id="i" class="noprint"><input type="submit" value="Nova Aba"></a>
+	<a href="" onclick="window.print()" class="noprint"><input type="submit" value="Imprimir"></a>
 <?php endif; ?>
 
 <style type="text/css">

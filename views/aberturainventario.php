@@ -44,19 +44,18 @@ $date = date('d/m/Y \- H:i:s');
 		<?php foreach($list as $item): ?>
 			<tr>
 				<td style="display: none"><input type="text" name="id_products[]" value="<?php echo $item['id_products']; ?>"></td>
-				<td><input type="text" name="cod[]" readonly="true" value="<?php echo $item['cod']; ?>"></td>
-				<td><input type="text" name="name[]" readonly="true" value="<?php echo $item['name_products']; ?>"></td>
-				<td><input type="text" name="quantity[]" value="<?php echo number_format($item['quantity'], 0, '', '.'); ?>"></td>
-				<td><input type="text" name="min_quantity[]" value="<?php echo number_format($item['min_quantity'], 0, '', '.'); ?>"></td>
-				<td><input type="text" name="difference[]" readonly="true" value="<?php echo number_format(floatval($item['min_quantity']) - floatval($item['quantity']), 0, '', '.'); ?>"></td>
+				<td><input class="borderinput" type="text" name="cod[]" readonly="true" value="<?php echo $item['cod']; ?>"></td>
+				<td><input class="borderinput" type="text" name="name[]" readonly="true" value="<?php echo $item['name_products']; ?>"></td>
+				<td><input class="borderinput2" type="text" name="quantity[]" value="<?php echo number_format($item['quantity'], 0, '', '.'); ?>"></td>
+				<td><input class="borderinput2" type="text" name="min_quantity[]" value="<?php echo number_format($item['min_quantity'], 0, '', '.'); ?>"></td>
+				<td><input class="borderinput" type="text" name="difference[]" readonly="true" value="<?php echo number_format(floatval($item['min_quantity']) - floatval($item['quantity']), 0, '', '.'); ?>"></td>
 			</tr>
-			<?php $total += $item['quantity']; ?>
 		<?php endforeach; ?>
 			<tr>
 				<th colspan="5">TOTAL DE PRODUTOS</th>
 			</tr>
 			<tr>
-				<td colspan="5"><input type="text" name="totalProducts" readonly="true" value="<?php echo count($list); ?>"></td>
+				<td colspan="5"><input class="borderinput" type="text" name="totalProducts" readonly="true" value="<?php echo count($list); ?>"></td>
 			<tr>
 	</table><br/><br/>	
 </form>
