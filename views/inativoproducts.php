@@ -3,6 +3,13 @@ $users = new Users();
 $users->setUsuario($_SESSION['token']);
 ?>
 
+<?php
+if ($users->hasPermission("ADM") == false) {
+	header("Location: index.php");
+	exit;
+} 
+?>
+
 <form method="GET" class="flexbuscador">
 	<fieldset>
 			<input type="text" id="busca" name="busca" value="<?php echo (!empty($_GET['busca']))?$_GET['busca']:''; ?>" placeholder="Digite o código de barras ou o nome do produto" style="width:100%;height:40px;font-size:18px;" />
