@@ -23,7 +23,7 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 			<td><?php echo $item['name']; ?></td>
 			<td><?php echo number_format($item['quantity'], 0, '', '.'); ?></td>
 			<td><?php echo number_format($item['min_quantity'], 0, '', '.'); ?></td>
-			<td><?php echo number_format(floatval($item['min_quantity']) - floatval($item['quantity']), 0, '', '.'); ?></td>
+			<td><?php echo number_format(floatval($item['quantity']) - floatval($item['min_quantity']), 0, '', '.'); ?></td>
 		</tr>
 	<?php endforeach; ?>
 </table><br/><br/>

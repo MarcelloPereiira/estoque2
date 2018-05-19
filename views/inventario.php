@@ -73,7 +73,7 @@ $date = date('d/m/Y \- H:i:s');
 				<td><input type="text" name="name[]" readonly="true" value="<?php echo $item['name']; ?>"></td>
 				<td><input type="text" name="quantity[]" readonly="true" value="<?php echo number_format($item['quantity'], 0, '', '.'); ?>"></td>
 				<td><input type="text" name="min_quantity[]" readonly="true" value="<?php echo number_format($item['min_quantity'], 0, '', '.'); ?>"></td>
-				<td><input type="text" name="difference[]" readonly="true" value="<?php echo number_format(floatval($item['min_quantity']) - floatval($item['quantity']), 0, '', '.'); ?>"></td>
+				<td><input type="text" name="difference[]" readonly="true" value="<?php echo floatval($item['quantity']) - number_format(floatval($item['min_quantity']), 0, '', '.'); ?>"></td>
 			</tr>
 			<?php $total += $item['quantity']; ?>
 		<?php endforeach; ?>
