@@ -14,12 +14,12 @@ class Inventario extends Model {
 		}
 	}*/
 
-	public function editInventario($array) {
+	public function editProductsByInventario($array) {
 
 		if(!empty($array)) {
 			for ($i=0; $i < count($array['name']); $i++) {
 
-				 $id = $array['id'][$i];
+				 $id = $array['id_products'][$i];
 				 $cod = $array['cod'][$i];
 				 $name = $array['name'][$i];
 				 $quantity = $array['quantity'][$i];
@@ -42,14 +42,14 @@ class Inventario extends Model {
 
 	}
 
-	public function addConjunct($total) {
+	public function addConjunct($total, $codinventario) {
 
 		if (!empty($total)) {
-			$total_conjunct = $total[0];
 
-			$sql = "INSERT INTO conjunct(data_conjunct, total_conjunct) VALUES(NOW(), :total_conjunct)";
+			$sql = "INSERT INTO conjunct(cod_inventario, data_conjunct, total_conjunct) VALUES(:codinventario ,NOW(), :total_conjunct)";
 			$sql = $this->db->prepare($sql);
-			$sql->bindValue(":total_conjunct", $total_conjunct);
+			$sql->bindValue(":total_conjunct", $total);
+			$sql->bindValue(":codinventario", $codinventario);
 			$sql->execute();	
 		 
 			return true;
@@ -67,14 +67,16 @@ class Inventario extends Model {
 			for ($i=0; $i < count($array['name']); $i++) {
 				$id = $array['id'][$i];
 				if (in_array($id, $array['check'])) {
+					 $id_products = $id;
 					 $cod = $array['cod'][$i];
 					 $name = $array['name'][$i];
 					 $quantity = $array['quantity'][$i];
 					 $min_quantity = $array['min_quantity'][$i];
 					 $difference = $array['min_quantity'][$i] - $array['quantity'][$i];
 				 
-					$sql = "INSERT INTO inventario (cod, name_products, quantity, min_quantity, difference, id_conjunct) VALUES (:cod, :name, :quantity, :min_quantity, :difference, :id_conjunct)";
+					$sql = "INSERT INTO inventario (id_products, cod, name_products, quantity, min_quantity, difference, id_conjunct) VALUES (:id_products, :cod, :name, :quantity, :min_quantity, :difference, :id_conjunct)";
 					$sql = $this->db->prepare($sql);
+					$sql->bindValue(":id_products", $id_products);
 					$sql->bindValue(":cod", $cod);
 					$sql->bindValue(":name", $name);
 					$sql->bindValue(":quantity", $quantity);
@@ -93,6 +95,37 @@ class Inventario extends Model {
 		}
 	}
 
+	public function addInventarioFechar($array, $id_conjunct) {
+		$id_conjunct = $id_conjunct[0];
+		if($array && $id_conjunct) {
+			for ($i=0; $i < count($array['name']); $i++) {
+					 $id_products = $array['id_products'][$i];
+					 $cod = $array['cod'][$i];
+					 $name = $array['name'][$i];
+					 $quantity = $array['quantity'][$i];
+					 $min_quantity = $array['min_quantity'][$i];
+					 $difference = $array['min_quantity'][$i] - $array['quantity'][$i];
+				 
+					$sql = "INSERT INTO inventario (id_products, cod, name_products, quantity, min_quantity, difference, id_conjunct) VALUES (:id_products, :cod, :name, :quantity, :min_quantity, :difference, :id_conjunct)";
+					$sql = $this->db->prepare($sql);
+					$sql->bindValue(":id_products", $id_products);
+					$sql->bindValue(":cod", $cod);
+					$sql->bindValue(":name", $name);
+					$sql->bindValue(":quantity", $quantity);
+					$sql->bindValue(":min_quantity", $min_quantity);
+					$sql->bindValue(":difference", $difference);
+					$sql->bindValue(":id_conjunct", $id_conjunct);
+					$sql->execute();
+				
+
+			}
+
+			return true;
+
+		} else {
+			return false;
+		}
+	}
 
 
 
@@ -148,6 +181,28 @@ public function getConjunct() {
 		return $array;
 			}
 							
+	}
+
+	public function getProductsConjunct($id_conjunct) {
+		$array = array();
+		$id = $id_conjunct['id'];
+
+		$sql = "SELECT inventario.id, inventario.id_products, inventario.cod, inventario.name_products, inventario.quantity, inventario.min_quantity, inventario.difference, inventario.id_conjunct, conjunct.cod_inventario
+				FROM inventario 
+				INNER JOIN conjunct
+				on inventario.id_conjunct = conjunct.id
+				WHERE id_conjunct = :id";
+		$sql = $this->db->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+
+			$array = $sql->fetchAll();
+
+		}
+
+		return $array;
 	}
 
 }

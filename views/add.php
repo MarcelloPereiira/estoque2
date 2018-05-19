@@ -21,10 +21,10 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 <form method="POST" class="form">
 
 	Código de Barras:<br/>
-	<input type="text" name="cod" required /><br/><br/>
+	<input type="text" name="cod" maxlength="40" required /><br/><br/>
 
 	Nome do Produto:<br/>
-	<input type="text" name="name" required /><br/><br/>
+	<input type="text" name="name" maxlength="100" required /><br/><br/>
 
 	Preço do Produto:<br/>
 	<input type="text" class="dinheiro" name="price" required /><br/><br/>

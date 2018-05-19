@@ -49,10 +49,10 @@ INSERT INTO `status` (`id_status`, `name_status`) VALUES
 --
 
 CREATE TABLE `fornecedores` (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `endereco` varchar(255) NOT NULL,
-  `fone` int(25) UNSIGNED NOT NULL,
+  `fone` varchar(25) NOT NULL,
   `cnpj` varchar(100) NOT NULL,
    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -77,7 +77,7 @@ INSERT INTO `fornecedores` (`id`, `nome`, `endereco`, `fone`, `cnpj`) VALUES
 --
 
 CREATE TABLE `categories`(
-  id_categories INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  id_categories INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   name_categories VARCHAR(100) NOT NULL,
   PRIMARY KEY(id_categories),
   `id_status` INT UNSIGNED NOT NULL DEFAULT 1,
@@ -92,13 +92,13 @@ CREATE TABLE `categories`(
 --
 
 CREATE TABLE `products` (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `cod` int(30) NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cod` VARCHAR(40) NOT NULL,
   `name` varchar(100) NOT NULL,
   `price` float NOT NULL,
   `quantity` float NOT NULL,
   `min_quantity` float NOT NULL,
-  `id_categories` int(11) UNSIGNED NOT NULL,
+  `id_categories` int UNSIGNED NOT NULL,
    PRIMARY KEY (`id`),
    INDEX indice_categories(id_categories),
    CONSTRAINT fk_categories_products
@@ -123,8 +123,8 @@ CREATE TABLE `products` (
 --
 
 CREATE TABLE `users` (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_number` int(11) UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_number` varchar(11) NOT NULL,
   `user_pass` varchar(32) NOT NULL DEFAULT '',
   `user_token` varchar(32) DEFAULT NULL,
    nivel VARCHAR(50) NOT NULL,
@@ -154,21 +154,23 @@ INSERT INTO `users` (`id`, `user_number`, `user_pass`, `user_token`, `nivel`, `n
 
 
 CREATE TABLE `estoque2`.`conjunct` (
-    `id` INT(30) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `cod_inventario` INT(10) UNSIGNED NOT NULL,
     `data_conjunct` DATETIME NOT NULL,
-    `total_conjunct` INT NOT NULL,
+    `total_conjunct` INT UNSIGNED NOT NULL,
     PRIMARY KEY(id)    
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `estoque2`.`inventario`(
-   `id` INT(30) UNSIGNED NOT NULL AUTO_INCREMENT,
-   `cod` INT(30) NOT NULL,
+   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+   `id_products` int(10) UNSIGNED NOT NULL,
+   `cod` VARCHAR(40) NOT NULL,
     `name_products` VARCHAR(50) NOT NULL,
     `quantity` FLOAT NOT NULL,
     `min_quantity` FLOAT NOT NULL,
     `difference` FLOAT NOT NULL,
     PRIMARY KEY(id),
-    `id_conjunct` INT(30) UNSIGNED NOT NULL,
+    `id_conjunct` INT(10) UNSIGNED NOT NULL,
     INDEX indice_id_produto (id_conjunct),
     CONSTRAINT fk_id_conjunct
     FOREIGN KEY (id_conjunct)

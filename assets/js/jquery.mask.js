@@ -583,8 +583,8 @@
             '0': {pattern: /\d/},
             '9': {pattern: /\d/, optional: true},
             '#': {pattern: /\d/, recursive: true},
-            'A': {pattern: /[a-zA-Z0-9]/},
-            'S': {pattern: /[a-zA-Z]/}
+            'A': {pattern: /[a-zA-Z0-9]/, recursive: true},
+            'S': {pattern: /[a-zA-Z]/, recursive: true}
         }
     };
 

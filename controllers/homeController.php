@@ -20,8 +20,8 @@ class homeController extends Controller {
         if ($users->hasPermission("ADM")) {
             $data = array(
             'menu' => array(
+                BASE_URL => 'HOME',
                 BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
-                BASE_URL.'home/fornecedores' => 'FORNECEDOR',
                 BASE_URL.'inventario' => 'INVENTÁRIO',
                 BASE_URL.'home/entrada' => 'ENTRADA',
                 BASE_URL.'home/addCategoria' => 'CATEGORIAS',
@@ -36,7 +36,6 @@ class homeController extends Controller {
             $data = array(
             'menu' => array(
                 BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
-                BASE_URL.'home/fornecedores' => 'FORNECEDOR',
                 BASE_URL.'inventario' => 'INVENTÁRIO',
                 BASE_URL.'home/entrada' => 'ENTRADA',
                 BASE_URL.'home/addCategoria' => 'CATEGORIAS',
@@ -82,17 +81,22 @@ class homeController extends Controller {
     public function add() {
     	$data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
     	$p = new Products();
         $filters = new FiltersHelper();
 
-        //$f = new Fornecedores();
-        //$data['list'] = $f->getFornecedores();
 
     	if(!empty($_POST['cod'])) {
-            $cod = filter_input(INPUT_POST, 'cod', FILTER_VALIDATE_INT);
+            $cod = filter_input(INPUT_POST, 'cod', FILTER_SANITIZE_STRING);
             $name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
             $price = $filters->filter_post_money('price');
             $quantity = $filters->filter_post_money('quantity');
@@ -100,7 +104,6 @@ class homeController extends Controller {
             if (!empty($_POST['id'])) {
                 $id_categories = addslashes($_POST['id']);    
                         
-            //$name_fornecedor = filter_input(INPUT_POST, 'name_fornecedor', FILTER_VALIDATE_INT);
 
                 if($cod && $name && $price && $quantity && $min_quantity && $id_categories) {
             		if($p->addProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories)){
@@ -125,9 +128,16 @@ class homeController extends Controller {
     }
 
     public function edit($id) {
-    	$data = array(
+        $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
     	$p = new Products();
@@ -135,7 +145,7 @@ class homeController extends Controller {
 
 
     	if(!empty($_POST['cod'])) {
-            $cod = filter_input(INPUT_POST, 'cod', FILTER_VALIDATE_INT);
+            $cod = filter_input(INPUT_POST, 'cod', FILTER_SANITIZE_STRING);
     		$name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
             $price = $filters->filter_post_money('price');
             $quantity = $filters->filter_post_money('quantity');
@@ -219,99 +229,21 @@ class homeController extends Controller {
     }
 
 
-      public function fornecedores() {
-        $data = array(
-            'menu' => array(
-                BASE_URL => 'VOLTAR',
-                BASE_URL.'home/listafornecedores' => 'LISTA'
-            )
-        );
-        $f = new Fornecedores();
-        //$filters = new FiltersHelper();
-
-        if(!empty($_POST['nome'])) {
-            $nome = ucwords(mb_strtolower(addslashes($_POST['nome'])));
-            $endereco = ucwords(mb_strtolower(addslashes($_POST['endereco'])));
-            $fone = addslashes($_POST['fone']);
-            $cnpj = addslashes($_POST['cnpj']);
-
-            if($nome && $endereco && $fone && $cnpj) {
-                if($f->addFornecedores($nome, $endereco, $fone, $cnpj)){
-                    $data['sucess'] = 'Cadastrado com sucesso.';
-                }   else{
-                    $data['warning'] = 'O fornecedor já existe.';
-                }
-
-                //header("Location: ".BASE_URL);
-                //exit;
-            } else {
-                $data['warning'] = 'Digite os campos corretamente.';
-            }
-        }
-
-
-        $this->loadTemplate('fornecedores', $data);
-    }
-
-    public function editarFornecedor($id) {
-        $data = array(
-            'menu' => array(
-                BASE_URL => 'VOLTAR'
-            )
-        );
-        $f = new Fornecedores();
-        //$filters = new FiltersHelper();
-
-        if(!empty($_POST['nome'])) {
-            $nome = ucwords(mb_strtolower(addslashes($_POST['nome'])));
-            $endereco = ucwords(mb_strtolower(addslashes($_POST['endereco'])));
-            $fone = addslashes($_POST['fone']);
-            $cnpj = addslashes($_POST['cnpj']);
-
-            if($nome && $endereco && $fone && $cnpj) {
-                $f->editarFornecedor($nome, $endereco, $fone, $cnpj, $id);
-
-                $data['sucess'] = 'Editado com sucesso.';
-                //header("Location: ".BASE_URL);
-                //exit;
-            } else {
-                $data['warning'] = 'Digite os campos corretamente.';
-            }
-        }
-
-        $data['info'] = $f->getFornecedor($id);
-
-        $this->loadTemplate('editarFornecedor', $data);
-    }
-
-    public function listafornecedores() {
-         $data = array(
-            'menu' => array(
-                BASE_URL => 'VOLTAR'
-            )
-        );
-        $f = new Fornecedores();
-
-
-        $s = '';
-        
-        if(!empty($_GET['busca'])) {
-            $s = $_GET['busca'];
-        }
-
-        $data['list'] = $f->getFornecedores($s);
-
-        $this->loadTemplate('listafornecedores', $data);
-    }
-
     public function addUsuario() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
         if ($users->hasPermission("ADM")) {
-            $data = array(
+        $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR',
-                BASE_URL.'home/listausuarios' => 'LISTA'
+                BASE_URL => 'HOME',
+                BASE_URL.'home/listausuarios' => 'LISTA',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
 
@@ -356,7 +288,14 @@ class homeController extends Controller {
     public function listausuarios() {
          $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
         $u = new Users();
@@ -375,9 +314,17 @@ class homeController extends Controller {
 
 
      public function editarUsuario($id) {
-        $data = array(
+         $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'HOME',
+                BASE_URL.'home/listausuarios' => 'LISTA',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
         $f = new Users();
@@ -422,7 +369,15 @@ class homeController extends Controller {
     public function inativousers() {
          $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'HOME',
+                BASE_URL.'home/listausuarios' => 'LISTA',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
         $u = new Users();
@@ -442,7 +397,14 @@ class homeController extends Controller {
     public function entrada() {
          $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
 
@@ -468,12 +430,21 @@ class homeController extends Controller {
 
 
     public function addCategoria() {
-        $data = array(
+         $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR',
-                BASE_URL."home/listacategorias" => "LISTA"
+                BASE_URL => 'HOME',
+                BASE_URL."home/listacategorias" => "LISTA",
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
+
+
         $p = new Products();
         //$filters = new FiltersHelper();
 
@@ -500,7 +471,14 @@ class homeController extends Controller {
     public function listacategorias() {
          $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
         $p = new Products();
@@ -518,9 +496,17 @@ class homeController extends Controller {
     }
 
     public function editarCategory($id) {
-        $data = array(
+         $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'HOME',
+                BASE_URL."home/listacategorias" => "LISTA",
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
         $p = new Products();
@@ -546,9 +532,17 @@ class homeController extends Controller {
     }
 
      public function editarStatusCategory($id) {
-        $data = array(
+         $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'HOME',
+                BASE_URL."home/listacategorias" => "LISTA",
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
         
@@ -571,7 +565,15 @@ class homeController extends Controller {
     public function inativocategories() {
          $data = array(
             'menu' => array(
-                BASE_URL => 'VOLTAR'
+                BASE_URL => 'HOME',
+                BASE_URL."home/listacategorias" => "LISTA",
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
             )
         );
         $p = new Products();

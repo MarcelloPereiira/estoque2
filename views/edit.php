@@ -25,10 +25,10 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 <form method="POST" class="form">
 
 	Código de Barras:<br/>
-	<input type="text" name="cod" value="<?php echo $info['cod']; ?>" required /><br/><br/>
+	<input type="text" name="cod" maxlength="40" value="<?php echo $info['cod']; ?>" required /><br/><br/>
 
 	Nome do Produto:<br/>
-	<input type="text" name="name" value="<?php echo $info['name']; ?>" required /><br/><br/>
+	<input type="text" name="name" maxlength="100" value="<?php echo $info['name']; ?>" required /><br/><br/>
 
 	Preço do Produto:<br/>
 	<input type="text" class="dinheiro" name="price" value="<?php echo number_format($info['price'], 2, ',', '.'); ?>" required /><br/><br/>

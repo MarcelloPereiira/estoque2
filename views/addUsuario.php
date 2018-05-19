@@ -11,13 +11,13 @@ if ($users->hasPermission("ADM") == false) {
 <h1>Cadastro de Usuário</h1>
 <form method="POST" class="formLogin">
 	Nome:<br/>
-	<input type="text" name="nome" required /><br/><br/>
+	<input type="text" name="nome" class="letras" maxlength="70" required /><br/><br/>
 
-	Número do Usuário:<br/>
-	<input type="text" class="inteiro" name="user_number" required /><br/><br/>
+	CPF:<br/>
+	<input type="text" class="inteiro" name="user_number" maxlength="11" required /><br/><br/>
 
 	Senha:<br/>
-	<input type="password" class="inteiro" name="user_pass" required /><br/><br/>
+	<input type="password" name="user_pass" maxlength="20" required /><br/><br/>
 	<div class="flexlogin">
 		<div>
 			<input type="radio" name="enviarNivel" value="ADM" id="adm" required />

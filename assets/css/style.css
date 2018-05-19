@@ -29,6 +29,9 @@ nav ul li {
 	height:40px;
 	line-height: 40px;
 }
+
+
+
 .header li a {
 	color:#000;
 	text-decoration: none;
@@ -135,7 +138,7 @@ table a:hover {
 
 .homeselect{
 	height: 65px;
-	width: 200px;
+	width: 400px;
 	background-color: #FFF;
 	border: 2px solid blue;
 }

@@ -49,9 +49,13 @@ $date = date('d/m/Y \- H:i:s');
 <form method="POST" id="forminv">
 	<table border="1" width="100%">
 		<tr>
+			<th colspan="2" style="background-color: #BBB;">
+			<input type="text" name="codinventario" style="background-color: #BBB; text-align: center" readonly="true" value="<?php echo rand(1, 100000) + rand(1, 100) + rand(1, 100000) + rand(1, 10000)?>">
+			</th>
 			<th colspan="6" style="background-color: #BBB; ">
 			<?php echo $date; ?>
 			</th>
+			
 		</tr>
 		<tr>
 			<th>OP</th>
@@ -65,11 +69,11 @@ $date = date('d/m/Y \- H:i:s');
 			<tr>
 				<td style="display: none"><input type="text" name="id[]" value="<?php echo $item['id']; ?>"></td>
 				<td><input type="checkbox" name="check[]" class="marcar" value="<?php echo $item['id']; ?>"  checked></td>
-				<td><input type="text" name="cod[]" value="<?php echo $item['cod']; ?>"></td>
-				<td><input type="text" name="name[]" value="<?php echo $item['name']; ?>"></td>
-				<td><input type="text" name="quantity[]" value="<?php echo number_format($item['quantity'], 0, '', '.'); ?>"></td>
-				<td><input type="text" name="min_quantity[]" value="<?php echo number_format($item['min_quantity'], 0, '', '.'); ?>"></td>
-				<td><input type="text" name="difference[]" value="<?php echo number_format(floatval($item['min_quantity']) - floatval($item['quantity']), 0, '', '.'); ?>"></td>
+				<td><input type="text" name="cod[]" readonly="true" value="<?php echo $item['cod']; ?>"></td>
+				<td><input type="text" name="name[]" readonly="true" value="<?php echo $item['name']; ?>"></td>
+				<td><input type="text" name="quantity[]" readonly="true" value="<?php echo number_format($item['quantity'], 0, '', '.'); ?>"></td>
+				<td><input type="text" name="min_quantity[]" readonly="true" value="<?php echo number_format($item['min_quantity'], 0, '', '.'); ?>"></td>
+				<td><input type="text" name="difference[]" readonly="true" value="<?php echo number_format(floatval($item['min_quantity']) - floatval($item['quantity']), 0, '', '.'); ?>"></td>
 			</tr>
 			<?php $total += $item['quantity']; ?>
 		<?php endforeach; ?>
@@ -77,11 +81,11 @@ $date = date('d/m/Y \- H:i:s');
 				<th colspan="6">TOTAL DE PRODUTOS</th>
 			</tr>
 			<tr>
-				<td colspan="6"><input type="text" name="totalProducts" value="<?php echo count($list); ?>"></td>
+				<td colspan="6"><input type="text" name="totalProducts" readonly="true" value="<?php echo count($list); ?>"></td>
 			<tr>
 	</table><br/><br/>	
 </form>
-<input type="submit" value="Salvar" class="btn_relatorio" onclick="confirmar();" >
+<input type="submit" value="Abrir Inventário" class="btn_relatorio" onclick="confirmar();" >
 
 
 
@@ -89,7 +93,7 @@ $date = date('d/m/Y \- H:i:s');
 <script type="text/javascript">
 //Confirmação para salvar o inventário
 function confirmar(){ 
-	if(confirm("Tem certeza que deseja salvar o Inventário?")){ 
+	if(confirm("Tem certeza que deseja abrir o inventário?")){ 
 		document.getElementById('forminv').submit(); 
 	} 
 }
@@ -107,7 +111,4 @@ $('#selectAll').click(function(){
 });
 
 </script>
-
-
-
 

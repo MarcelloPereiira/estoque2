@@ -22,7 +22,7 @@ $date = date('d/m/Y \- \H\o\r\a\: H\h:i\m\i\n');
 		<option value="">SELECIONE UMA DATA</option>
 		<?php foreach($listdate as $item): ?>
 		<option value="<?php echo $item['id']; ?>" <?php echo (($_GET['data_conj']) == $item['id'])?'selected="select"':''; ?>> 
-			<?php echo date("d/m/Y \- H:i:s", strtotime($item['data_conjunct'])); ?>					
+			<?php echo "Cod: ".$item['cod_inventario']." -- Data: ".date("d/m/Y \- H:i:s", strtotime($item['data_conjunct'])); ?>
 		</option>
 		<?php endforeach; ?>	
 	</select>
