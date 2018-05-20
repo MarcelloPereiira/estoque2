@@ -56,16 +56,16 @@ class Inventario extends Model {
 				if (in_array($id, $array['check'])) {
 					 $id_products = $id;
 					 $cod = $array['cod'][$i];
-					 $name = $array['name'][$i];
+					 $name_products = $array['name'][$i];
 					 $quantity = $array['quantity'][$i];
 					 $min_quantity = $array['min_quantity'][$i];
-					 $difference = $array['min_quantity'][$i] - $array['quantity'][$i];
+					 $difference = $array['difference'][$i];
 				 
-					$sql = "INSERT INTO inventario (id_products, cod, name_products, quantity, min_quantity, difference, id_conjunct) VALUES (:id_products, :cod, :name, :quantity, :min_quantity, :difference, :id_conjunct)";
+					$sql = "INSERT INTO inventario (id_products, cod, name_products, quantity, min_quantity, difference, id_conjunct) VALUES (:id_products, :cod, :name_products, :quantity, :min_quantity, :difference, :id_conjunct)";
 					$sql = $this->db->prepare($sql);
 					$sql->bindValue(":id_products", $id_products);
 					$sql->bindValue(":cod", $cod);
-					$sql->bindValue(":name", $name);
+					$sql->bindValue(":name_products", $name_products);
 					$sql->bindValue(":quantity", $quantity);
 					$sql->bindValue(":min_quantity", $min_quantity);
 					$sql->bindValue(":difference", $difference);
@@ -88,16 +88,16 @@ class Inventario extends Model {
 			for ($i=0; $i < count($array['name']); $i++) {
 					 $id_products = $array['id_products'][$i];
 					 $cod = $array['cod'][$i];
-					 $name = $array['name'][$i];
+					 $name_products = $array['name'][$i];
 					 $quantity = $array['quantity'][$i];
 					 $min_quantity = $array['min_quantity'][$i];
-					 $difference = $array['min_quantity'][$i] - $array['quantity'][$i];
+					 $difference = $array['difference'][$i];
 				 
-					$sql = "INSERT INTO inventario (id_products, cod, name_products, quantity, min_quantity, difference, id_conjunct) VALUES (:id_products, :cod, :name, :quantity, :min_quantity, :difference, :id_conjunct)";
+					$sql = "INSERT INTO inventario (id_products, cod, name_products, quantity, min_quantity, difference, id_conjunct) VALUES (:id_products, :cod, :name_products, :quantity, :min_quantity, :difference, :id_conjunct)";
 					$sql = $this->db->prepare($sql);
 					$sql->bindValue(":id_products", $id_products);
 					$sql->bindValue(":cod", $cod);
-					$sql->bindValue(":name", $name);
+					$sql->bindValue(":name_products", $name_products);
 					$sql->bindValue(":quantity", $quantity);
 					$sql->bindValue(":min_quantity", $min_quantity);
 					$sql->bindValue(":difference", $difference);

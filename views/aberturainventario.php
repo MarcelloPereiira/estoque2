@@ -46,9 +46,9 @@ $date = date('d/m/Y \- H:i:s');
 				<td style="display: none"><input type="text" name="id_products[]" value="<?php echo $item['id_products']; ?>"></td>
 				<td><input class="borderinput" type="text" name="cod[]" readonly="true" value="<?php echo $item['cod']; ?>"></td>
 				<td><input class="borderinput" type="text" name="name[]" readonly="true" value="<?php echo $item['name_products']; ?>"></td>
-				<td><input class="borderinput2" type="text" name="quantity[]" value="<?php echo number_format($item['quantity'], 0, '', '.'); ?>"></td>
-				<td><input class="borderinput2" type="text" name="min_quantity[]" value="<?php echo number_format($item['min_quantity'], 0, '', '.'); ?>"></td>
-				<td><input class="borderinput" type="text" name="difference[]" readonly="true" value="<?php echo number_format(floatval($item['min_quantity']) - floatval($item['quantity']), 0, '', '.'); ?>"></td>
+				<td><input class="borderinput2 quantidade" type="text" name="quantity[]" value="<?php echo number_format($item['quantity'], 2, ',', '.'); ?>"></td>
+				<td><input class="borderinput2 quantidade" type="text" name="min_quantity[]" value="<?php echo number_format($item['min_quantity'], 2, ',', '.'); ?>"></td>
+				<td><input class="borderinput" type="text" name="difference[]" readonly="true" value="<?php echo number_format(floatval($item['quantity']) - floatval($item['min_quantity']), 2, ',', '.'); ?>"></td>
 			</tr>
 		<?php endforeach; ?>
 			<tr>

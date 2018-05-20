@@ -320,7 +320,7 @@ class homeController extends Controller {
         
 
         $f = new Users();
-        //$filters = new FiltersHelper();
+        
 
         if((!empty($_POST['user_number']) && !empty($_POST['user_pass'])) && isset($_POST['enviarNivel']) && !empty($_POST['nome'])) {
             $user_number = addslashes($_POST['user_number']);
@@ -392,7 +392,7 @@ class homeController extends Controller {
             )
         );
         $f = new Users();
-        //$filters = new FiltersHelper();
+        
 
         if(!empty($_POST['nome'])) {
             $user_number = addslashes($_POST['user_number']);
@@ -492,11 +492,11 @@ class homeController extends Controller {
         }
 
          $p = new Products();
-        
+        $filters = new FiltersHelper();
 
         if(!empty($_POST['quantity'])){
-            $quantity = addslashes($_POST['quantity']);
-            $id = addslashes($_POST['id']);
+            $quantity = $filters->filter_post_money('quantity');
+            $id = $_POST['id'];
 
             if($quantity && $id) {
                 $p->entradaProduto($quantity, $id);
@@ -549,7 +549,7 @@ class homeController extends Controller {
 
 
         $p = new Products();
-        //$filters = new FiltersHelper();
+        
 
         if(!empty($_POST['nome'])) {
             $nome = ucwords(mb_strtolower(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING)));
@@ -656,7 +656,7 @@ class homeController extends Controller {
         }
 
         $p = new Products();
-        //$filters = new FiltersHelper();
+        
 
         if(!empty($_POST['name_categories'])) {
             $name_categories = ucwords(mb_strtolower(addslashes($_POST['name_categories'])));

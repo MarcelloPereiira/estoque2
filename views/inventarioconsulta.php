@@ -52,7 +52,7 @@ $date = date('d/m/Y \- \H\o\r\a\: H\h:i\m\i\n');
 					<td><?php echo $item['name_products']; ?></td>
 					<td><?php echo number_format($item['quantity'], 0, '', '.'); ?></td>
 					<td><?php echo number_format($item['min_quantity'], 0, '', '.'); ?></td>
-					<td><?php echo number_format(floatval($item['min_quantity']) - floatval($item['quantity']), 0, '', '.'); ?></td>
+					<td><?php echo number_format(floatval($item['quantity']) - floatval($item['min_quantity']), 0, '', '.'); ?></td>
 				</tr>
 			<?php endforeach; ?>
 				<tr>

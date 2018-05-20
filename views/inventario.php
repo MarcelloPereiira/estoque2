@@ -71,9 +71,9 @@ $date = date('d/m/Y \- H:i:s');
 				<td><input type="checkbox" name="check[]" class="marcar" value="<?php echo $item['id']; ?>"  checked></td>
 				<td><input class="borderinput" type="text" name="cod[]" readonly="true" value="<?php echo $item['cod']; ?>"></td>
 				<td><input class="borderinput" type="text" name="name[]" readonly="true" value="<?php echo $item['name']; ?>"></td>
-				<td><input class="borderinput" type="text" name="quantity[]" readonly="true" value="<?php echo number_format($item['quantity'], 0, '', '.'); ?>"></td>
-				<td><input class="borderinput" type="text" name="min_quantity[]" readonly="true" value="<?php echo number_format($item['min_quantity'], 0, '', '.'); ?>"></td>
-				<td><input class="borderinput" type="text" name="difference[]" readonly="true" value="<?php echo floatval($item['quantity']) - number_format(floatval($item['min_quantity']), 0, '', '.'); ?>"></td>
+				<td><input class="borderinput quantidade" type="text" name="quantity[]" readonly="true" value="<?php echo number_format($item['quantity'],2, ',',''); ?>"></td>
+				<td><input class="borderinput quantidade" type="text" name="min_quantity[]" readonly="true" value="<?php echo number_format($item['min_quantity'], 2 ,',', ''); ?>"></td>
+				<td><input class="borderinput" type="text" name="difference[]" readonly="true" value="<?php echo number_format(floatval($item['quantity']) - floatval($item['min_quantity']), 2, ',', '.'); ?>"></td>
 			</tr>
 		<?php endforeach; ?>
 			<tr>

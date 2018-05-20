@@ -49,7 +49,7 @@ class inventarioController extends Controller {
 
 		$i = new Inventario();
 		$p = new Products();
-		$filters = new FiltersHelper();
+		//$filters = new FiltersHelper();
 
 
 		if(!empty($_POST['name'])) {
@@ -108,7 +108,7 @@ class inventarioController extends Controller {
 
         $i = new Inventario();
         $p = new Products();
-        $filters = new FiltersHelper();
+        //$filters = new FiltersHelper();
 
 
         if(!empty($_POST['name'])) {
