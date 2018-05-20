@@ -36,7 +36,7 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 			<td><?php echo $item['name_categories']; ?></td>
 			<?php if ($users->hasPermission('ADM') || $users->hasPermission('OP')): ?>
 				<td>
-					<a href="<?php echo BASE_URL; ?>home/editarCategory/<?php echo $item['id_categories']; ?>">Editar</a>
+					<a class="edit" href="<?php echo BASE_URL; ?>home/editarCategory/<?php echo $item['id_categories']; ?>">Editar</a>
 				</td>
 				<td>
 					<a href="<?php echo BASE_URL; ?>home/editarStatusCategory/<?php echo $item['id_categories']; ?>">

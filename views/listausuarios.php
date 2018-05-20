@@ -36,7 +36,7 @@ if ($users->hasPermission("ADM") == false) {
 			<td><?php echo $item['user_number']; ?></td>
 			<?php if ($users->hasPermission('ADM') || $users->hasPermission('OP')): ?>
 				<td>
-					<a href="<?php echo BASE_URL; ?>home/editarusuario/<?php echo $item['id']; ?>">Editar</a>
+					<a class="edit" href="<?php echo BASE_URL; ?>home/editarusuario/<?php echo $item['id']; ?>">Editar</a>
 				</td>
 				<td>
 					<a href="<?php echo BASE_URL; ?>home/editarStatusUser/<?php echo $item['id']; ?>">

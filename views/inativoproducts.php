@@ -49,15 +49,15 @@ if ($users->hasPermission("ADM") == false) {
 			<td><?php echo $item['name_categories']; ?></td>
 			<td>R$ <?php echo number_format($item['price'], 2, ',', '.'); ?></td>
 			<?php if ($item['quantity'] <= $item['min_quantity'] && $item['quantity'] > 0): ?>
-				<td style="color: #ffbb00"><?php echo number_format($item['quantity'], 2, ',', '.'); ?></td>	
+				<td class="min"><?php echo number_format($item['quantity'], 2, ',', '.'); ?></td>	
 			<?php elseif($item['quantity'] == 0): ?>
-				<td style="color: red"><?php echo number_format($item['quantity'], 2, ',', '.'); ?></td>	
+				<td class="esgotado"><?php echo number_format($item['quantity'], 2, ',', '.'); ?></td>	
 			<?php else: ?>
-				<td style="color: green"><?php echo number_format($item['quantity'], 2, ',', '.'); ?></td>	
+				<td class="ok"><?php echo number_format($item['quantity'], 2, ',', '.'); ?></td>	
 			<?php endif; ?>
 			<?php if ($users->hasPermission('ADM')): ?>
 				<td>
-					<a href="<?php echo BASE_URL; ?>home/edit/<?php echo $item['id']; ?>">Editar</a>
+					<a class="edit" href="<?php echo BASE_URL; ?>home/edit/<?php echo $item['id']; ?>">Editar</a>
 				</td>
 				<td>
 					<a href="<?php echo BASE_URL; ?>home/editarStatusProducts/<?php echo $item['id']; ?>">

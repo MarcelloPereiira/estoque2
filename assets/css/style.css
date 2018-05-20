@@ -1,9 +1,11 @@
 *{
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #3F3F40;
 }
 body {
 	margin:0;
 	font-size: 15px;
+	background-color: #FCFDFF;
 }
 .container {
 	max-width:1000px;
@@ -31,9 +33,7 @@ nav ul li {
 }
 
 
-
 .header li a {
-	color:#000;
 	text-decoration: none;
 	display:block;
 	padding-left:10px;
@@ -71,8 +71,8 @@ table a {
 	transition: 1s all;
 }
 .monitorar:hover {
-	color: green;
-	border: 1px solid green;
+	color: #328041;
+	border: 1px solid #328041;
 }
 
 .btninativos {
@@ -85,8 +85,8 @@ table a {
 	transition: 1s all;
 }
 .btninativos:hover {
-	color: red;
-	border: 1px solid red;
+	color: #C54123;
+	border: 1px solid #C54123;
 }
 
 .flexlinkhome{
@@ -96,19 +96,38 @@ table a {
 
 table a:hover {
 	text-decoration:underline;
-	color: red;
-	font-size: 13px;
+	font-size: 12px;
 	font-weight: bold;
 }
 .ativo{
-	color: green;
+	color: #297542;
 } 
 .ativo:hover{
-	color: green;
+	color: #297542;
 	text-decoration:underline;
 } 
 .inativo{
-	color: red;
+	color: #C54123;
+}
+.inativo:hover{
+	color: #C54123;
+	text-decoration:underline;
+}
+
+.edit{
+	color: #0B5A79;
+}
+
+.esgotado{
+	color: #BD1147;
+}
+
+.min{
+ color: #F2A336;
+}
+
+.ok{
+	color: #297542;
 }
 
 .flexbuscador{
@@ -119,6 +138,7 @@ table a:hover {
 #busca {
 	outline:0;
 	border:0;
+	background-color: #FCFDFF;
 }
 .flexbuscador fieldset{
 	width: 100%;
@@ -133,14 +153,14 @@ table a:hover {
 	transition: 1s all;
 }
 .flexbuscador .botao:hover{
-	border: 2px solid blue;
+	border: 2px solid #8c8c8c;
 }
 
 .homeselect{
 	height: 65px;
 	width: 400px;
-	background-color: #FFF;
-	border: 2px solid blue;
+	background-color: #FCFDFF;
+	border: 2px solid #8c8c8c;
 }
 
 
@@ -171,6 +191,7 @@ a input {
 a input:hover{
 	box-shadow: 0px 0px 5px #000000;
 	background-color:#EEEEEE;
+	cursor: pointer;
 }
 
 .warning {
@@ -196,7 +217,7 @@ a input:hover{
 }
 .status{
 	font-size: 12px;
-	color: #03b0be;
+	color: #0B5A79;
 }
 
 .formLogin input[type=text],
@@ -221,6 +242,7 @@ a input:hover{
 .formLogin input[type=submit]:hover{
 	box-shadow: 0px 0px 5px #000000;
 	background-color:#EEEEEE;
+	cursor: pointer;
 }
 
 .flexlogin{
