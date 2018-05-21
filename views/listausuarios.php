@@ -9,6 +9,8 @@ if ($users->hasPermission("ADM") == false) {
 }
 ?>
 
+<h1>Lista de Usuários Ativos</h1>
+
 <fieldset>
 	<form method="GET">
 		<input type="text" id="busca" name="busca" value="<?php echo (!empty($_GET['busca']))?$_GET['busca']:''; ?>" placeholder="Digite o nome ou o número do usuário" style="width:100%;height:40px;font-size:18px;" />

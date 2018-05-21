@@ -10,6 +10,8 @@ if ($users->hasPermission("ADM") == false) {
 } 
 ?>
 
+<h1>Lista de Producos Inativos</h1>
+
 <form method="GET" class="flexbuscador">
 	<fieldset>
 			<input type="text" id="busca" name="busca" value="<?php echo (!empty($_GET['busca']))?$_GET['busca']:''; ?>" placeholder="Digite o código de barras ou o nome do produto" style="width:100%;height:40px;font-size:18px;" />

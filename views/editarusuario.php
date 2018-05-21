@@ -8,17 +8,16 @@ if ($users->hasPermission("ADM") == false) {
 	exit;
 } 
 ?>
-<h1>Editar de Usuário</h1>
+<h1>Editar Usuário</h1>
 <form method="POST" class="formLogin">
 	Nome:<br/>
-	<input type="text" name="nome" value="<?php echo $info['nome']; ?>" required /><br/><br/>
+	<input type="text" name="nome" class="letras" maxlength="70" value="<?php echo $info['nome']; ?>" required /><br/><br/>
 
-	Número do Usuário:<br/>
-	<input type="text" class="inteiro" name="user_number" value="<?php echo $info['user_number']; ?>" required /><br/><br/>
+	CPF:<br/>
+	<input type="text" class="inteiro" name="user_number" maxlength="11" value="<?php echo $info['user_number']; ?>" required /><br/><br/>
 
 	Senha:<br/>
-	<input type="password" class="inteiro" name="user_pass" required /><br/><br/>
-
+	<input type="password" name="user_pass" maxlength="20" required /><br/><br/>
 	<div class="flexlogin">
 		<div>
 			<input type="radio" name="enviarNivel" value="ADM" id="adm" required />
