@@ -21,7 +21,7 @@ if ($users->hasPermission("ADM") == false) {
 <table border="0" width="100%">
 	<tr>
 		<th>NOME</th>
-		<th>NIVEL</th>
+		<th>NÍVEL</th>
 		<th>NÚMERO</th>
 		<?php if ($users->hasPermission('ADM') || $users->hasPermission('OP')): ?>
 			<th>AÇÕES</th>

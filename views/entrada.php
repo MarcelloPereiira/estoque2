@@ -9,7 +9,7 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 } 
 ?>
 
-<h1>Entrada de Produtos</h1>
+<h1>Entrada de Nota Fiscal</h1>
 
 <?php if(!empty($warning)): ?>
 <div class="warning"><?php echo $warning; ?></div>
