@@ -13,10 +13,12 @@ class homeController extends Controller {
 		}		
 	}
 
+    /** Funções da página HOME */
     public function index() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
 
+        /** Menu do usuário administrador*/
         if ($users->hasPermission("ADM")) {
             $data = array(
             'menu' => array(
@@ -32,6 +34,8 @@ class homeController extends Controller {
         );
 
         }
+
+        /** Menu do usuário operacional */
         else if ($users->hasPermission("OP")) {
             $data = array(
             'menu' => array(
@@ -46,6 +50,7 @@ class homeController extends Controller {
 
         }
 
+        /** Menu do usuário Caixa */
         else if ($users->hasPermission("CX")) {
             $data = array(
             'menu' => array(
@@ -62,7 +67,7 @@ class homeController extends Controller {
 
         $s = '';
         $c = '';
-        
+        /** Condição de Busca por nome/código ou por categorias */
         if(!empty($_GET['busca']) || !empty($_GET['category'])) {
         	$s = $_GET['busca'];
             $c = $_GET['category'];
@@ -71,154 +76,18 @@ class homeController extends Controller {
         }
 
         $data['list'] = $p->getProducts($s, $c);
+
+        /** Enviando o nome e o tipo de usuário para mostrar a mensagem de boas-vindas na página Home */
         $data['nome'] = $users->getNome();
 
-        //$data['list'] = $p->getCategory($c);
-
+        /** Mostrar a categoria de cada produto */
         $data['listcategory'] = $p->getCategories();
         $this->loadTemplate('home', $data);
     }
+    /** Fim da Função da página HOME */
 
 
-    public function add() {
-        $users = new Users();
-        $users->setUsuario($_SESSION['token']);
-    	
-        if ($users->hasPermission("ADM")) {
-            $data = array(
-            'menu' => array(
-                BASE_URL => 'HOME',
-                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
-                BASE_URL.'inventario' => 'INVENTÁRIO',
-                BASE_URL.'home/entrada' => 'ENTRADA',
-                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
-                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
-                BASE_URL.'login/sair' => 'SAIR'
-                
-            )
-        );
-
-        }
-        else if ($users->hasPermission("OP")) {
-            $data = array(
-            'menu' => array(
-                BASE_URL => 'HOME',
-                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
-                BASE_URL.'inventario' => 'INVENTÁRIO',
-                BASE_URL.'home/entrada' => 'ENTRADA',
-                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
-                BASE_URL.'login/sair' => 'SAIR'
-            )
-        );
-
-        }
-
-    	$p = new Products();
-        $filters = new FiltersHelper();
-
-
-    	if(!empty($_POST['cod'])) {
-            $cod = filter_input(INPUT_POST, 'cod', FILTER_SANITIZE_STRING);
-            $name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
-            $price = $filters->filter_post_money('price');
-            $quantity = $filters->filter_post_money('quantity');
-            $min_quantity = $filters->filter_post_money('min_quantity');
-            if (!empty($_POST['id'])) {
-                $id_categories = addslashes($_POST['id']);    
-                        
-
-                if($cod && $name && $price && $quantity && $min_quantity && $id_categories) {
-            		if($p->addProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories)){
-                        $data['sucess'] = 'Cadastrado com sucesso.';
-                    } else{
-                        $data['warning'] = 'O produto já existe.';
-                    }
-
-            		//header("Location: ".BASE_URL);
-            		//exit;
-                } else {
-                    $data['warning'] = 'Digite os campos corretamente.';
-                }
-
-            }   else {
-                    $data['warning'] = 'Digite os campos corretamente.';
-                }
-
-    	} 
-        $data['list'] = $p->getCategories();
-    	$this->loadTemplate('add', $data);
-    }
-
-    public function edit($id) {
-        $users = new Users();
-        $users->setUsuario($_SESSION['token']);
-        
-        if ($users->hasPermission("ADM")) {
-            $data = array(
-            'menu' => array(
-                BASE_URL => 'HOME',
-                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
-                BASE_URL.'inventario' => 'INVENTÁRIO',
-                BASE_URL.'home/entrada' => 'ENTRADA',
-                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
-                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
-                BASE_URL.'login/sair' => 'SAIR'
-                
-            )
-        );
-
-        }
-        else if ($users->hasPermission("OP")) {
-            $data = array(
-            'menu' => array(
-                BASE_URL => 'HOME',
-                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
-                BASE_URL.'inventario' => 'INVENTÁRIO',
-                BASE_URL.'home/entrada' => 'ENTRADA',
-                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
-                BASE_URL.'login/sair' => 'SAIR'
-            )
-        );
-
-        }
-
-
-    	$p = new Products();
-        $filters = new FiltersHelper();
-
-
-    	if(!empty($_POST['cod'])) {
-            $cod = filter_input(INPUT_POST, 'cod', FILTER_SANITIZE_STRING);
-    		$name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
-            $price = $filters->filter_post_money('price');
-            $quantity = $filters->filter_post_money('quantity');
-            $min_quantity = $filters->filter_post_money('min_quantity');
-            if (!empty($_POST['id'])) {
-                $id_categories = addslashes($_POST['id']);
-             
-
-                if($cod && $name && $price && $quantity && $min_quantity) {
-            		$p->editProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories, $id);
-
-                    $data['sucess'] = 'Editado com sucesso.';
-            		//header("Location: ".BASE_URL);
-            		//exit;
-                } else {
-                    $data['warning'] = 'Digite os campos corretamente.';
-                }
-
-            }  else {
-                    $data['warning'] = 'Digite os campos corretamente.';
-                }
-    	}
-
-    	$data['info'] = $p->getProduct($id);
-        $data['list'] = $p->getCategories();
-
-    	$this->loadTemplate('edit', $data);
-    }
-
-
+     /** Função para Inativar os produtos Ativos*/
      public function editarStatusProducts($id) {
         
         $p = new Products();
@@ -238,11 +107,15 @@ class homeController extends Controller {
         
     }
 
+
+    /** Função da página de Lista de Produtos Inativos */
+        /** Função para Ativar os produtos Inativos */
     public function inativoproducts() {
         
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
 
+        /** Menu do usuário administrador */
         if ($users->hasPermission("ADM")) {
             $data = array(
             'menu' => array(
@@ -258,6 +131,7 @@ class homeController extends Controller {
         );
 
         }
+        /** Menu do usuário operacional */
         else if ($users->hasPermission("OP")) {
             $data = array(
             'menu' => array(
@@ -278,26 +152,169 @@ class homeController extends Controller {
 
         $s = '';
         $c = '';
-        
+        /** Condição de Busca por nome/código ou por categorias */
         if(!empty($_GET['busca']) || !empty($_GET['category'])) {
             $s = $_GET['busca'];
             $c = $_GET['category'];
         }else if (empty($_GET['category'])) {
             $_GET['category'] = '';
         }
-
-        $data['list'] = $p->getProducts($s, $c);
-
-
+        
         $data['list'] = $p->getProductsInativos($s, $c);
-
-        //$data['list'] = $p->getCategory($c);
 
         $data['listcategory'] = $p->getCategoriesInativos();
 
 
         $this->loadTemplate('inativoproducts', $data);
     }
+
+
+    /** Função da página de ADICIONAR PRODUTOS */
+    public function add() {
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+    	
+        /** Menu do usuário administrador*/
+        if ($users->hasPermission("ADM")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
+            )
+        );
+
+        }
+        /** Menu do usuário operacional */
+        else if ($users->hasPermission("OP")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'login/sair' => 'SAIR'
+            )
+        );
+
+        }/** Fim da função da página ADICIONAR PRODUTOS */
+
+    	$p = new Products();
+        $filters = new FiltersHelper();
+
+
+    	if(!empty($_POST['cod'])) {
+            /** Recebe as informações enviadas pelo usuário */
+            $cod = filter_input(INPUT_POST, 'cod', FILTER_SANITIZE_STRING);
+            $name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
+            $price = $filters->filter_post_money('price');
+            $quantity = $filters->filter_post_money('quantity');
+            $min_quantity = $filters->filter_post_money('min_quantity');
+
+            if (!empty($_POST['id'])) {
+                $id_categories = addslashes($_POST['id']);    
+                        
+
+                if($cod && $name && $price && $quantity && $min_quantity && $id_categories) {
+            		if($p->addProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories)){
+                        $data['sucess'] = 'Cadastrado com sucesso.';
+                    } else{
+                        $data['warning'] = 'O produto já existe.';
+                    }
+
+                } else {
+                    $data['warning'] = 'Digite os campos corretamente.';
+                }
+
+            }   else {
+                    $data['warning'] = 'Digite os campos corretamente.';
+                }
+
+    	} 
+        $data['list'] = $p->getCategories();
+    	$this->loadTemplate('add', $data);
+    }
+
+    /** Função da página EDITAR PRODUTOS*/
+    public function edit($id) {
+        $users = new Users();
+        $users->setUsuario($_SESSION['token']);
+        
+        /** Menu do usuário administrador*/
+        if ($users->hasPermission("ADM")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'home/addUsuario' => 'CADASTRAR USUÁRIO',
+                BASE_URL.'login/sair' => 'SAIR'
+                
+            )
+        );
+
+        }
+        /** Menu do usuário operacional*/
+        else if ($users->hasPermission("OP")) {
+            $data = array(
+            'menu' => array(
+                BASE_URL => 'HOME',
+                BASE_URL.'home/add' => 'ADICIONAR PRODUTO',
+                BASE_URL.'inventario' => 'INVENTÁRIO',
+                BASE_URL.'home/entrada' => 'ENTRADA',
+                BASE_URL.'home/addCategoria' => 'CATEGORIAS',
+                BASE_URL.'login/sair' => 'SAIR'
+            )
+        );
+
+        }
+
+
+    	$p = new Products();
+        $filters = new FiltersHelper();
+
+
+    	if(!empty($_POST['cod'])) {
+            /** Recebe as informações enviadas pelo usuário */
+            $cod = filter_input(INPUT_POST, 'cod', FILTER_SANITIZE_STRING);
+    		$name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
+            $price = $filters->filter_post_money('price');
+            $quantity = $filters->filter_post_money('quantity');
+            $min_quantity = $filters->filter_post_money('min_quantity');
+            if (!empty($_POST['id'])) {
+                $id_categories = addslashes($_POST['id']);
+             
+
+                if($cod && $name && $price && $quantity && $min_quantity) {
+                    /** Envia as informações para a função editProducts dentro da Classe Products para editar as informações do produto */
+            		$p->editProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories, $id);
+
+                    $data['sucess'] = 'Editado com sucesso.';
+            		
+                } else {
+                    $data['warning'] = 'Digite os campos corretamente.';
+                }
+
+            }  else {
+                    $data['warning'] = 'Digite os campos corretamente.';
+                }
+    	}
+        /** Pega as informações do produto a partir do id do produto, o produto que usuário escolheu para editar */
+    	$data['info'] = $p->getProduct($id);
+        $data['list'] = $p->getCategories();
+
+    	$this->loadTemplate('edit', $data);
+    }/** Fim da função da página EDITAR PRODUTOS*/
+
+    
 
 
     public function addUsuario() {
