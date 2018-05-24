@@ -75,6 +75,7 @@ class homeController extends Controller {
             $_GET['category'] = '';
         }
 
+        /** Pega os produtos ativos */
         $data['list'] = $p->getProducts($s, $c);
 
         /** Enviando o nome e o tipo de usuário para mostrar a mensagem de boas-vindas na página Home */
@@ -92,13 +93,19 @@ class homeController extends Controller {
         
         $p = new Products();
 
+        /** Envia o id que foi passado como parâmentro para a função getProducts dentro da Classe Products */
+        /** id_produto recebe os dados do produto que tem o mesmo id que foi passado com parâmetro  */
         $id_produto = $p->getProduct($id);
+
+        /** Envia o id da categoria do produto que foi recebido na variável id_produto para a função getCategoryStatus que está dentro da Classe Products */
+        /** id_produto recebe os dados do produto que tem o mesmo id que foi passado com parâmetro  */
         $categoria = $p->getCategoryStatus($id_produto['id_categories']);
         if (empty($categoria)) {
             echo "<script>alert('A categoria deste produto está desativada.');</script>";
             echo "<script>location.href='../../home';</script>";
             exit;
         } else{
+            /** Envia os dados para função getStatus dentro da Classe Products*/
             $data['info'] = $p->upStatus($id_produto, $id, $categoria);
 
             header("Location: ../../home");   
@@ -159,12 +166,14 @@ class homeController extends Controller {
         }else if (empty($_GET['category'])) {
             $_GET['category'] = '';
         }
-        
+
+        /** Pega os produtos inativos */
         $data['list'] = $p->getProductsInativos($s, $c);
 
+        /** Pega a categoria dos produtos inativos */
         $data['listcategory'] = $p->getCategoriesInativos();
 
-
+        /** Envia os produtos inativos */
         $this->loadTemplate('inativoproducts', $data);
     }
 
@@ -210,7 +219,7 @@ class homeController extends Controller {
 
 
     	if(!empty($_POST['cod'])) {
-            /** Recebe as informações enviadas pelo usuário */
+            /** Recebe os dados enviados pelo usuário */
             $cod = filter_input(INPUT_POST, 'cod', FILTER_SANITIZE_STRING);
             $name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
             $price = $filters->filter_post_money('price');
@@ -283,7 +292,7 @@ class homeController extends Controller {
 
 
     	if(!empty($_POST['cod'])) {
-            /** Recebe as informações enviadas pelo usuário */
+            /** Recebe os dados enviados pelo usuário */
             $cod = filter_input(INPUT_POST, 'cod', FILTER_SANITIZE_STRING);
     		$name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
             $price = $filters->filter_post_money('price');
@@ -294,7 +303,7 @@ class homeController extends Controller {
              
 
                 if($cod && $name && $price && $quantity && $min_quantity) {
-                    /** Envia as informações para a função editProducts dentro da Classe Products para editar as informações do produto */
+                    /** Envia os dados para a função editProducts dentro da Classe Products para editar os dados do produto */
             		$p->editProduct($cod, $name, $price, $quantity, $min_quantity, $id_categories, $id);
 
                     $data['sucess'] = 'Editado com sucesso.';
@@ -307,7 +316,7 @@ class homeController extends Controller {
                     $data['warning'] = 'Digite os campos corretamente.';
                 }
     	}
-        /** Pega as informações do produto a partir do id do produto, o produto que usuário escolheu para editar */
+        /** Pega os dados do produto a partir do id do produto, o produto que usuário escolheu para editar */
     	$data['info'] = $p->getProduct($id);
         $data['list'] = $p->getCategories();
 
@@ -316,10 +325,12 @@ class homeController extends Controller {
 
     
 
-
+    /** Função da página ADICIONAR USUÁRIO */
     public function addUsuario() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
+        /** Menu */
+        /** Somente os usuários que são administradores que podem acessar a página de ADICIONAR USUÁRIO */
         $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
@@ -340,21 +351,20 @@ class homeController extends Controller {
         
 
         if((!empty($_POST['user_number']) && !empty($_POST['user_pass'])) && isset($_POST['enviarNivel']) && !empty($_POST['nome'])) {
+            /** Recebe os dados enviadas pelo usuário */
             $user_number = addslashes($_POST['user_number']);
             $user_pass = md5(addslashes($_POST['user_pass']));
             $nivel = addslashes($_POST['enviarNivel']);
             $nome = mb_strtoupper(addslashes($_POST['nome']));
 
             if($user_number && $user_pass && $nivel && $nome) {
-                
+                    /** Envia os dados para a função addUsuario dentro da Classe Users */
                 if ($f->addUsuario($user_number, $user_pass, $nivel, $nome)) {
                     $data['msg'] = 'Cadastrado com sucesso.';   
                 } else{
                     $data['msg'] = 'O usuário já existe.';
                 }
 
-                //header("Location: ".BASE_URL);
-                //exit;
             } else {
                 $data['msg'] = 'Digite os campos corretamente.';
             }
@@ -365,8 +375,10 @@ class homeController extends Controller {
     }
 
 
-
+    /** Função da página Lista de Usuários Ativos */
     public function listausuarios() {
+        /** Menu */
+        /** Somente os usuários que são administradores que podem acessar a página Lista de Usuários Ativos */
          $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
@@ -382,19 +394,22 @@ class homeController extends Controller {
         $u = new Users();
 
         $s = '';
-        
+
         if(!empty($_GET['busca'])) {
             $s = $_GET['busca'];
         }
 
+        /** Pega a lista de usuários ativos */
         $data['list'] = $u->getUsers($s);
 
         $this->loadTemplate('listausuarios', $data);
     }
 
 
-
+    /** Função da página Editar Usuário */
      public function editarUsuario($id) {
+        /** Menu */
+        /** Somente os usuários que são administradores que podem acessar a página de Editar Usuário */
          $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
@@ -412,26 +427,26 @@ class homeController extends Controller {
         
 
         if(!empty($_POST['nome'])) {
+            /** Recebe os dados enviadas pelo usuário */
             $user_number = addslashes($_POST['user_number']);
             $user_pass = md5(addslashes($_POST['user_pass']));
             $nivel = addslashes($_POST['enviarNivel']);
             $nome = mb_strtoupper(addslashes($_POST['nome']));
 
              if($user_number && $user_pass && $nivel && $nome) {
-                
+                    /** Envia para a função editUser dentro da Classe Users */
                 if ($f->editUser($user_number, $user_pass, $nivel, $nome, $id)) {
                     $data['msg'] = 'Editado com sucesso.';   
                 } else{
                     $data['msg'] = 'O usuário já existe.';
                 }
 
-                //header("Location: ".BASE_URL);
-                //exit;
             } else {
                 $data['warning'] = 'Digite os campos corretamente.';
             }
         }
 
+        /** Pega os dados do usuário cadastrado a partir do id, o usuário escolhido para editar */
         $data['info'] = $f->getUser($id);
 
         $this->loadTemplate('editarusuario', $data);
@@ -447,7 +462,10 @@ class homeController extends Controller {
         header("Location: ../listausuarios");
     }
 
+    /** Função da página Lista de Usuários Inativos  */
     public function inativousers() {
+        /** menu  */
+        /** Somente os usuários que são administradores que podem acessar a página Lista de Usuários Inativos */
          $data = array(
             'menu' => array(
                 BASE_URL => 'HOME',
@@ -469,16 +487,18 @@ class homeController extends Controller {
             $s = $_GET['busca'];
         }
 
+        /** Pega os usuário inativos  */
         $data['list'] = $u->getUsersInativos($s);
 
         $this->loadTemplate('inativousers', $data);
     }
     
-
+    /** Função da página Entrada de Nota Fiscal  */
     public function entrada() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
         
+        /** menu do usuário Administrador  */
          if ($users->hasPermission("ADM")) {
             $data = array(
             'menu' => array(
@@ -494,6 +514,7 @@ class homeController extends Controller {
         );
 
         }
+        /** menu do usuário Operacional */
         else if ($users->hasPermission("OP")) {
             $data = array(
             'menu' => array(
@@ -508,14 +529,17 @@ class homeController extends Controller {
 
         }
 
-         $p = new Products();
+        $p = new Products();
         $filters = new FiltersHelper();
 
+
         if(!empty($_POST['quantity'])){
+            /** A variável quantity recebe os dados enviados pelo usuário, antes o dado é passado para a função filter_post_money dentro da Classe FiltersHelper */
             $quantity = $filters->filter_post_money('quantity');
             $id = $_POST['id'];
 
             if($quantity && $id) {
+                /** Envia os dados para a função entradaProduto dentro da Classe Products */
                 $p->entradaProduto($quantity, $id);
                 $data['sucess'] = 'Entrada de Produto com sucesso.';
                     
@@ -524,15 +548,17 @@ class homeController extends Controller {
               }
         }
 
+        /** Pega os produtos ativos e envia para a página */
         $data['list'] = $p->getProducts();
         $this->loadTemplate('entrada', $data);
     }
 
 
+    /** Função da página Cadastro de Categoria */
     public function addCategoria() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
-        
+        /** Menu do usuário administrador */
          if ($users->hasPermission("ADM")) {
             $data = array(
             'menu' => array(
@@ -549,6 +575,7 @@ class homeController extends Controller {
         );
 
         }
+        /** Menu do usuário Operacional */
         else if ($users->hasPermission("OP")) {
             $data = array(
             'menu' => array(
@@ -569,9 +596,11 @@ class homeController extends Controller {
         
 
         if(!empty($_POST['nome'])) {
+            /** A variável $nome recebe o dado enviado pelo usuário */
             $nome = ucwords(mb_strtolower(filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_STRING)));
 
             if($nome){
+                    
                 if ($p->addCategoryProduct($nome)) {
                     $data['sucess'] = 'Cadastrado com sucesso.';   
                 } else{
