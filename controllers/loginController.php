@@ -6,8 +6,10 @@ class loginController extends Controller {
 			'msg' => ''
 		);
 
+		$filters = new FiltersHelper();
+
 		if(!empty($_POST['number'])) {
-			$unumber = $_POST['number'];
+			$unumber = $filters->filter_post_cpf('number');
 			$upass = $_POST['password'];
 
 			$users = new Users();

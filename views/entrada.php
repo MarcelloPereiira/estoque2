@@ -34,6 +34,8 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 		<?php endforeach; ?>	
 	</select><br/><br/>	
 
+	Código de Barras:
+	<input type="text" name="cod" maxlength="40" /><br/><br/>
 	Quantidade:<br/>
 	<input type="text" class="dinheiro" name="quantity"  required /><br/><br/>
 

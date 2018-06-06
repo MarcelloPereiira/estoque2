@@ -14,7 +14,7 @@ if ($users->hasPermission("ADM") == false) {
 	<input type="text" name="nome" class="letras" maxlength="70" required /><br/><br/>
 
 	CPF:<br/>
-	<input type="text" class="inteiro" name="user_number" maxlength="11" required /><br/><br/>
+	<input type="text" class="cpf" name="user_number" maxlength="11" required /><br/><br/>
 
 	Senha:<br/>
 	<input type="password" name="user_pass" maxlength="20" required /><br/><br/>

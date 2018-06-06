@@ -13,7 +13,8 @@ class homeController extends Controller {
 		}		
 	}
 
-    /** Funções da página HOME */
+    /** Função da página HOME */
+    /** Função para listar os produtos ativos em uma tabela */
     public function index() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
@@ -64,8 +65,9 @@ class homeController extends Controller {
         
         $p = new Products();
         
-
+        /** Variável de busca por nome ou por código de barras */
         $s = '';
+        /** Variável de busca por categoria */
         $c = '';
         /** Condição de Busca por nome/código ou por categorias */
         if(!empty($_GET['busca']) || !empty($_GET['category'])) {
@@ -81,11 +83,11 @@ class homeController extends Controller {
         /** Enviando o nome e o tipo de usuário para mostrar a mensagem de boas-vindas na página Home */
         $data['nome'] = $users->getNome();
 
-        /** Mostrar a categoria de cada produto */
+        /** Pega todas as categorias ativas */
         $data['listcategory'] = $p->getCategories();
         $this->loadTemplate('home', $data);
     }
-    /** Fim da Função da página HOME */
+    
 
 
      /** Função para Inativar os produtos Ativos*/
@@ -100,8 +102,9 @@ class homeController extends Controller {
         /** Envia o id da categoria do produto que foi recebido na variável id_produto para a função getCategoryStatus que está dentro da Classe Products */
         /** id_produto recebe os dados do produto que tem o mesmo id que foi passado com parâmetro  */
         $categoria = $p->getCategoryStatus($id_produto['id_categories']);
+        /** Se a categoria deste produto estiver inativada, vai dar um alert dizendo que não pode ativar o produto */
         if (empty($categoria)) {
-            echo "<script>alert('A categoria deste produto está desativada.');</script>";
+            echo "<script>alert('A categoria deste produto está desativada. Não foi possível ativar o produto');</script>";
             echo "<script>location.href='../../home';</script>";
             exit;
         } else{
@@ -116,7 +119,7 @@ class homeController extends Controller {
 
 
     /** Função da página de Lista de Produtos Inativos */
-        /** Função para Ativar os produtos Inativos */
+        /** Função para listar os produtos inativos em uma tabela */
     public function inativoproducts() {
         
         $users = new Users();
@@ -156,8 +159,9 @@ class homeController extends Controller {
 
         $p = new Products();
         
-
+        /** Variável de busca por nome ou por código de barras */
         $s = '';
+        /** Variável de busca por categorias */
         $c = '';
         /** Condição de Busca por nome/código ou por categorias */
         if(!empty($_GET['busca']) || !empty($_GET['category'])) {
@@ -170,7 +174,7 @@ class homeController extends Controller {
         /** Pega os produtos inativos */
         $data['list'] = $p->getProductsInativos($s, $c);
 
-        /** Pega a categoria dos produtos inativos */
+        /** Pega todas as categorias inativas */
         $data['listcategory'] = $p->getCategoriesInativos();
 
         /** Envia os produtos inativos */
@@ -179,6 +183,7 @@ class homeController extends Controller {
 
 
     /** Função da página de ADICIONAR PRODUTOS */
+    /** Função para adicionar um novo produto */
     public function add() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
@@ -251,6 +256,7 @@ class homeController extends Controller {
     }
 
     /** Função da página EDITAR PRODUTOS*/
+    /** Função para editar um produto */
     public function edit($id) {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
@@ -321,11 +327,12 @@ class homeController extends Controller {
         $data['list'] = $p->getCategories();
 
     	$this->loadTemplate('edit', $data);
-    }/** Fim da função da página EDITAR PRODUTOS*/
+    }
 
     
 
     /** Função da página ADICIONAR USUÁRIO */
+    /** Função para adicionar um novo usuário */
     public function addUsuario() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
@@ -348,11 +355,12 @@ class homeController extends Controller {
         
 
         $f = new Users();
+        $filters = new FiltersHelper();
         
 
         if((!empty($_POST['user_number']) && !empty($_POST['user_pass'])) && isset($_POST['enviarNivel']) && !empty($_POST['nome'])) {
             /** Recebe os dados enviadas pelo usuário */
-            $user_number = addslashes($_POST['user_number']);
+            $user_number = $filters->filter_post_cpf('user_number');
             $user_pass = md5(addslashes($_POST['user_pass']));
             $nivel = addslashes($_POST['enviarNivel']);
             $nome = mb_strtoupper(addslashes($_POST['nome']));
@@ -376,6 +384,7 @@ class homeController extends Controller {
 
 
     /** Função da página Lista de Usuários Ativos */
+    /** Função para listar os usuário ativos em uma tabela */
     public function listausuarios() {
         /** Menu */
         /** Somente os usuários que são administradores que podem acessar a página Lista de Usuários Ativos */
@@ -393,6 +402,7 @@ class homeController extends Controller {
         );
         $u = new Users();
 
+        /** Variável de busca por nome ou por CPF */
         $s = '';
 
         if(!empty($_GET['busca'])) {
@@ -407,6 +417,7 @@ class homeController extends Controller {
 
 
     /** Função da página Editar Usuário */
+    /** Função para editar um usuário */
      public function editarUsuario($id) {
         /** Menu */
         /** Somente os usuários que são administradores que podem acessar a página de Editar Usuário */
@@ -424,11 +435,11 @@ class homeController extends Controller {
             )
         );
         $f = new Users();
-        
+        $filters = new FiltersHelper();
 
         if(!empty($_POST['nome'])) {
             /** Recebe os dados enviadas pelo usuário */
-            $user_number = addslashes($_POST['user_number']);
+            $user_number = $filters->filter_post_cpf('user_number');
             $user_pass = md5(addslashes($_POST['user_pass']));
             $nivel = addslashes($_POST['enviarNivel']);
             $nome = mb_strtoupper(addslashes($_POST['nome']));
@@ -452,6 +463,7 @@ class homeController extends Controller {
         $this->loadTemplate('editarusuario', $data);
     }
 
+    /** Função para editar o status do usuário (ativar ou inativar) */
      public function editarStatusUser($id) {
         
         $u = new Users();
@@ -463,6 +475,7 @@ class homeController extends Controller {
     }
 
     /** Função da página Lista de Usuários Inativos  */
+    /** Função para listar os usuário inativos em uma tabela */
     public function inativousers() {
         /** menu  */
         /** Somente os usuários que são administradores que podem acessar a página Lista de Usuários Inativos */
@@ -481,6 +494,7 @@ class homeController extends Controller {
         );
         $u = new Users();
 
+        /** Variável de busca por nome ou por CPF */
         $s = '';
         
         if(!empty($_GET['busca'])) {
@@ -494,6 +508,7 @@ class homeController extends Controller {
     }
     
     /** Função da página Entrada de Nota Fiscal  */
+    /** Função para dar entrada nos produtos */
     public function entrada() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
@@ -537,15 +552,30 @@ class homeController extends Controller {
             /** A variável quantity recebe os dados enviados pelo usuário, antes o dado é passado para a função filter_post_money dentro da Classe FiltersHelper */
             $quantity = $filters->filter_post_money('quantity');
             $id = $_POST['id'];
+            $cod = $_POST['cod'];
 
-            if($quantity && $id) {
-                /** Envia os dados para a função entradaProduto dentro da Classe Products */
-                $p->entradaProduto($quantity, $id);
-                $data['sucess'] = 'Entrada de Produto com sucesso.';
-                    
+            if (!empty($cod)) {
+                if($cod && $quantity) {
+                    /** Envia os dados para a função entradaProduto dentro da Classe Products */
+                    $p->entradaProdutoPorCod($quantity, $cod);
+                    $data['sucess'] = 'Entrada de Produto com sucesso.';
+                        
+                } else{
+                       $data['warning'] = 'Não foi possível dar entrada.';
+                  }
+
             } else{
-                   $data['warning'] = 'Não foi possível dar entrada.';
-              }
+
+                if($quantity && $id) {
+                    /** Envia os dados para a função entradaProduto dentro da Classe Products */
+                    $p->entradaProduto($quantity, $id);
+                    $data['sucess'] = 'Entrada de Produto com sucesso.';
+                        
+                } else{
+                       $data['warning'] = 'Não foi possível dar entrada.';
+                  }
+
+            }
         }
 
         /** Pega os produtos ativos e envia para a página */
@@ -555,6 +585,7 @@ class homeController extends Controller {
 
 
     /** Função da página Cadastro de Categoria */
+    /** Função para adicionar uma nova categoria */
     public function addCategoria() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
@@ -617,10 +648,12 @@ class homeController extends Controller {
         $this->loadTemplate('addCategoria', $data);
     }
 
+        /** Função da página Lista de Categorias */
+        /** Função para listar as categorias ativas em uma tabela */
     public function listacategorias() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
-        
+          /** Menu do usuário administrador */
           if ($users->hasPermission("ADM")) {
             $data = array(
             'menu' => array(
@@ -636,6 +669,7 @@ class homeController extends Controller {
         );
 
         }
+        /** Menu do usuário operacional */
         else if ($users->hasPermission("OP")) {
             $data = array(
             'menu' => array(
@@ -654,22 +688,25 @@ class homeController extends Controller {
 
         $p = new Products();
 
-
+        /** Variável de busca por nome */
         $s = '';
         
         if(!empty($_GET['busca'])) {
             $s = $_GET['busca'];
         }
 
+         /** envia a variável $s para a função getCategory dentro da Classe Products e a variável $data['list'] recebe o retorno */
         $data['list'] = $p->getCategory($s);
 
         $this->loadTemplate('listacategorias', $data);
     }
 
+    /** Função da página Editar Categoria */
+    /** Função para editar uma categoria */
     public function editarCategory($id) {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
-        
+        /** Menu do usuário administrador */
           if ($users->hasPermission("ADM")) {
             $data = array(
             'menu' => array(
@@ -686,6 +723,7 @@ class homeController extends Controller {
         );
 
         }
+        /** Menu do usuário operacional */
         else if ($users->hasPermission("OP")) {
             $data = array(
             'menu' => array(
@@ -705,32 +743,40 @@ class homeController extends Controller {
         
 
         if(!empty($_POST['name_categories'])) {
+            /** Recebe o dado enviado pelo usuário */
             $name_categories = ucwords(mb_strtolower(addslashes($_POST['name_categories'])));
 
             if($name_categories) {
+                /** envia os dados para a função editarCategoria dentro da Classe Products */
                 $p->editarCategoria($name_categories, $id);
 
                 $data['sucess'] = 'Editado com sucesso.';
-                //header("Location: ".BASE_URL);
-                //exit;
+                
             } else {
                 $data['warning'] = 'Digite os campos corretamente.';
             }
         }
 
+        /** envia o id para a função getCategoryEdit e a variável $data['info'] recebe o resultado(retorno) */
         $data['info'] = $p->getCategoryEdit($id);
 
         $this->loadTemplate('editcategory', $data);
     }
 
+     /** Função para ativar ou inativar as categorias */
      public function editarStatusCategory($id) {
         
         
         $p = new Products();
 
+        /** Envia o id da categoria que foi passada como parâmetro para a função getCategoryEdit dentro da Classe Products e a variável $id_status recebe o resultado(retorno) */
         $id_status = $p->getCategoryEdit($id);
+        /** Envia o id da categoria que foi passada como parâmetro para a função getProductCat dentro da Classe Products e a variável $produto recebe o resultado(retorno) */
         $produto = $p->getProductCat($id);
+
+        /** Se tiver algum produto ativo desta categoria, vai dar um alert dizendo que a categoria não pode ser inativada */
         if (!empty($produto)) {
+
              echo "<script>alert('Existem produtos ativos relacionados a esta categoria. Não foi possível Inativar.');</script>";
              echo "<script>location.href='listacategorias';</script>";
              exit;
@@ -742,11 +788,12 @@ class homeController extends Controller {
         
     }
 
+    /** Função da página Lista de Categorias Inativas */    
+    /** Função para listar as categorias inativas em uma tabela */
     public function inativocategories() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
-    
-
+          /** Menu do usuário administrador */
           if ($users->hasPermission("ADM")) {
             $data = array(
             'menu' => array(
@@ -763,6 +810,7 @@ class homeController extends Controller {
         );
 
         }
+        /** Menu do usuário operacional */
         else if ($users->hasPermission("OP")) {
             $data = array(
             'menu' => array(
@@ -781,13 +829,14 @@ class homeController extends Controller {
         $p = new Products();
         
         
-
+        /** Variável de busca por nome */
         $s = '';
         
         if(!empty($_GET['busca']) || !empty($_GET['category'])) {
             $s = $_GET['busca'];
         }
 
+        /** envia a variável $s para a função getCategoryInativos e a variável $data['list'] recebe o resultado(retorno) */
         $data['list'] = $p->getCategoryInativos($s);
 
 

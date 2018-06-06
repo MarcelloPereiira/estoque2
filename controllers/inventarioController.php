@@ -11,10 +11,14 @@ class inventarioController extends Controller {
 		}		
 	}
 
+    /** Função da página Inventário */
+    /** Função para listar os produtos ativos em uma tabela */
+    /** Esse inventário é salvo antes da contagem dos produtos */
 	public function index() {
         $users = new Users();
         $users->setUsuario($_SESSION['token']);
 
+        /** Menu do usuário administrador */
         if ($users->hasPermission("ADM")) {
             $data = array(
             'menu' => array(
@@ -31,6 +35,7 @@ class inventarioController extends Controller {
         );
 
         }
+        /** Menu do usuário operacional */
         else if ($users->hasPermission("OP")) {
             $data = array(
             'menu' => array(
@@ -53,10 +58,10 @@ class inventarioController extends Controller {
 
 
 		if(!empty($_POST['name'])) {
-            //$cod = filter_input(INPUT_POST, 'cod', FILTER_VALIDATE_INT);
-    		//$name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
             if (!empty($_POST['check'])) {
+                /** A variável $codinventario recebe um código aleatório a cada vez que é aberto o inventário, esse código identifica o inventário */
                 $codinventario = $_POST['codinventario'];
+                /** Recebe todos os dados dos produtos para montar o inventário */
                 $array['check'] = $_POST['check'];
         		$array['id'] = $_POST['id'];
         		$array['cod'] = $_POST['cod'];
@@ -64,17 +69,18 @@ class inventarioController extends Controller {
                 $array['quantity'] = $_POST['quantity'];
                 $array['min_quantity'] = $_POST['min_quantity'];
                 $array['difference'] = $_POST['difference'];
+                /** A variavel $total recebe a contagem de todos os checkbox que foram marcados e enviados pelo usuário */
                 $total = count($_POST['check']);
-                //$totalUni = $filters->filter_post_money('totalUni');
                 
                 if($array && $total) {
+                    /** Envia a variável $total e $codinventario para a função addConjunct dentro da Classe Inventario */
                 	$i->addConjunct($total, $codinventario);
+                    /** A variável $id_conjunct recebe o resultado(retorno) da função getConjunct */
                 	$id_conjunct = $i->getConjunct();
+                    /** Envia o array $array e a variável $id_conjunct para a função addInventario dentro da Classe Inventario */
             		$i->addInventario($array, $id_conjunct);
             		
-
-                    //$data['sucess'] = 'Inventário salvo com sucesso.';
-                    //$this->loadTemplate('aberturainventario', $data);
+                    /** Depois que o usuário clicar no botão "Abrir Inventário" vai ser redirecionado para a página Abertura de Inventário (aberturainventario) */
             		header("Location: ".BASE_URL.'inventario/aberturainventario');
             		exit;
                 } else {
@@ -87,7 +93,10 @@ class inventarioController extends Controller {
     	}
 
 
+        /** Variável de busca por nome ou por código de barras */
         $s = '';
+
+        /** Variável de busca por categoria */
         $c = '';
         
         if(!empty($_GET['busca']) || !empty($_GET['category'])) {
@@ -97,13 +106,18 @@ class inventarioController extends Controller {
             $_GET['category'] = '';
         }
 
+        /** Pega os produtos ativos */
         $data['list'] = $p->getProducts($s, $c);
 
+        /** Pega todas as categorias ativas */
         $data['listcategory'] = $p->getCategories();
 
 		$this->loadTemplate('inventario', $data);
 	}
 
+    /** Função da página Abertura de Inventário */
+    /** Função para listar os produtos em uma tabela que foram escolhidos pelo usuário no Inventário, onde poderá ser editado a quantidade e a quantidade mínima */
+    /** Esse inventário é salvo depois da contagem dos produtos */
     public function aberturainventario() {
 
         $i = new Inventario();
@@ -112,10 +126,10 @@ class inventarioController extends Controller {
 
 
         if(!empty($_POST['name'])) {
-            //$cod = filter_input(INPUT_POST, 'cod', FILTER_VALIDATE_INT);
-            //$name = ucwords(mb_strtolower(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING)));
             if (!empty($_POST['cod'])) {
+                /** A variável $codinventario recebe o mesmo código que foi gerado aleatóriamente no Inventário a cada vez que é aberto o inventário, esse código identifica o inventário */
                 $codinventario = $_POST['codinventario'];
+                /** Recebendo todos os dados dos produtos para montar o inventário */
                 $array['id_products'] = $_POST['id_products'];
                 $array['cod'] = $_POST['cod'];
                 $array['name'] = $_POST['name'];

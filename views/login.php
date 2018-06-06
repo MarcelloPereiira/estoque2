@@ -10,7 +10,7 @@
 	<div class="loginarea">
 		<form method="POST">
 			CPF:<br/>
-			<input type="text" name="number" class="inteiro" maxlength="11" required /><br/><br/>
+			<input type="text" name="number" class="cpf" maxlength="11" required /><br/><br/>
 
 			Senha:<br/>
 			<input type="password" name="password" required /><br/><br/>

@@ -4,6 +4,7 @@ $(function(){
 	$('.inteiro').mask("#0", {reverse: true});
 	$('input[name=cod]').mask("A");
 	$('input[class=letras]').mask("S");
+	$('.cpf').mask('000.000.000-00', {reverse: true});
 });
 
 

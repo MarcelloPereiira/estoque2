@@ -136,7 +136,7 @@ public function getConjunct() {
 	public function getDateConjuct() {
 		$array = array();
 
-		$sql = "SELECT * FROM conjunct";
+		$sql = "SELECT * FROM conjunct ORDER BY data_conjunct DESC";
 		$sql = $this->db->query($sql);
 
 		if($sql->rowCount() > 0) {
