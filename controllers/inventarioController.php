@@ -165,13 +165,15 @@ class inventarioController extends Controller {
         $this->loadTemplate('aberturainventario', $data);
     }
 
-
+    /** A função inventarioconsulta lista todos os inventários salvos em uma seleção */
 	public function inventarioconsulta() {
 		$data = array();
 		$i = new Inventario();
 
+        /** A variável $c é uma variável de busca  */
 		$c = '';
 		if(!empty($_GET['data_conj'])) {
+            /** Recebe a data do inventário buscado */
             $c = $_GET['data_conj'];
         }else if (empty($_GET['data_conj'])) {
             $_GET['data_conj'] = '';

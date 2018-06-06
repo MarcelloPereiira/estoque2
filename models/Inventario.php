@@ -1,6 +1,8 @@
 <?php
 class Inventario extends Model {
 
+	/** A variável $array recebe os dados do produto */
+	/** Função para atualizar(editar) a quantidade e a quantidade mínima de cada produto passado como parâmetro */
 	public function editProductsByInventario($array) {
 
 		if(!empty($array)) {
@@ -29,6 +31,8 @@ class Inventario extends Model {
 
 	}
 
+	/** A variável $total recebe a contagem total de todos os produtos escolhido pelo usuário, a variável $codinventario recebe um número aleatório que será o identificador do iventário para facilitar que o usuário identifique melhor os inventários salvos  */
+	/** Função para addConjunct salva a o valor total dos produtos, o identificador do iventário e a data em que o inventário foi salvo, é salvo na tabela conjunct */
 	public function addConjunct($total, $codinventario) {
 
 		if (!empty($total)) {
@@ -48,6 +52,8 @@ class Inventario extends Model {
 		
 	}
 
+	/** A variável $array recebe os dados do produto e a diferença entre a quantidade e a quantidade mínima, a variável $id_conjunct recebe o id dos dados que foram salvos por último na tabela conjunct */
+	/** A função addInventario salva todos os dados atuais dos produtos que foram passados como parâmetro */
 	public function addInventario($array, $id_conjunct) {
 		$id_conjunct = $id_conjunct[0];
 		if($array && $id_conjunct) {
@@ -82,6 +88,8 @@ class Inventario extends Model {
 		}
 	}
 
+	/** A variável $array recebe os dados do produto e a diferença entre a quantidade e a quantidade mínima (recebe os dados dos últimos produtos salvos na tabela inventário), a variável $id_conjunct recebe o id dos dados que foram salvos por último na tabela conjunct */
+	/** A função addInventarioFechar salva todos os dados depois da contagem dos produtos do estoque que foram passados como parâmetro */
 	public function addInventarioFechar($array, $id_conjunct) {
 		$id_conjunct = $id_conjunct[0];
 		if($array && $id_conjunct) {
@@ -116,7 +124,7 @@ class Inventario extends Model {
 
 
 
-
+/** A função getConjunct retorna a última informação salva na tabela conjunct */
 public function getConjunct() {
 		$array = array();
 
@@ -133,6 +141,7 @@ public function getConjunct() {
 		return $array;
 	}
 
+	/** A função getDateConjunct retorna todos os dados da tabela conjunct ordenado pela data de forma decrescente */
 	public function getDateConjuct() {
 		$array = array();
 
@@ -147,7 +156,8 @@ public function getConjunct() {
 
 		return $array;
 	}
-
+	/** A variável $c recebe a data do inventário */
+	/** A função getInventarioProducts lista todos os dados salvo no inventário junto com a inforção salva na tabela conjunct em uma seleção, para que o usuário possa escolher a opção e visualizar os dados dos produtos que foram salvos no inventário */
 	public function getInventarioProducts($c='') {
 		$array = array();
 			if(!empty($c)) {

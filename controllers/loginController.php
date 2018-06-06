@@ -1,6 +1,7 @@
 <?php
 class loginController extends Controller {
 
+	/** Função para autenticar o usuário  */
 	public function index() {
 		$data = array(
 			'msg' => ''
@@ -27,7 +28,7 @@ class loginController extends Controller {
 
 		$this->loadView('login', $data);
 	}
-
+	/** Função para encerrar a sessão(sair da conta)  */
 	public function sair() {
 		unset($_SESSION['token']);
 		header("Location: ".BASE_URL."login");

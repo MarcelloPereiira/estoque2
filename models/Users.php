@@ -1,8 +1,11 @@
 <?php
 class Users extends Model {
 
+	/**Guarda os dados(informação) do usuário*/
 	private $info;
+	/**Guarda o token do usuário*/
 	private $token;
+	/**Guarda o nivel do usuário*/
 	private $nivel;
 
 	/** A variável $s é uma variável para busca, recebe o nome do usuário ou o número do usuário(CPF) */
@@ -175,7 +178,8 @@ class Users extends Model {
 			return false;
 		}
 	}
-
+	/* A variável token recebe o token do usuário(número aleatório a cada vez que logar) */
+	/* A função setUsuario busca o usuário que está logado e guarda no nível do usuário na variável 'nivel' restringir cada usuário conforme o seu nível de acesso */
 	public function setUsuario($token){
 		$this->token = $token;
 
@@ -193,10 +197,12 @@ class Users extends Model {
 
 	}
 
+	/* A função getUsuario retorna o nível do usuário  */
 	public function getNivel() {
 		return $this->nivel;
 	}
 
+	/* A função getUsuario retorna o true ou false a depender do nível de acesso de cada usuário e da restrição de cada página */
 	public function hasPermission($p){
 		if (in_array($p, $this->nivel)) {
 			return true;
@@ -205,6 +211,7 @@ class Users extends Model {
 		}
 	}
 
+	/* A função getNome retorna os dados do usuário logado */
 	public function getNome(){
 		$array = array();
 		$token = $_SESSION['token'];
@@ -220,6 +227,8 @@ class Users extends Model {
 		return $array;
 	}
 
+	/* A variável $id recebe o id(identificador) do usuário */
+	/* A função getNome retorna os dados do usuário que tem o mesmo id que foi passado como parâmentro */
 	public function getUser($id) {
 		$array = array();
 
@@ -237,6 +246,8 @@ class Users extends Model {
 		return $array;
 	}
 
+	/* A variável $user_number recebe o número de acesso(CPF) do usuário, a variável $user_pass recebe a senha do usuário, a variável $nivel recebe o nível do usuário, a variável $nome recebe o nome do usuário ,a variável $id recebe o id(identificador) do usuário */
+	/* A função editUser atualiza(edita) os dados do usuário que tem o mesmo id que foi passado como parâmentro */
 	public function editUser($user_number, $user_pass, $nivel, $nome, $id) {
 
 		if($this->verifyUserEdit($user_number, $id)) {
@@ -260,7 +271,8 @@ class Users extends Model {
 
 
 
-
+	/** A variável $$id_status recebe o status atual do usuário e o $id recebe o id do usuário que foi passado como parâmetro */
+	/** A função upStatus atualiza(edita) o status do usuário, se o status atual for ativo a função irá inativar o usuário, se o status  atual for inativo a função irá ativar o usuário*/
 	public function upStatus($id_status, $id) {
 		$id_status = $id_status['id_status'];
 		if($id_status == 1) {

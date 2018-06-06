@@ -10,7 +10,7 @@ class relatorioController extends Controller {
 			exit;
 		}		
 	}
-
+	/** Função para listar os dados dos produtos em uma tabela quando a quantidade estiver abaixo da quantidade mínima */
 	public function index() {
 		$data = array();
 		$p = new Products();
