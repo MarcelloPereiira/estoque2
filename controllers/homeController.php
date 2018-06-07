@@ -559,9 +559,13 @@ class homeController extends Controller {
             if (!empty($cod)) {
                 if($cod && $quantity) {
                     /** Envia os dados para a função entradaProduto dentro da Classe Products */
-                    $p->entradaProdutoPorCod($quantity, $cod);
-                    $data['sucess'] = 'Entrada de Produto com sucesso.';
-                        
+                    if ($p->perquisaProdutoPorCod($cod)) {
+                        $p->entradaProdutoPorCod($quantity, $cod);
+                        $data['sucess'] = 'Entrada de Produto com sucesso.';
+                    }else{
+                       $data['warning'] = 'Não foi possível dar entrada.'; 
+                    }
+
                 } else{
                        $data['warning'] = 'Não foi possível dar entrada.';
                   }

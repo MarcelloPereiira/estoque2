@@ -244,6 +244,20 @@ class Products extends Model {
 
 	}
 
+	public function perquisaProdutoPorCod($cod) {
+
+			$sql = "SELECT * FROM products WHERE cod = :cod";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":cod", $cod);
+			$sql->execute();
+
+			if ($sql->rowCount() > 0) {
+				return true;	
+			} else{
+				return false;
+			}
+
+	}
 
 	
 
