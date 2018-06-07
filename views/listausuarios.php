@@ -10,7 +10,7 @@ if ($users->hasPermission("ADM") == false) {
 }
 ?>
 
-<h1>Lista de Usuários Ativos</h1>
+<h1>Lista de Usuários</h1>
 
 <fieldset>
 	<form method="GET">

@@ -11,7 +11,7 @@ if ($users->hasPermission("ADM") == false) {
 } 
 ?>
 
-<h1>Lista de Producos Inativos</h1>
+<h1>Lista de Produtos Inativos</h1>
 
 <form method="GET" class="flexbuscador">
 	<fieldset>
