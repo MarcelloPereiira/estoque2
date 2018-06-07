@@ -4,6 +4,7 @@ $users->setUsuario($_SESSION['token']);
 ?>
 
 <?php
+/** Restrição de usuários. Só tem acesso a esta página os administradores */
 if ($users->hasPermission("ADM") == false) {
 	header("Location: index.php");
 	exit;

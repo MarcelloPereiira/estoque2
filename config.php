@@ -1,4 +1,6 @@
 <?php
+/** Configuração para conexão com o banco de dados */
+
 require 'environment.php';
 
 global $config;

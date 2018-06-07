@@ -1,4 +1,5 @@
 <?php
+/** Classe para Inventários */
 class Inventario extends Model {
 
 	/** A variável $array recebe os dados do produto */
@@ -156,30 +157,9 @@ public function getConjunct() {
 
 		return $array;
 	}
-	/** A variável $c recebe a data do inventário */
-	/** A função getInventarioProducts lista todos os dados salvo no inventário junto com a inforção salva na tabela conjunct em uma seleção, para que o usuário possa escolher a opção e visualizar os dados dos produtos que foram salvos no inventário */
-	public function getInventarioProducts($c='') {
-		$array = array();
-			if(!empty($c)) {
-				$sql = "SELECT conjunct.data_conjunct, conjunct.total_conjunct, inventario.cod, inventario.name_products, inventario.quantity, inventario.min_quantity, inventario.difference 
-				FROM conjunct
-				INNER JOIN inventario
-				ON conjunct.id = inventario.id_conjunct 
-				WHERE conjunct.id = :id";
-				$sql = $this->db->prepare($sql);
-				$sql->bindValue(":id", $c);
-				$sql->execute();
+	
 
-
-				if($sql->rowCount() > 0) {
-			$array = $sql->fetchAll();
-		}
-
-		return $array;
-			}
-							
-	}
-
+	/** A função getProductsConjunct lista todos os dados salvo no inventário junto com a informação salva na tabela conjunct, para que o usuário possa alterar a quantidade e a quantidade mínima, essa alteração é feita depois da contagem das quantidades dos produtos do estoque físico*/
 	public function getProductsConjunct($id_conjunct) {
 		$array = array();
 		$id = $id_conjunct['id'];
@@ -200,6 +180,30 @@ public function getConjunct() {
 		}
 
 		return $array;
+	}
+
+	/** A variável $c recebe a data do inventário */
+	/** A função getInventarioProducts lista todos os dados salvo no inventário junto com a informação salva na tabela conjunct em uma seleção, para que o usuário possa escolher a opção e visualizar os dados dos produtos que foram salvos no inventário */
+	public function getInventarioProducts($c='') {
+		$array = array();
+			if(!empty($c)) {
+				$sql = "SELECT conjunct.data_conjunct, conjunct.total_conjunct, inventario.cod, inventario.name_products, inventario.quantity, inventario.min_quantity, inventario.difference 
+				FROM conjunct
+				INNER JOIN inventario
+				ON conjunct.id = inventario.id_conjunct 
+				WHERE conjunct.id = :id";
+				$sql = $this->db->prepare($sql);
+				$sql->bindValue(":id", $c);
+				$sql->execute();
+
+
+				if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+		}
+
+		return $array;
+			}
+							
 	}
 
 }

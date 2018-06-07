@@ -115,7 +115,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `user_number`, `user_pass`, `user_token`, `nivel`, `nome`) VALUES
 (1, 123, '202cb962ac59075b964b07152d234b70', '752c1d8eada1593d04abe075b4e8d47a', 'ADM', 'MARCELO PEREIRA'),
-(2, 321, 'caf1a3dfb505ffed0d024130f58c5cfa', '4fb650f7ea5f3f8ec43d4aedbba112b5', 'OP', 'HANNA PIMENTA');
+(2, 321, 'caf1a3dfb505ffed0d024130f58c5cfa', '4fb650f7ea5f3f8ec43d4aedbba112b5', 'OP', 'DIEGO ARAUJO');
 
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

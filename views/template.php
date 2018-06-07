@@ -27,12 +27,6 @@
 
 		<script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/jquery.mask.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/script.js"></script>
-
-
-
-
-
-
 		
 	</body>
 </html>

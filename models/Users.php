@@ -1,4 +1,5 @@
 <?php
+/** Classe para Usuários */
 class Users extends Model {
 
 	/**Guarda os dados(informação) do usuário*/

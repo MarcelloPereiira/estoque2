@@ -1,9 +1,9 @@
 <?php
 class inventarioController extends Controller {
-
+    /** Construtor */
 	public function __construct() {
 		parent::__construct();
-
+        /** Verificação de login(Somente os usuários logados poderam ter acesso) */
 		$this->user = new Users();
 		if(!$this->user->checkLogin()) {
 			header("Location: ".BASE_URL."login");

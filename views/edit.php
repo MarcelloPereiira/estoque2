@@ -3,7 +3,7 @@ $users = new Users();
 $users->setUsuario($_SESSION['token']);
 ?>
 <?php
-//Usuários com permição para acessar essa página
+/** Restrição de usuários. Só tem acesso a esta página os administradores */
 if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == false) {
 	header("Location: index.php");
 	exit;
