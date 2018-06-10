@@ -14,7 +14,7 @@ if ($users->hasPermission("ADM") == false && $users->hasPermission("OP") == fals
 
 <fieldset>
 	<form method="GET">
-		<input type="text" id="busca" name="busca" value="<?php echo (!empty($_GET['busca']))?$_GET['busca']:''; ?>" placeholder="Digite o nome do fornecedor ou o CNPJ" style="width:100%;height:40px;font-size:18px;" />
+		<input type="text" id="busca" name="busca" value="<?php echo (!empty($_GET['busca']))?$_GET['busca']:''; ?>" placeholder="Digite o nome da categoria" style="width:100%;height:40px;font-size:18px;" />
 	</form>
 </fieldset>
 <br/><br/>
